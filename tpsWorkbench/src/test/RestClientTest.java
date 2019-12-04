@@ -43,7 +43,7 @@ public class RestClientTest {
 
     private static void initProperties() throws Exception {
         Properties properties = new Properties();
-        String path = "D:\\workspace\\data\\ambari-metric-writer\\es-writer\\src\\content\\"
+        String path = "D:\\workspace\\data\\ambari-metric-writer\\es-writer\\src\\jobs\\"
                 + "es-example.properties";
         path = path.replace("\\", "\\\\");
 
@@ -350,7 +350,7 @@ public class RestClientTest {
 
     public static void main(String[] args) throws Exception {
 
-        LOG.info("Start to do es content !");
+        LOG.info("Start to do es jobs !");
 
         initProperties();
         try {
