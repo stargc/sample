@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehl.tsq.data.infrastructure.persistence.mapper.BaseStatisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.ehl.tsq.data.infrastructure.persistence.po.BaseStatistics" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="des" property="des" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="DOUBLE" />
+    <result column="year_on_year" property="yearOnYear" jdbcType="DOUBLE" />
+    <result column="chain_ratio" property="chainRatio" jdbcType="DOUBLE" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="region" property="region" jdbcType="VARCHAR" />
+    <result column="is_true" property="isTrue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, unit, des, value, year_on_year, chain_ratio, date, region, is_true
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.BaseStatisticsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_dws_base_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.BaseStatisticsExample" >
+    delete from t_dws_base_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.BaseStatistics" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_dws_base_statistics (name, unit, des, 
+      value, year_on_year, chain_ratio, 
+      date, region, is_true
+      )
+    values (#{name,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, 
+      #{value,jdbcType=DOUBLE}, #{yearOnYear,jdbcType=DOUBLE}, #{chainRatio,jdbcType=DOUBLE}, 
+      #{date,jdbcType=TIMESTAMP}, #{region,jdbcType=VARCHAR}, #{isTrue,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.BaseStatistics" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_dws_base_statistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="des != null" >
+        des,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="yearOnYear != null" >
+        year_on_year,
+      </if>
+      <if test="chainRatio != null" >
+        chain_ratio,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+      <if test="isTrue != null" >
+        is_true,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="des != null" >
+        #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=DOUBLE},
+      </if>
+      <if test="yearOnYear != null" >
+        #{yearOnYear,jdbcType=DOUBLE},
+      </if>
+      <if test="chainRatio != null" >
+        #{chainRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="isTrue != null" >
+        #{isTrue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.BaseStatisticsExample" resultType="java.lang.Integer" >
+    select count(*) from t_dws_base_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_dws_base_statistics
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.des != null" >
+        des = #{record.des,jdbcType=VARCHAR},
+      </if>
+      <if test="record.value != null" >
+        value = #{record.value,jdbcType=DOUBLE},
+      </if>
+      <if test="record.yearOnYear != null" >
+        year_on_year = #{record.yearOnYear,jdbcType=DOUBLE},
+      </if>
+      <if test="record.chainRatio != null" >
+        chain_ratio = #{record.chainRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.region != null" >
+        region = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isTrue != null" >
+        is_true = #{record.isTrue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_dws_base_statistics
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      des = #{record.des,jdbcType=VARCHAR},
+      value = #{record.value,jdbcType=DOUBLE},
+      year_on_year = #{record.yearOnYear,jdbcType=DOUBLE},
+      chain_ratio = #{record.chainRatio,jdbcType=DOUBLE},
+      date = #{record.date,jdbcType=TIMESTAMP},
+      region = #{record.region,jdbcType=VARCHAR},
+      is_true = #{record.isTrue,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

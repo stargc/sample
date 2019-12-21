@@ -1,10 +1,14 @@
 package com.ehl.tsq.data.business.strategy.test;
 
 import com.ehl.tsq.data.business.common.vo.BaseResponse;
+import com.ehl.tsq.data.infrastructure.persistence.mapper.BaseStatisticsMapper;
+import com.ehl.tsq.data.infrastructure.persistence.po.BaseStatistics;
+import com.ehl.tsq.data.infrastructure.persistence.po.BaseStatisticsExample;
 import com.github.benmanes.caffeine.cache.CacheLoader;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,11 +33,17 @@ public class TestStrategy {
     @Resource
     private RestTemplate restTemplate;
 
+    @Autowired
+    private BaseStatisticsMapper baseStatisticsMapper;
+
     public BaseResponse doTest(){
         log.info(testValue);
         BaseResponse response = new BaseResponse();
         response.setResultCode(BaseResponse.SUCCESS);
         response.setResultMsg("SUCCESS：" + testValue);
+        BaseStatisticsExample example = new BaseStatisticsExample();
+        example.createCriteria().andNameEqualTo("SY-SCJG-YPAQ-HGL");
+        List<BaseStatistics> ad = baseStatisticsMapper.selectByExample(example);
         return response;
     }
 

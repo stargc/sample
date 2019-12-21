@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ehl.tsp.data</groupId>
-    <artifactId>tspDataProvider</artifactId>
+    <artifactId>xzDataProvider</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>tpDataProvider</name>
-    <description>tpDataProvider</description>
+    <name>xzDataProvider</name>
+    <description>xzDataProvider</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -81,6 +81,17 @@
             <artifactId>caffeine</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.14</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.14</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -113,6 +124,24 @@
                 <version>2.6</version>
                 <configuration>
                     <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <!--<scope>runtime</scope>-->
+                        <version>8.0.13</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <configurationFile>src/main/resources/generator/generatorConfig.xml</configurationFile>
+                    <overwrite>true</overwrite>
+                    <verbose>true</verbose>
                 </configuration>
             </plugin>
         </plugins>

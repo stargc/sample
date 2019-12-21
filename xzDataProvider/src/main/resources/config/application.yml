@@ -3,15 +3,15 @@ spring:
     active: dev
   application:
     name: empty
-  mybatis:
-    typeAliasesPackage: com.ehl.tsq.data.infrastructure.persistence.po
-    mapperLocations: classpath:mapper/*.xml
-    configuration:
-      map-underscore-to-camel-case: true
   datasource:
     url: jdbc:mysql://221.229.208.19:3306/stat?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
     password: ehl1234
 
+mybatis:
+  typeAliasesPackage: com.ehl.tsq.data.infrastructure.persistence.po
+  mapperLocations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
 server:
   port: 22001
