@@ -273,17 +273,22 @@
     </if>
   </update>
   <select id="selectGroupByType" resultType="com.ehl.tsq.data.business.strategy.statCityManager.StatCMCaseResultVo">
-    select count(1) as count, type,typeDesc
+    select count(1) as count, type,typeDesc as typeDes
     from t_dws_csgl_dtsj_jcyj_sjxx
-    where warningTime > #{startTime,jdbcType=TIMESTAMP}
-    and  #{endTime,jdbcType=TIMESTAMP} > warningTime
-    GROUP by type;
+    <if test="startTime != null" >
+      where warningTime > #{startTime,jdbcType=TIMESTAMP}
+      and  #{endTime,jdbcType=TIMESTAMP} > warningTime
+    </if>
+    GROUP by type
+    order by count DESC;
   </select>
   <select id="selectGroupByStreet" resultType="com.ehl.tsq.data.business.strategy.statCityManager.StatCMCaseResultVo">
     select count(1) as count, street_code as type,street as typeDesc
     from t_dws_csgl_dtsj_jcyj_sjxx
-    where warningTime > #{startTime,jdbcType=TIMESTAMP}
-    and  #{endTime,jdbcType=TIMESTAMP} > warningTime
+    <if test="startTime != null" >
+      where warningTime > #{startTime,jdbcType=TIMESTAMP}
+      and  #{endTime,jdbcType=TIMESTAMP} > warningTime
+    </if>
     GROUP by street;
   </select>
 </mapper>

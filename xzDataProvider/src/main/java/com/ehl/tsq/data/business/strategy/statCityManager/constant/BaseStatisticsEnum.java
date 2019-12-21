@@ -1,4 +1,7 @@
-package com.ehl.tsq.data.business.strategy.cityManager;
+package com.ehl.tsq.data.business.strategy.statCityManager.constant;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public enum BaseStatisticsEnum {
     SY("SY-SCJG-SPAQ-CCPC","食品抽查批次",""),
@@ -14,12 +17,11 @@ public enum BaseStatisticsEnum {
     YJASL("CSGL-NAJCLQK-YJASL","应结案数量","件"),
     JASL("CSGL-NAJCLQK-JASL","结案数量","件"),
     NAJSBZS("CSGL-NAJSBZS","案件上报总数","件"),
-    LDWDL("CSGL-AJ-SJLAJ-LDWDL","乱堆物堆料","件"),
-    ZDTD("CSGL-AJ-SJLAJ-ZDTD","占道摊点","个"),
-    DWJY("CSGL-AJ-SJLAJ-DWJY","店外经营","个"),
-    TXJG("CSGL-AJ-BJLAJ-TXJG","通讯敬爱","个"),
-    HSSS("CSGL-AJ-BJLAJ-HSSS","护树设施","个"),
-    XCL("CSGL-AJ-BJLAJ-XCL","宣传栏","个"),
+    CSGFAJTJ1("CSGL-AJ-CSGFAJTJ1","城市高发案件top5","件"),
+    CSGFAJTJ2("CSGL-AJ-CSGFAJTJ2","城市高发案件top5","件"),
+    CSGFAJTJ3("CSGL-AJ-CSGFAJTJ3","城市高发案件top5","件"),
+    CSGFAJTJ4("CSGL-AJ-CSGFAJTJ4","城市高发案件top5","件"),
+    CSGFAJTJ5("CSGL-AJ-CSGFAJTJ5","城市高发案件top5","件"),
     SR("CSGL-AJSBFL-SR","市容","件"),
     SZ("CSGL-AJSBFL-SZ","市政","件"),
     GG("CSGL-AJSBFL-GG","广告","件"),
@@ -31,6 +33,7 @@ public enum BaseStatisticsEnum {
     CSSSSHGFD("CSGL-CSSSSHGFD","城市设施损坏高发地","件"),
     CSAJGFD("CSGL-CSAJGFD","城市案件高发地","件"),
     RAJSBSSDT("CSGL-RAJSBSSDT","案件上报实时动态","件"),
+    YAJSBSSDT("CSGL-YAJSBSSDT","案件上报实时动态","件"),
     SXT("CSGL-CSSSSH-SXT","摄像头","个"),
     LD("CSGL-CSSSSH-LD","路灯","个"),
     JRSLL("CSGL-AJCLQK-JRSLL","今日受理量","件"),
