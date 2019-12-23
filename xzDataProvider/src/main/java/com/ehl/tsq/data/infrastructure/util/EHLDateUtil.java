@@ -80,6 +80,16 @@ public class EHLDateUtil {
         return monthStart.getTime();
     }
 
+    public static Date getMonthStart(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        Calendar monthStart = Calendar.getInstance();
+        monthStart.clear();
+        monthStart.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+        monthStart.set(Calendar.MONTH,calendar.get(Calendar.MONTH));
+        return monthStart.getTime();
+    }
+
     public static Date getMonthEnd(int year,int month){
         Calendar now = Calendar.getInstance();
         Calendar monthEnd = Calendar.getInstance();
@@ -87,6 +97,15 @@ public class EHLDateUtil {
         monthEnd.set(Calendar.YEAR, year);
         monthEnd.set(Calendar.MONTH, month);
         return  DateUtils.addSeconds(monthEnd.getTime(), -1);
+    }
+    public static Date getMonthEnd(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        Calendar monthEnd = Calendar.getInstance();
+        monthEnd.clear();
+        monthEnd.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+        monthEnd.set(Calendar.MONTH,calendar.get(Calendar.MONTH) + 1);
+        return DateUtils.addSeconds(monthEnd.getTime(), -1);
     }
 
 
@@ -105,6 +124,9 @@ public class EHLDateUtil {
 
         System.out.println(getNowMonthStart().toLocaleString());
         System.out.println(getNowMonthEnd().toLocaleString());
+
+        System.out.println(getMonthStart(new Date()).toLocaleString());
+        System.out.println(getMonthEnd(new Date()).toLocaleString());
     }
 
 }

@@ -29,15 +29,13 @@ public class StatCMCaseService {
     @Autowired
     private BaseStatisticsMapper baseStatisticsMapper;
 
-    public void statCase(){
-        statStatusNum(null);
-        statTypeTop5Num();
-    }
-
     /***
      * 更新当日案件进度数量
      */
     public void statStatusNum(Date date){
+        if (date == null){
+            date = new Date();
+        }
         Date dayStart = EHLDateUtil.getDayStart(date);
         Date dayEnd = EHLDateUtil.getDayEnd(date);
 
@@ -178,13 +176,12 @@ public class StatCMCaseService {
         if (date != null){
             now.setTime(date);
         }
-        int dayNum = now.getActualMaximum(Calendar.DATE);
-        for (int i = 0; i < dayNum; i++) {
+        for (int i = 0; i < 31; i++) {
             Calendar day = Calendar.getInstance();
-            now.set(Calendar.HOUR_OF_DAY,0);
-            now.set(Calendar.MINUTE,0);
-            now.set(Calendar.SECOND,0);
-            day.set(Calendar.DAY_OF_MONTH,i+1);
+            day.set(Calendar.HOUR_OF_DAY,0);
+            day.set(Calendar.MINUTE,0);
+            day.set(Calendar.SECOND,0);
+            day.set(Calendar.DAY_OF_MONTH,now.get(Calendar.DAY_OF_MONTH) - i);
 
             Date dayStart = EHLDateUtil.getDayStart(day.getTime());
             Date dayEnd = EHLDateUtil.getDayEnd(day.getTime());
@@ -207,14 +204,20 @@ public class StatCMCaseService {
      * 统计当月上报实时动态
      */
     public void statCauseNumByMonth(Date date){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
+        Calendar now = Calendar.getInstance();
+        if (date != null) {
+            now.setTime(date);
+        }
         BaseStatisticsExample deleteExample = new BaseStatisticsExample();
         deleteExample.createCriteria().andNameEqualTo(BaseStatisticsEnum.YAJSBSSDT.getName());
         baseStatisticsMapper.deleteByExample(deleteExample);
         for (int i = 0; i < 12; i++) {
-            Date monthStart = EHLDateUtil.getMonthStart(calendar.get(Calendar.YEAR),i+1);
-            Date monthEnd = EHLDateUtil.getMonthEnd(calendar.get(Calendar.YEAR),i+1);
+            Calendar month = Calendar.getInstance();
+            month.setTime(now.getTime());
+            month.set(Calendar.MONTH,now.get(Calendar.MONTH) - i);
+            Date monthStart = EHLDateUtil.getMonthStart(month.getTime());
+            Date monthEnd = EHLDateUtil.getMonthEnd(month.getTime());
+
             CsglDtsjJcyjSjxxExample example = new CsglDtsjJcyjSjxxExample();
             example.createCriteria().andWarningtimeBetween(monthStart,monthEnd);
             int count = csglDtsjJcyjSjxxMapper.countByExample(example);
