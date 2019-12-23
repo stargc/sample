@@ -1,4 +1,4 @@
-package com.ehl.tsq.data.business.strategy.test;
+package com.ehl.tsq.data.business.service.test;
 
 import com.ehl.tsq.data.business.common.vo.BaseResponse;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.BaseStatisticsMapper;
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @Slf4j
-public class TestStrategy {
+public class TestSservice {
 
     @Value("${testValue}")
     private String testValue;

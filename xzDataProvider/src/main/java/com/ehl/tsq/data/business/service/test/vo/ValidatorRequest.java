@@ -1,4 +1,4 @@
-package com.ehl.tsq.data.business.strategy.test.vo;
+package com.ehl.tsq.data.business.service.test.vo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

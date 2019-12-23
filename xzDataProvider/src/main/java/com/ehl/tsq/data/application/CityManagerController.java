@@ -1,8 +1,7 @@
 package com.ehl.tsq.data.application;
 
 import com.ehl.tsq.data.business.common.vo.BaseResponse;
-import com.ehl.tsq.data.business.strategy.statCityManager.StatCMCaseStrategy;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ehl.tsq.data.business.service.statCityManager.StatCMCaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,25 +21,37 @@ import java.util.Date;
 public class CityManagerController {
 
     @Autowired
-    private StatCMCaseStrategy statCMCaseStrategy;
+    private StatCMCaseService statCMCaseService;
 
     @GetMapping("CityManager/statStreetCause")
     public BaseResponse statStreetNum(@RequestParam int year){
-        statCMCaseStrategy.statStreetNumYear(year);
-        statCMCaseStrategy.statStreetNumMonth();
+        statCMCaseService.statStreetNumYear(year);
+        statCMCaseService.statStreetNumMonth();
+        return new BaseResponse(BaseResponse.SUCCESS,"Success");
+    }
+
+    @GetMapping("CityManager/statTypeTop5Num")
+    public BaseResponse statTypeTop5Num(){
+        statCMCaseService.statTypeTop5Num();
+        return new BaseResponse(BaseResponse.SUCCESS,"Success");
+    }
+
+    @GetMapping("CityManager/statStatusNum")
+    public BaseResponse statStatusNum(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
+        statCMCaseService.statStatusNum(date);
         return new BaseResponse(BaseResponse.SUCCESS,"Success");
     }
 
     @GetMapping("CityManager/statTypeNum")
-    public BaseResponse statTypeNum(){
-        statCMCaseStrategy.statTypeNum();
+    public BaseResponse statTypeNum(@RequestParam int year,@RequestParam int month){
+        statCMCaseService.statTypeNum(year,month);
         return new BaseResponse(BaseResponse.SUCCESS,"Success");
     }
 
-
-    @GetMapping("CityManager/statStatusNum")
-    public BaseResponse statStatusNum(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
-        statCMCaseStrategy.statStatusNum(date);
+    @GetMapping("CityManager/statCauseNum")
+    public BaseResponse statCauseNum(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
+        statCMCaseService.statCauseNumByDay(date);
+        statCMCaseService.statCauseNumByMonth(date);
         return new BaseResponse(BaseResponse.SUCCESS,"Success");
     }
 }

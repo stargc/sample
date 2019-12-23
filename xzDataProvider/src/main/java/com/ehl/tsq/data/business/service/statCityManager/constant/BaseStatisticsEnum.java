@@ -1,7 +1,4 @@
-package com.ehl.tsq.data.business.strategy.statCityManager.constant;
-
-import java.util.HashMap;
-import java.util.Map;
+package com.ehl.tsq.data.business.service.statCityManager.constant;
 
 public enum BaseStatisticsEnum {
     SY("SY-SCJG-SPAQ-CCPC","食品抽查批次",""),
@@ -22,18 +19,15 @@ public enum BaseStatisticsEnum {
     CSGFAJTJ3("CSGL-AJ-CSGFAJTJ3","城市高发案件top5","件"),
     CSGFAJTJ4("CSGL-AJ-CSGFAJTJ4","城市高发案件top5","件"),
     CSGFAJTJ5("CSGL-AJ-CSGFAJTJ5","城市高发案件top5","件"),
-    SR("CSGL-AJSBFL-SR","市容","件"),
-    SZ("CSGL-AJSBFL-SZ","市政","件"),
-    GG("CSGL-AJSBFL-GG","广告","件"),
-    TXC("CSGL-AJSBFL-TXC","停洗车","件"),
+    AJSBFL("CSGL-AJSBFL","案件上报分类",""),
     RJCSL("CSGL-RJCSL","人均厕所量","个"),
     HWCLFB("CSGL-JDZYFB-HWCLFB","环卫车辆","个"),
     LJTFB("CSGL-JDZYFB-LJTFB","垃圾桶","个"),
     ZZZFB("CSGL-JDZYFB-ZZZFB","中转站","个"),
     CSSSSHGFD("CSGL-CSSSSHGFD","城市设施损坏高发地","件"),
     CSAJGFD("CSGL-CSAJGFD","城市案件高发地","件"),
-    RAJSBSSDT("CSGL-RAJSBSSDT","案件上报实时动态","件"),
-    YAJSBSSDT("CSGL-YAJSBSSDT","案件上报实时动态","件"),
+    RAJSBSSDT("CSGL-RAJSBSSDT","案件上报实时动态","件"),//当月按日
+    YAJSBSSDT("CSGL-YAJSBSSDT","案件上报实时动态","件"),//当年按月
     SXT("CSGL-CSSSSH-SXT","摄像头","个"),
     LD("CSGL-CSSSSH-LD","路灯","个"),
     JRSLL("CSGL-AJCLQK-JRSLL","今日受理量","件"),

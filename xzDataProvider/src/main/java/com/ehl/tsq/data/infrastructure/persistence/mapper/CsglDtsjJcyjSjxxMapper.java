@@ -1,12 +1,12 @@
 package com.ehl.tsq.data.infrastructure.persistence.mapper;
 
-import com.ehl.tsq.data.business.strategy.statCityManager.StatCMCaseResultVo;
+import com.ehl.tsq.data.business.service.statCityManager.StatCMCaseResultVo;
 import com.ehl.tsq.data.infrastructure.persistence.po.CsglDtsjJcyjSjxx;
 import com.ehl.tsq.data.infrastructure.persistence.po.CsglDtsjJcyjSjxxExample;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface CsglDtsjJcyjSjxxMapper {
     int countByExample(CsglDtsjJcyjSjxxExample example);
@@ -26,4 +26,5 @@ public interface CsglDtsjJcyjSjxxMapper {
     List<StatCMCaseResultVo> selectGroupByType(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
     List<StatCMCaseResultVo> selectGroupByStreet(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+
 }

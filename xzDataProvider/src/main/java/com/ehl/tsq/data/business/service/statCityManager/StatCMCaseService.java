@@ -1,7 +1,7 @@
-package com.ehl.tsq.data.business.strategy.statCityManager;
+package com.ehl.tsq.data.business.service.statCityManager;
 
-import com.ehl.tsq.data.business.strategy.statCityManager.constant.BaseStatisticsEnum;
-import com.ehl.tsq.data.business.strategy.statCityManager.constant.BaseStatisticsEnumTool;
+import com.ehl.tsq.data.business.service.statCityManager.constant.BaseStatisticsEnum;
+import com.ehl.tsq.data.business.service.statCityManager.constant.BaseStatisticsEnumTool;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.BaseStatisticsMapper;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.CsglDtsjJcyjSjxxMapper;
 import com.ehl.tsq.data.infrastructure.persistence.po.BaseStatistics;
@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
  */
 @Component
 @Slf4j
-public class StatCMCaseStrategy {
+public class StatCMCaseService {
 
     @Autowired
     private CsglDtsjJcyjSjxxMapper csglDtsjJcyjSjxxMapper;
@@ -30,11 +31,11 @@ public class StatCMCaseStrategy {
 
     public void statCase(){
         statStatusNum(null);
-        statTypeNum();
+        statTypeTop5Num();
     }
 
     /***
-     * 更新当日 案件进度数量
+     * 更新当日案件进度数量
      */
     public void statStatusNum(Date date){
         Date dayStart = EHLDateUtil.getDayStart(date);
@@ -68,9 +69,9 @@ public class StatCMCaseStrategy {
     }
 
     /***
-     * 安装类型 统计城管案件
+     * 安装类型 统计城管案件 TOP5
      */
-    public void statTypeNum(){
+    public void statTypeTop5Num(){
         Date yearStart = EHLDateUtil.getNowYearStart();
         Date yearEnd = EHLDateUtil.getNowYearEnd();
         List<StatCMCaseResultVo> resultVoList = csglDtsjJcyjSjxxMapper.selectGroupByType(yearStart,yearEnd);
@@ -129,4 +130,104 @@ public class StatCMCaseStrategy {
             }
         });
     }
+
+    /***
+     * 上报案件分类
+     */
+    public void statTypeNum(int year,int month){
+        Date startTime = EHLDateUtil.getNowMonthStart();
+        Date endTime = EHLDateUtil.getNowMonthEnd();
+        if (year != 0 && month != 0){
+            startTime = EHLDateUtil.getMonthStart(year,month);
+            endTime = EHLDateUtil.getMonthEnd(year,month);
+        }
+        List<StatCMCaseResultVo> resultVoList = csglDtsjJcyjSjxxMapper.selectGroupByType(startTime,endTime);
+
+        CsglDtsjJcyjSjxxExample countExample = new CsglDtsjJcyjSjxxExample();
+        countExample.createCriteria().andWarningtimeBetween(startTime,endTime);
+        int count = csglDtsjJcyjSjxxMapper.countByExample(countExample);
+        if (count <= 0){
+            log.error("安装类型 统计城管案件: 总数量为0");
+            return;
+        }
+
+        BaseStatisticsExample deleteExample = new BaseStatisticsExample();
+        deleteExample.createCriteria().andNameEqualTo(BaseStatisticsEnum.AJSBFL.getName());
+        baseStatisticsMapper.deleteByExample(deleteExample);
+
+        resultVoList.stream().forEach(vo -> {
+            BaseStatistics baseStatistics = new BaseStatistics();
+            baseStatistics.setValue(Double.valueOf(vo.getCount()));
+            baseStatistics.setDate(new Date());
+            baseStatistics.setDes(vo.getTypeDes());
+            baseStatistics.setIsTrue("TRUE");
+            baseStatistics.setName(BaseStatisticsEnum.AJSBFL.getName());
+            baseStatistics.setYearOnYear(Double.valueOf(vo.getCount())/count);
+            baseStatisticsMapper.insertSelective(baseStatistics);
+        });
+    }
+
+    /***
+     * 统计当日上报实时动态
+     */
+    public void statCauseNumByDay(Date date){
+        BaseStatisticsExample deleteExample = new BaseStatisticsExample();
+        deleteExample.createCriteria().andNameEqualTo(BaseStatisticsEnum.RAJSBSSDT.getName());
+        baseStatisticsMapper.deleteByExample(deleteExample);
+        Calendar now = Calendar.getInstance();
+        if (date != null){
+            now.setTime(date);
+        }
+        int dayNum = now.getActualMaximum(Calendar.DATE);
+        for (int i = 0; i < dayNum; i++) {
+            Calendar day = Calendar.getInstance();
+            now.set(Calendar.HOUR_OF_DAY,0);
+            now.set(Calendar.MINUTE,0);
+            now.set(Calendar.SECOND,0);
+            day.set(Calendar.DAY_OF_MONTH,i+1);
+
+            Date dayStart = EHLDateUtil.getDayStart(day.getTime());
+            Date dayEnd = EHLDateUtil.getDayEnd(day.getTime());
+            CsglDtsjJcyjSjxxExample example = new CsglDtsjJcyjSjxxExample();
+            example.createCriteria().andWarningtimeBetween(dayStart,dayEnd);
+            int count = csglDtsjJcyjSjxxMapper.countByExample(example);
+
+            BaseStatistics baseStatistics = new BaseStatistics();
+            baseStatistics.setValue(Double.valueOf(count));
+            baseStatistics.setDate(dayStart);
+            baseStatistics.setDes(BaseStatisticsEnum.RAJSBSSDT.getMsg());
+            baseStatistics.setIsTrue("TRUE");
+            baseStatistics.setName(BaseStatisticsEnum.RAJSBSSDT.getName());
+            baseStatistics.setUnit(BaseStatisticsEnum.RAJSBSSDT.getUnit());
+            baseStatisticsMapper.insertSelective(baseStatistics);
+        }
+    }
+
+    /***
+     * 统计当月上报实时动态
+     */
+    public void statCauseNumByMonth(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        BaseStatisticsExample deleteExample = new BaseStatisticsExample();
+        deleteExample.createCriteria().andNameEqualTo(BaseStatisticsEnum.YAJSBSSDT.getName());
+        baseStatisticsMapper.deleteByExample(deleteExample);
+        for (int i = 0; i < 12; i++) {
+            Date monthStart = EHLDateUtil.getMonthStart(calendar.get(Calendar.YEAR),i+1);
+            Date monthEnd = EHLDateUtil.getMonthEnd(calendar.get(Calendar.YEAR),i+1);
+            CsglDtsjJcyjSjxxExample example = new CsglDtsjJcyjSjxxExample();
+            example.createCriteria().andWarningtimeBetween(monthStart,monthEnd);
+            int count = csglDtsjJcyjSjxxMapper.countByExample(example);
+
+            BaseStatistics baseStatistics = new BaseStatistics();
+            baseStatistics.setValue(Double.valueOf(count));
+            baseStatistics.setDate(monthStart);
+            baseStatistics.setDes(BaseStatisticsEnum.YAJSBSSDT.getMsg());
+            baseStatistics.setIsTrue("TRUE");
+            baseStatistics.setName(BaseStatisticsEnum.YAJSBSSDT.getName());
+            baseStatistics.setUnit(BaseStatisticsEnum.YAJSBSSDT.getUnit());
+            baseStatisticsMapper.insertSelective(baseStatistics);
+        }
+    }
+
 }

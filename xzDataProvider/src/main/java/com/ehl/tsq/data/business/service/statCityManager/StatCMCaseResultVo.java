@@ -1,4 +1,4 @@
-package com.ehl.tsq.data.business.strategy.statCityManager;
+package com.ehl.tsq.data.business.service.statCityManager;
 
 import lombok.Data;
 

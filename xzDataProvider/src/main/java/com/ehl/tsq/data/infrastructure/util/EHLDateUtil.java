@@ -41,17 +41,23 @@ public class EHLDateUtil {
 
     public static Date getNowYearStart(){
         Calendar now = Calendar.getInstance();
+        return getYearStart(now.get(Calendar.YEAR));
+    }
+    public static Date getYearStart(int year){
         Calendar yearStart = Calendar.getInstance();
         yearStart.clear();
-        yearStart.set(Calendar.YEAR,now.get(Calendar.YEAR));
+        yearStart.set(Calendar.YEAR,year);
         return yearStart.getTime();
     }
 
     public static Date getNowYearEnd(){
         Calendar now = Calendar.getInstance();
+        return getYearEnd(now.get(Calendar.YEAR));
+    }
+    public static Date getYearEnd(int year){
         Calendar yearEnd = Calendar.getInstance();
         yearEnd.clear();
-        yearEnd.set(Calendar.YEAR, now.get(Calendar.YEAR) +1 );
+        yearEnd.set(Calendar.YEAR, year + 1);
         return DateUtils.addSeconds(yearEnd.getTime(), -1);
     }
 
@@ -87,6 +93,8 @@ public class EHLDateUtil {
     public static void main(String[] args) {
         System.out.println(getNowYearStart().toLocaleString());
         System.out.println(getNowYearEnd().toLocaleString());
+        System.out.println(getYearStart(2019).toLocaleString());
+        System.out.println(getYearEnd(2019).toLocaleString());
 
         System.out.println(getMonthStart(2019,2).toLocaleString());
         System.out.println(getMonthEnd(2019,2).toLocaleString());

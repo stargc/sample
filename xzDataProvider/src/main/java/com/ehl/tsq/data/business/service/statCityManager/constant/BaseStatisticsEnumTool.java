@@ -1,4 +1,4 @@
-package com.ehl.tsq.data.business.strategy.statCityManager.constant;
+package com.ehl.tsq.data.business.service.statCityManager.constant;
 
 import java.util.HashMap;
 import java.util.Map;
