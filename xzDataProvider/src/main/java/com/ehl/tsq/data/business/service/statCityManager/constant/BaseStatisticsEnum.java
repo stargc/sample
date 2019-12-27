@@ -34,6 +34,9 @@ public enum BaseStatisticsEnum {
     DCL("CSGL-AJCLQK-DCL","待处理","件"),
     BLZ("CSGL-AJCLQK-BLZ","办理中","件"),
     YBJ("CSGL-AJCLQK-YBJ","已办结","件"),
+    CSSSSHLD("CSGL-CSSSSH-LD","路灯损坏数","个"),
+    CSSSSHLJT("CSGL-CSSSSH-LJT","垃圾桶损坏数","个"),
+    CSSSSHSXT("CSGL-CSSSSH-SXT","摄像头损坏数","个"),
     ;
     private String name;
     private String msg;

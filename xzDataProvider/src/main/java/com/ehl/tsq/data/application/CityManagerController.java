@@ -1,6 +1,7 @@
 package com.ehl.tsq.data.application;
 
 import com.ehl.tsq.data.business.common.vo.BaseResponse;
+import com.ehl.tsq.data.business.service.mock.MockService;
 import com.ehl.tsq.data.business.service.statCityManager.StatCMCaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class CityManagerController {
 
     @Autowired
     private StatCMCaseService statCMCaseService;
+
+    @Autowired
+    private MockService mockService;
 
     @GetMapping("CityManager/statStreetCause")
     public BaseResponse statStreetNum(@RequestParam int year){
@@ -52,6 +56,12 @@ public class CityManagerController {
     public BaseResponse statCauseNum(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
         statCMCaseService.statCauseNumByDay(date);
         statCMCaseService.statCauseNumByMonth(date);
+        return new BaseResponse(BaseResponse.SUCCESS,"Success");
+    }
+
+    @GetMapping("mock/CityManager/breakDevice")
+    public BaseResponse breakDevice(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
+        mockService.breakDevice(date);
         return new BaseResponse(BaseResponse.SUCCESS,"Success");
     }
 }
