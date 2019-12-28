@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGToiletsMapper" >
+  <resultMap id="BaseResultMap" type="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToilets" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="toilet_id" property="toiletId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="street_name" property="streetName" jdbcType="VARCHAR" />
+    <result column="road_name" property="roadName" jdbcType="VARCHAR" />
+    <result column="street_id" property="streetId" jdbcType="INTEGER" />
+    <result column="road_id" property="roadId" jdbcType="INTEGER" />
+    <result column="owner" property="owner" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="DOUBLE" />
+    <result column="latitude" property="latitude" jdbcType="DOUBLE" />
+    <result column="sensor_id_Man" property="sensorIdMan" jdbcType="VARCHAR" />
+    <result column="sensor_d_Woman" property="sensorDWoman" jdbcType="VARCHAR" />
+    <result column="enclosure_Url" property="enclosureUrl" jdbcType="VARCHAR" />
+    <result column="warning" property="warning" jdbcType="VARCHAR" />
+    <result column="warning_time" property="warningTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, toilet_id, name, address, street_name, road_name, street_id, road_id, owner, 
+    telephone, longitude, latitude, sensor_id_Man, sensor_d_Woman, enclosure_Url, warning, 
+    warning_time, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_dws_zhcg_toilets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsExample" >
+    delete from t_dws_zhcg_toilets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToilets" >
+    insert into t_dws_zhcg_toilets (id, toilet_id, name, 
+      address, street_name, road_name, 
+      street_id, road_id, owner, 
+      telephone, longitude, latitude, 
+      sensor_id_Man, sensor_d_Woman, enclosure_Url, 
+      warning, warning_time, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{toiletId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{streetName,jdbcType=VARCHAR}, #{roadName,jdbcType=VARCHAR}, 
+      #{streetId,jdbcType=INTEGER}, #{roadId,jdbcType=INTEGER}, #{owner,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, 
+      #{sensorIdMan,jdbcType=VARCHAR}, #{sensorDWoman,jdbcType=VARCHAR}, #{enclosureUrl,jdbcType=VARCHAR}, 
+      #{warning,jdbcType=VARCHAR}, #{warningTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id"  parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToilets" >
+    insert into t_dws_zhcg_toilets
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="toiletId != null" >
+        toilet_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="streetName != null" >
+        street_name,
+      </if>
+      <if test="roadName != null" >
+        road_name,
+      </if>
+      <if test="streetId != null" >
+        street_id,
+      </if>
+      <if test="roadId != null" >
+        road_id,
+      </if>
+      <if test="owner != null" >
+        owner,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="sensorIdMan != null" >
+        sensor_id_Man,
+      </if>
+      <if test="sensorDWoman != null" >
+        sensor_d_Woman,
+      </if>
+      <if test="enclosureUrl != null" >
+        enclosure_Url,
+      </if>
+      <if test="warning != null" >
+        warning,
+      </if>
+      <if test="warningTime != null" >
+        warning_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="toiletId != null" >
+        #{toiletId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="streetName != null" >
+        #{streetName,jdbcType=VARCHAR},
+      </if>
+      <if test="roadName != null" >
+        #{roadName,jdbcType=VARCHAR},
+      </if>
+      <if test="streetId != null" >
+        #{streetId,jdbcType=INTEGER},
+      </if>
+      <if test="roadId != null" >
+        #{roadId,jdbcType=INTEGER},
+      </if>
+      <if test="owner != null" >
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="sensorIdMan != null" >
+        #{sensorIdMan,jdbcType=VARCHAR},
+      </if>
+      <if test="sensorDWoman != null" >
+        #{sensorDWoman,jdbcType=VARCHAR},
+      </if>
+      <if test="enclosureUrl != null" >
+        #{enclosureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="warning != null" >
+        #{warning,jdbcType=VARCHAR},
+      </if>
+      <if test="warningTime != null" >
+        #{warningTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsExample" resultType="java.lang.Integer" >
+    select count(*) from t_dws_zhcg_toilets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_dws_zhcg_toilets
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.toiletId != null" >
+        toilet_id = #{record.toiletId,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.streetName != null" >
+        street_name = #{record.streetName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roadName != null" >
+        road_name = #{record.roadName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.streetId != null" >
+        street_id = #{record.streetId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roadId != null" >
+        road_id = #{record.roadId,jdbcType=INTEGER},
+      </if>
+      <if test="record.owner != null" >
+        owner = #{record.owner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null" >
+        longitude = #{record.longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.latitude != null" >
+        latitude = #{record.latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sensorIdMan != null" >
+        sensor_id_Man = #{record.sensorIdMan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sensorDWoman != null" >
+        sensor_d_Woman = #{record.sensorDWoman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enclosureUrl != null" >
+        enclosure_Url = #{record.enclosureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.warning != null" >
+        warning = #{record.warning,jdbcType=VARCHAR},
+      </if>
+      <if test="record.warningTime != null" >
+        warning_time = #{record.warningTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_dws_zhcg_toilets
+    set id = #{record.id,jdbcType=INTEGER},
+      toilet_id = #{record.toiletId,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      street_name = #{record.streetName,jdbcType=VARCHAR},
+      road_name = #{record.roadName,jdbcType=VARCHAR},
+      street_id = #{record.streetId,jdbcType=INTEGER},
+      road_id = #{record.roadId,jdbcType=INTEGER},
+      owner = #{record.owner,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      longitude = #{record.longitude,jdbcType=DOUBLE},
+      latitude = #{record.latitude,jdbcType=DOUBLE},
+      sensor_id_Man = #{record.sensorIdMan,jdbcType=VARCHAR},
+      sensor_d_Woman = #{record.sensorDWoman,jdbcType=VARCHAR},
+      enclosure_Url = #{record.enclosureUrl,jdbcType=VARCHAR},
+      warning = #{record.warning,jdbcType=VARCHAR},
+      warning_time = #{record.warningTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

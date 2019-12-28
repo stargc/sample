@@ -1,7 +1,5 @@
 package com.ehl.tsq.data.business.service.ZHCG.vehicles;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ehl.tsq.data.business.service.ZHCG.BeanTransitUtil;
 import com.ehl.tsq.data.business.service.ZHCG.vo.ZHCGResp;
@@ -15,7 +13,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author created by guanchen on 2019/12/28 10:28
@@ -39,7 +40,6 @@ public class VehicleService {
     private String vehiclesTrackUrl;
 
     public void queryVehicleInfo() {
-        Map<String, String> parm = new HashMap<>();
         ZHCGResp<List<Map<String, String>>> resp =
                 restTemplate.getForObject(vehiclesPageUrl + "?start=1&limit=51", ZHCGResp.class);
         if (resp == null || !"true".equals(resp.getSuccess()) || resp.getData().isEmpty()) {
@@ -61,7 +61,7 @@ public class VehicleService {
                         || !existCarList.get(0).getEnclosureUrl().equals(car.getEnclosureUrl())
                         || !existCarList.get(0).getVehicleState().equals(car.getVehicleState())) {
                     car.setUpdateTime(new Date());
-                    carMapper.updateByExample(car, example);
+                    carMapper.updateByExampleSelective(car, example);
                 }
                 log.info("访问 获取环卫车基础信息<" + car.getCarId() + ">数据无变化");
             } else {

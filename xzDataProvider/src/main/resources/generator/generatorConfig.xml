@@ -48,7 +48,7 @@
                <!--enableUpdateByExample="true">-->
         <!--</table>-->
 
-        <table tableName="t_dws_dtsj_csgl_csjcssjc" domainObjectName="DtsjCsglCsjcssjc"
+        <table tableName="t_dws_zhcg_trash" domainObjectName="ZHCGTrash"
                enableSelectByPrimaryKey="true"
                enableSelectByExample="true"
                enableCountByExample="true"
