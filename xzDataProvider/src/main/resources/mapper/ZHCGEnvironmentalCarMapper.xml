@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGEnvironmentalCarMapper">
+  <resultMap id="BaseResultMap" type="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGEnvironmentalCar">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="car_id" jdbcType="INTEGER" property="carId" />
+    <result column="vehicle_no" jdbcType="VARCHAR" property="vehicleNo" />
+    <result column="engine_no" jdbcType="VARCHAR" property="engineNo" />
+    <result column="brand_model" jdbcType="VARCHAR" property="brandModel" />
+    <result column="vehicle_load" jdbcType="VARCHAR" property="vehicleLoad" />
+    <result column="vehicle_typeName" jdbcType="VARCHAR" property="vehicleTypename" />
+    <result column="service_area_name" jdbcType="VARCHAR" property="serviceAreaName" />
+    <result column="driver_name" jdbcType="VARCHAR" property="driverName" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="start_up_time" jdbcType="TIMESTAMP" property="startUpTime" />
+    <result column="useful_life" jdbcType="VARCHAR" property="usefulLife" />
+    <result column="sensor_id" jdbcType="VARCHAR" property="sensorId" />
+    <result column="enclosure_url" jdbcType="VARCHAR" property="enclosureUrl" />
+    <result column="vehicle_state" jdbcType="INTEGER" property="vehicleState" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, car_id, vehicle_no, engine_no, brand_model, vehicle_load, vehicle_typeName, service_area_name, 
+    driver_name, telephone, start_up_time, useful_life, sensor_id, enclosure_url, vehicle_state, 
+    create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGEnvironmentalCarExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_dws_zhcg_environmental_car
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGEnvironmentalCarExample">
+    delete from t_dws_zhcg_environmental_car
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id"  parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGEnvironmentalCar">
+    insert into t_dws_zhcg_environmental_car (id, car_id, vehicle_no, 
+      engine_no, brand_model, vehicle_load, 
+      vehicle_typeName, service_area_name, driver_name, 
+      telephone, start_up_time, useful_life, 
+      sensor_id, enclosure_url, vehicle_state, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{carId,jdbcType=INTEGER}, #{vehicleNo,jdbcType=VARCHAR}, 
+      #{engineNo,jdbcType=VARCHAR}, #{brandModel,jdbcType=VARCHAR}, #{vehicleLoad,jdbcType=VARCHAR}, 
+      #{vehicleTypename,jdbcType=VARCHAR}, #{serviceAreaName,jdbcType=VARCHAR}, #{driverName,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{startUpTime,jdbcType=TIMESTAMP}, #{usefulLife,jdbcType=VARCHAR}, 
+      #{sensorId,jdbcType=VARCHAR}, #{enclosureUrl,jdbcType=VARCHAR}, #{vehicleState,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGEnvironmentalCar">
+    insert into t_dws_zhcg_environmental_car
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="carId != null">
+        car_id,
+      </if>
+      <if test="vehicleNo != null">
+        vehicle_no,
+      </if>
+      <if test="engineNo != null">
+        engine_no,
+      </if>
+      <if test="brandModel != null">
+        brand_model,
+      </if>
+      <if test="vehicleLoad != null">
+        vehicle_load,
+      </if>
+      <if test="vehicleTypename != null">
+        vehicle_typeName,
+      </if>
+      <if test="serviceAreaName != null">
+        service_area_name,
+      </if>
+      <if test="driverName != null">
+        driver_name,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="startUpTime != null">
+        start_up_time,
+      </if>
+      <if test="usefulLife != null">
+        useful_life,
+      </if>
+      <if test="sensorId != null">
+        sensor_id,
+      </if>
+      <if test="enclosureUrl != null">
+        enclosure_url,
+      </if>
+      <if test="vehicleState != null">
+        vehicle_state,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null">
+        #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleNo != null">
+        #{vehicleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="engineNo != null">
+        #{engineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="brandModel != null">
+        #{brandModel,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleLoad != null">
+        #{vehicleLoad,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleTypename != null">
+        #{vehicleTypename,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceAreaName != null">
+        #{serviceAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="driverName != null">
+        #{driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="startUpTime != null">
+        #{startUpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usefulLife != null">
+        #{usefulLife,jdbcType=VARCHAR},
+      </if>
+      <if test="sensorId != null">
+        #{sensorId,jdbcType=VARCHAR},
+      </if>
+      <if test="enclosureUrl != null">
+        #{enclosureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleState != null">
+        #{vehicleState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGEnvironmentalCarExample" resultType="java.lang.Integer">
+    select count(*) from t_dws_zhcg_environmental_car
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_dws_zhcg_environmental_car
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.carId != null">
+        car_id = #{record.carId,jdbcType=INTEGER},
+      </if>
+      <if test="record.vehicleNo != null">
+        vehicle_no = #{record.vehicleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.engineNo != null">
+        engine_no = #{record.engineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandModel != null">
+        brand_model = #{record.brandModel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vehicleLoad != null">
+        vehicle_load = #{record.vehicleLoad,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vehicleTypename != null">
+        vehicle_typeName = #{record.vehicleTypename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceAreaName != null">
+        service_area_name = #{record.serviceAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.driverName != null">
+        driver_name = #{record.driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null">
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startUpTime != null">
+        start_up_time = #{record.startUpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.usefulLife != null">
+        useful_life = #{record.usefulLife,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sensorId != null">
+        sensor_id = #{record.sensorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enclosureUrl != null">
+        enclosure_url = #{record.enclosureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vehicleState != null">
+        vehicle_state = #{record.vehicleState,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_dws_zhcg_environmental_car
+    set id = #{record.id,jdbcType=INTEGER},
+      car_id = #{record.carId,jdbcType=INTEGER},
+      vehicle_no = #{record.vehicleNo,jdbcType=VARCHAR},
+      engine_no = #{record.engineNo,jdbcType=VARCHAR},
+      brand_model = #{record.brandModel,jdbcType=VARCHAR},
+      vehicle_load = #{record.vehicleLoad,jdbcType=VARCHAR},
+      vehicle_typeName = #{record.vehicleTypename,jdbcType=VARCHAR},
+      service_area_name = #{record.serviceAreaName,jdbcType=VARCHAR},
+      driver_name = #{record.driverName,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      start_up_time = #{record.startUpTime,jdbcType=TIMESTAMP},
+      useful_life = #{record.usefulLife,jdbcType=VARCHAR},
+      sensor_id = #{record.sensorId,jdbcType=VARCHAR},
+      enclosure_url = #{record.enclosureUrl,jdbcType=VARCHAR},
+      vehicle_state = #{record.vehicleState,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

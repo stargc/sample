@@ -40,13 +40,20 @@
         </javaClientGenerator>
 
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
+        <!--<table tableName="t_dws_zhcg_environmental_car" domainObjectName="ZHCGEnvironmentalCar"-->
+               <!--enableSelectByPrimaryKey="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--enableCountByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableUpdateByExample="true">-->
+        <!--</table>-->
+
         <table tableName="t_dws_dtsj_csgl_csjcssjc" domainObjectName="DtsjCsglCsjcssjc"
                enableSelectByPrimaryKey="true"
                enableSelectByExample="true"
                enableCountByExample="true"
                enableDeleteByExample="true"
                enableUpdateByExample="true">
-            <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
     </context>
 </generatorConfiguration>

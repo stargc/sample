@@ -92,6 +92,11 @@
             <version>3.14</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.33</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -140,7 +145,7 @@
                 </dependencies>
                 <configuration>
                     <configurationFile>src/main/resources/generator/generatorConfig.xml</configurationFile>
-                    <overwrite>true</overwrite>
+                    <!--<overwrite>true</overwrite>-->
                     <verbose>true</verbose>
                 </configuration>
             </plugin>

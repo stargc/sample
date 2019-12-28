@@ -15,3 +15,12 @@ mybatis:
     map-underscore-to-camel-case: true
 server:
   port: 22001
+
+ZHCG:
+  vehicles_page: http://157.0.243.32:18188/sanitation/settings/vehicles/page
+  vehicles_track: http://157.0.243.32:18188/sanitation/overview/vehicles/track/history/
+  toilets_page: http://157.0.243.32:18188/sanitation/settings/toilets/page
+  stations_page: http://157.0.243.32:18188/sanitation/settings/stations/page
+  trashes_page: http://157.0.243.32:18188/sanitation/settings/trashes/page
+  muck_tree: http://157.0.243.27:18097/view/muck/tree
+  muck_track: http://157.0.243.27:18097/view/muck/history/track/

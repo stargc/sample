@@ -33,6 +33,12 @@ public class DtsjCsglCsjcssjc {
 
     private String isTrue;
 
+    private String typeCode;
+
+    private Integer deviceId;
+
+    private Date updateTime;
+
     public Integer getId() {
         return id;
     }
@@ -151,5 +157,29 @@ public class DtsjCsglCsjcssjc {
 
     public void setIsTrue(String isTrue) {
         this.isTrue = isTrue == null ? null : isTrue.trim();
+    }
+
+    public String getTypeCode() {
+        return typeCode;
+    }
+
+    public void setTypeCode(String typeCode) {
+        this.typeCode = typeCode == null ? null : typeCode.trim();
+    }
+
+    public Integer getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(Integer deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

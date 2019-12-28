@@ -1124,6 +1124,196 @@ public class DtsjCsglCsjcssjcExample {
             addCriterion("is_true not between", value1, value2, "isTrue");
             return (Criteria) this;
         }
+
+        public Criteria andTypeCodeIsNull() {
+            addCriterion("type_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeIsNotNull() {
+            addCriterion("type_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeEqualTo(String value) {
+            addCriterion("type_code =", value, "typeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeNotEqualTo(String value) {
+            addCriterion("type_code <>", value, "typeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeGreaterThan(String value) {
+            addCriterion("type_code >", value, "typeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("type_code >=", value, "typeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeLessThan(String value) {
+            addCriterion("type_code <", value, "typeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeLessThanOrEqualTo(String value) {
+            addCriterion("type_code <=", value, "typeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeLike(String value) {
+            addCriterion("type_code like", value, "typeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeNotLike(String value) {
+            addCriterion("type_code not like", value, "typeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeIn(List<String> values) {
+            addCriterion("type_code in", values, "typeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeNotIn(List<String> values) {
+            addCriterion("type_code not in", values, "typeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeBetween(String value1, String value2) {
+            addCriterion("type_code between", value1, value2, "typeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeCodeNotBetween(String value1, String value2) {
+            addCriterion("type_code not between", value1, value2, "typeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceIdIsNull() {
+            addCriterion("device_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceIdIsNotNull() {
+            addCriterion("device_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceIdEqualTo(Integer value) {
+            addCriterion("device_id =", value, "deviceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceIdNotEqualTo(Integer value) {
+            addCriterion("device_id <>", value, "deviceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceIdGreaterThan(Integer value) {
+            addCriterion("device_id >", value, "deviceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("device_id >=", value, "deviceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceIdLessThan(Integer value) {
+            addCriterion("device_id <", value, "deviceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceIdLessThanOrEqualTo(Integer value) {
+            addCriterion("device_id <=", value, "deviceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceIdIn(List<Integer> values) {
+            addCriterion("device_id in", values, "deviceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceIdNotIn(List<Integer> values) {
+            addCriterion("device_id not in", values, "deviceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceIdBetween(Integer value1, Integer value2) {
+            addCriterion("device_id between", value1, value2, "deviceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("device_id not between", value1, value2, "deviceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIsNull() {
+            addCriterion("update_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIsNotNull() {
+            addCriterion("update_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeEqualTo(Date value) {
+            addCriterion("update_time =", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotEqualTo(Date value) {
+            addCriterion("update_time <>", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeGreaterThan(Date value) {
+            addCriterion("update_time >", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("update_time >=", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeLessThan(Date value) {
+            addCriterion("update_time <", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("update_time <=", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIn(List<Date> values) {
+            addCriterion("update_time in", values, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotIn(List<Date> values) {
+            addCriterion("update_time not in", values, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeBetween(Date value1, Date value2) {
+            addCriterion("update_time between", value1, value2, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("update_time not between", value1, value2, "updateTime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@PropertySource(value = {"classpath:config/application.yml", "classpath:config/system-dev.yml"},
+@PropertySource(value = {"classpath:config/application.yml"},
 		ignoreResourceNotFound = true)
 @MapperScan("com.ehl.tsq.data.infrastructure.persistence.mapper")
 @EnableScheduling
