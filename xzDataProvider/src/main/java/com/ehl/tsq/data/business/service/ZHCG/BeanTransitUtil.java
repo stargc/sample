@@ -91,4 +91,24 @@ public class BeanTransitUtil {
         bean.setDeviceId(trash.getId());
         return bean;
     }
+    public static DtsjCsglCsjcssjc muckCat2Bean(ZHCGMuckCar car){
+        DtsjCsglCsjcssjc bean = new DtsjCsglCsjcssjc();
+        bean.setName(car.getName());
+        bean.setAddress(null);
+        bean.setPrincipal(null);
+        bean.setTel(null);
+        bean.setStreetArea(null);
+        bean.setArea(null);
+        bean.setUrl(null);
+        bean.setGeometry("("+car.getLongitude() + "," + car.getLatitude() + ")");
+        bean.setGeometryType("线");
+        bean.setType("渣土车");
+        bean.setDate(new Date());
+        bean.setWarning(null);
+        bean.setWarningTime(null);
+        bean.setIsTrue("TRUE");
+        bean.setTypeCode("ZTC");
+        bean.setDeviceId(car.getId());
+        return bean;
+    }
 }

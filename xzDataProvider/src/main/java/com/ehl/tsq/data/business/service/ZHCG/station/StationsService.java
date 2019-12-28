@@ -40,11 +40,10 @@ public class StationsService {
             log.error("访问 获取垃圾中转站基础信息 接口返回内容为空");
             return;
         }
+        log.info("获取垃圾中转站条数：" + resp.getTotalCount());
         List<Map<String, String>> stationList = resp.getData();
         stationList.stream().forEach(map -> {
             ZHCGStations station = JSONObject.parseObject(JSONObject.toJSONString(map), ZHCGStations.class);
-            station.setStationId(station.getId());
-            station.setId(null);
 
             ZHCGStationsExample example = new ZHCGStationsExample();
             example.createCriteria().andStationIdEqualTo(station.getStationId());

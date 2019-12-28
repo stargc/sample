@@ -46,11 +46,10 @@ public class VehicleService {
             log.error("访问 获取环卫车基础信息 接口返回内容为空");
             return;
         }
+        log.info("获取环卫车辆条数：" + resp.getTotalCount());
         List<Map<String, String>> carList = resp.getData();
         carList.stream().forEach(map -> {
             ZHCGEnvironmentalCar car = JSONObject.parseObject(JSONObject.toJSONString(map), ZHCGEnvironmentalCar.class);
-            car.setCarId(car.getId());
-            car.setId(null);
 
             ZHCGEnvironmentalCarExample example = new ZHCGEnvironmentalCarExample();
             example.createCriteria().andCarIdEqualTo(car.getCarId());
@@ -75,28 +74,30 @@ public class VehicleService {
 
     public void queryVehicleTrack() {
         ZHCGEnvironmentalCarExample example = new ZHCGEnvironmentalCarExample();
-
-        //TODO:
         example.createCriteria().andVehicleStateEqualTo(1);//查找状态为 在线车辆
         List<ZHCGEnvironmentalCar> carList = carMapper.selectByExample(example);
 
-        Map<String, String> parm = new HashMap<>();
         long now = System.currentTimeMillis();
-        //TODO:
-        parm.put("startTime", String.valueOf(now - 30 * 60 * 1000));//默认搜索版小数数据
-        parm.put("endTime", String.valueOf(now));
         carList.stream().forEach(car -> {
+            DtsjCsglCsjcssjcExample dtExample = new DtsjCsglCsjcssjcExample();
+            dtExample.createCriteria().andTypeCodeEqualTo("HWCL").andDeviceIdEqualTo(car.getId());
+            DtsjCsglCsjcssjc bean = new DtsjCsglCsjcssjc();
+
+            StringBuilder url = new StringBuilder(vehiclesTrackUrl).append(car.getCarId())
+                    .append("?startTime=").append(now - 30 * 60 * 1000)
+                    .append("&endTime=").append(now);
             ZHCGResp<List<List<Map<String, String>>>> resp =
-                    restTemplate.getForObject(vehiclesTrackUrl + car.getCarId(), ZHCGResp.class, parm);
+                    restTemplate.getForObject(url.toString(), ZHCGResp.class);
             if (resp == null || !"true".equals(resp.getSuccess()) || resp.getData().isEmpty()) {
                 log.error("访问 获取环卫车历史轨迹 接口返回内容为空");
+                bean.setGeometry("((0,0),(0,0))");
+                dtsjCsglCsjcssjcMapper.updateByExampleSelective(bean, dtExample);
                 return;
             }
             List<List<Map<String, String>>> trackList = resp.getData();
+
             StringBuilder trackSB = new StringBuilder("(");
             trackList.get(0).stream().forEach(map -> {
-                map.put("trackId", map.get("id"));
-                map.put("id", null);
                 ZHCGEnvironmentalCarTrack track = JSONObject.parseObject(
                         JSONObject.toJSONString(map), ZHCGEnvironmentalCarTrack.class);
                 track.setCarId(car.getCarId());
@@ -110,12 +111,9 @@ public class VehicleService {
                         .append(track.getLatitude()).append(")").append(",");
             });
             trackSB.substring(0, trackSB.length() - 1);
-            DtsjCsglCsjcssjcExample dtExample = new DtsjCsglCsjcssjcExample();
-            dtExample.createCriteria().andTypeCodeEqualTo("HWCL").andDeviceIdEqualTo(car.getId());
-            DtsjCsglCsjcssjc bean = new DtsjCsglCsjcssjc();
             bean.setGeometry(trackSB.append(")").toString());
+            bean.setUpdateTime(new Date());
             dtsjCsglCsjcssjcMapper.updateByExampleSelective(bean, dtExample);
-
         });
     }
 }

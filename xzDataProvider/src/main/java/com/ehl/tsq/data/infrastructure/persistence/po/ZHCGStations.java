@@ -1,10 +1,13 @@
 package com.ehl.tsq.data.infrastructure.persistence.po;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 public class ZHCGStations {
     private Integer id;
 
+    @JSONField(name="id")
     private Integer stationId;
 
     private String name;

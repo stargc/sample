@@ -1,25 +1,23 @@
 package com.ehl.tsq.data.infrastructure.persistence.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public class ZHCGEnvironmentalCarTrack {
+public class ZHCGMuckCarTrack {
     private Integer id;
 
     private Integer carId;
 
-    @JSONField(name="id")
-    private String trackId;
+    private Integer trackId;
 
     private String latitude;
 
     private String longitude;
 
-    private String speed;
-
-    private String sensorId;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(name="time")
     private Date createTime;
 
     private Date updateTime;
@@ -40,12 +38,12 @@ public class ZHCGEnvironmentalCarTrack {
         this.carId = carId;
     }
 
-    public String getTrackId() {
+    public Integer getTrackId() {
         return trackId;
     }
 
-    public void setTrackId(String trackId) {
-        this.trackId = trackId == null ? null : trackId.trim();
+    public void setTrackId(Integer trackId) {
+        this.trackId = trackId;
     }
 
     public String getLatitude() {
@@ -62,22 +60,6 @@ public class ZHCGEnvironmentalCarTrack {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude == null ? null : longitude.trim();
-    }
-
-    public String getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(String speed) {
-        this.speed = speed == null ? null : speed.trim();
-    }
-
-    public String getSensorId() {
-        return sensorId;
-    }
-
-    public void setSensorId(String sensorId) {
-        this.sensorId = sensorId == null ? null : sensorId.trim();
     }
 
     public Date getCreateTime() {

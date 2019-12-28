@@ -40,11 +40,10 @@ public class ToiletService {
             log.error("访问 获取环卫车基础信息 接口返回内容为空");
             return;
         }
+        log.info("获取公厕条数：" + resp.getTotalCount());
         List<Map<String, String>> toiletList = resp.getData();
         toiletList.stream().forEach(map -> {
             ZHCGToilets toilet = JSONObject.parseObject(JSONObject.toJSONString(map), ZHCGToilets.class);
-            toilet.setToiletId(toilet.getId());
-            toilet.setId(null);
 
             ZHCGToiletsExample example = new ZHCGToiletsExample();
             example.createCriteria().andToiletIdEqualTo(toilet.getToiletId());

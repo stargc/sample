@@ -40,11 +40,10 @@ public class TrasheService {
             log.error("访问 获取垃圾桶基础信息 接口返回内容为空");
             return;
         }
+        log.info("获取垃圾桶条数：" + resp.getTotalCount());
         List<Map<String, String>> trashList = resp.getData();
         trashList.stream().forEach(map -> {
             ZHCGTrash trash = JSONObject.parseObject(JSONObject.toJSONString(map), ZHCGTrash.class);
-            trash.setTrashId(trash.getId());
-            trash.setId(null);
 
             ZHCGTrashExample example = new ZHCGTrashExample();
             example.createCriteria().andTrashIdEqualTo(trash.getTrashId());
