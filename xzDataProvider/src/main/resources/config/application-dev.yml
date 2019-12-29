@@ -4,7 +4,7 @@ spring:
   application:
     name: empty
   datasource:
-    url: jdbc:mysql://221.229.208.19:3306/stat?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://221.229.208.19:3306/stat_test_copy?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: ehl1234
   activemq:

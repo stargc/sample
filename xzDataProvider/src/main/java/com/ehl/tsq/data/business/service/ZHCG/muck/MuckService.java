@@ -2,6 +2,7 @@ package com.ehl.tsq.data.business.service.ZHCG.muck;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ehl.tsq.data.business.service.ZHCG.BeanTransitUtil;
+import com.ehl.tsq.data.business.service.ZHCG.vo.DeviceTypeCodeEnum;
 import com.ehl.tsq.data.business.service.ZHCG.vo.ZHCGResp;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.*;
 import com.ehl.tsq.data.infrastructure.persistence.po.*;
@@ -88,7 +89,8 @@ public class MuckService {
             }
             List<List<Map<String, String>>> trackList = resp.getData();
             DtsjCsglCsjcssjcExample dtExample = new DtsjCsglCsjcssjcExample();
-            dtExample.createCriteria().andTypeCodeEqualTo("ZTC").andDeviceIdEqualTo(car.getId());
+            dtExample.createCriteria().andTypeCodeEqualTo(DeviceTypeCodeEnum.ZTC.getCode())
+                    .andDeviceIdEqualTo(car.getId());
             DtsjCsglCsjcssjc bean = new DtsjCsglCsjcssjc();
             if (trackList.isEmpty()) {
                 //没有轨迹信息，保存线数据为0

@@ -5,6 +5,8 @@ import java.util.Date;
 public class ZHCGToiletsValue {
     private Integer id;
 
+    private Integer toiletId;
+
     private String deviceNum;
 
     private String ch4;
@@ -61,6 +63,14 @@ public class ZHCGToiletsValue {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getToiletId() {
+        return toiletId;
+    }
+
+    public void setToiletId(Integer toiletId) {
+        this.toiletId = toiletId;
     }
 
     public String getDeviceNum() {

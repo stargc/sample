@@ -3,6 +3,8 @@ package com.ehl.tsq.data.business.service.ZHCG.trash;
 import com.alibaba.fastjson.JSONObject;
 import com.ehl.tsq.data.business.service.ZHCG.trash.vo.TrashAlarmMessage;
 import com.ehl.tsq.data.business.service.ZHCG.trash.vo.TrashStateData;
+import com.ehl.tsq.data.business.service.ZHCG.vo.DeviceTypeCodeEnum;
+import com.ehl.tsq.data.business.service.ZHCG.vo.ZHCGResp;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.DtsjCsglCsjcssjcMapper;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGTrashMapper;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGTrashWarningMapper;
@@ -42,9 +44,14 @@ public class TrashMQConsumer {
             log.error("接收到 垃圾桶信息 内容为空");
             return;
         }
-        TrashAlarmMessage alarmMessage = JSONObject.parseObject(result, TrashAlarmMessage.class);
-        ZHCGTrashWarning alarm = alarmMessage.alarm2Bean();
+        ZHCGResp<TrashAlarmMessage> resp = JSONObject.parseObject(result, ZHCGResp.class);
+        if (resp == null || resp.getData() == null){
+            log.error("接收到 垃圾桶信息 内容为空");
+            return;
+        }
+        TrashAlarmMessage alarmMessage = JSONObject.parseObject(JSONObject.toJSONString(resp.getData()),TrashAlarmMessage.class);
 
+        ZHCGTrashWarning alarm = alarmMessage.alarm2Bean();
         ZHCGTrashExample example = new ZHCGTrashExample();
         example.createCriteria().andSensorIdEqualTo(alarm.getTrashSensorId());
         List<ZHCGTrash> trashList = trashMapper.selectByExample(example);
@@ -57,7 +64,8 @@ public class TrashMQConsumer {
         warningMapper.insertSelective(alarm);
 
         DtsjCsglCsjcssjcExample warnExample = new DtsjCsglCsjcssjcExample();
-        warnExample.createCriteria().andTypeCodeEqualTo("LJT").andDeviceIdEqualTo(alarm.getTrashId());
+        warnExample.createCriteria().andTypeCodeEqualTo(DeviceTypeCodeEnum.LJT.getCode())
+                .andDeviceIdEqualTo(alarm.getTrashId());
         List<DtsjCsglCsjcssjc> deviceList = dtsjCsglCsjcssjcMapper.selectByExample(warnExample);
         if (deviceList.isEmpty()){
             log.error("没有找到对应的垃圾桶,垃圾桶ID：" + alarm.getTrashId());
@@ -69,7 +77,7 @@ public class TrashMQConsumer {
                 isAlarm) != 0){
             DtsjCsglCsjcssjc bean = new DtsjCsglCsjcssjc();
             bean.setWarningTime(isAlarm ? new Date() : null);
-            bean.setWarning(isAlarm ? "垃圾桶发生满溢" : null);
+            bean.setWarning(isAlarm ? "垃圾桶发生满溢" : "\"\"");
             bean.setUpdateTime(new Date());
             dtsjCsglCsjcssjcMapper.updateByExampleSelective(bean,warnExample);
         }

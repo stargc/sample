@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author created by guanchen on 2019/12/29 11:54
  */
@@ -40,6 +43,11 @@ public class MockMQProducer {
         message.setTime("sss");
         message.setVersion("22");
 
-        System.out.println(JSONObject.toJSONString(message));
+        Map<String,Object> bean = new HashMap<>();
+        bean.put("code","200");
+        bean.put("message","SUCCESS");
+        bean.put("data",message);
+
+        System.out.println(JSONObject.toJSONString(bean));
     }
 }

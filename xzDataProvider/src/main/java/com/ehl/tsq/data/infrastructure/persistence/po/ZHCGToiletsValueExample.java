@@ -165,6 +165,66 @@ public class ZHCGToiletsValueExample {
             return (Criteria) this;
         }
 
+        public Criteria andToiletIdIsNull() {
+            addCriterion("toilet_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andToiletIdIsNotNull() {
+            addCriterion("toilet_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andToiletIdEqualTo(Integer value) {
+            addCriterion("toilet_id =", value, "toiletId");
+            return (Criteria) this;
+        }
+
+        public Criteria andToiletIdNotEqualTo(Integer value) {
+            addCriterion("toilet_id <>", value, "toiletId");
+            return (Criteria) this;
+        }
+
+        public Criteria andToiletIdGreaterThan(Integer value) {
+            addCriterion("toilet_id >", value, "toiletId");
+            return (Criteria) this;
+        }
+
+        public Criteria andToiletIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("toilet_id >=", value, "toiletId");
+            return (Criteria) this;
+        }
+
+        public Criteria andToiletIdLessThan(Integer value) {
+            addCriterion("toilet_id <", value, "toiletId");
+            return (Criteria) this;
+        }
+
+        public Criteria andToiletIdLessThanOrEqualTo(Integer value) {
+            addCriterion("toilet_id <=", value, "toiletId");
+            return (Criteria) this;
+        }
+
+        public Criteria andToiletIdIn(List<Integer> values) {
+            addCriterion("toilet_id in", values, "toiletId");
+            return (Criteria) this;
+        }
+
+        public Criteria andToiletIdNotIn(List<Integer> values) {
+            addCriterion("toilet_id not in", values, "toiletId");
+            return (Criteria) this;
+        }
+
+        public Criteria andToiletIdBetween(Integer value1, Integer value2) {
+            addCriterion("toilet_id between", value1, value2, "toiletId");
+            return (Criteria) this;
+        }
+
+        public Criteria andToiletIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("toilet_id not between", value1, value2, "toiletId");
+            return (Criteria) this;
+        }
+
         public Criteria andDeviceNumIsNull() {
             addCriterion("device_num is null");
             return (Criteria) this;

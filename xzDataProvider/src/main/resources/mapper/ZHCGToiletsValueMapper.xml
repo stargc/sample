@@ -3,6 +3,7 @@
 <mapper namespace="com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGToiletsValueMapper">
   <resultMap id="BaseResultMap" type="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsValue">
     <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="toilet_id" jdbcType="INTEGER" property="toiletId" />
     <result column="device_num" jdbcType="VARCHAR" property="deviceNum" />
     <result column="cH4" jdbcType="VARCHAR" property="ch4" />
     <result column="cO" jdbcType="VARCHAR" property="co" />
@@ -88,8 +89,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, device_num, cH4, cO, cO2, dB, h2, h2S, hCHO, mPA, nH3, nO, nO2, nOI, o2, o3, 
-    pM10, pM25, sMOG, sO2, sPD, tEMP, tSP, tVOC, wS, create_time
+    id, toilet_id, device_num, cH4, cO, cO2, dB, h2, h2S, hCHO, mPA, nH3, nO, nO2, nOI, 
+    o2, o3, pM10, pM25, sMOG, sO2, sPD, tEMP, tSP, tVOC, wS, create_time
   </sql>
   <select id="selectByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsValueExample" resultMap="BaseResultMap">
     select
@@ -112,21 +113,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsValue">
-    insert into t_dws_zhcg_toilets_value (id, device_num, cH4, 
-      cO, cO2, dB, h2, 
-      h2S, hCHO, mPA, nH3, 
-      nO, nO2, nOI, o2, 
-      o3, pM10, pM25, sMOG, 
-      sO2, sPD, tEMP, tSP, 
-      tVOC, wS, create_time
+    insert into t_dws_zhcg_toilets_value (id, toilet_id, device_num, 
+      cH4, cO, cO2, dB, 
+      h2, h2S, hCHO, mPA, 
+      nH3, nO, nO2, nOI, 
+      o2, o3, pM10, pM25, 
+      sMOG, sO2, sPD, tEMP, 
+      tSP, tVOC, wS, create_time
       )
-    values (#{id,jdbcType=INTEGER}, #{deviceNum,jdbcType=VARCHAR}, #{ch4,jdbcType=VARCHAR}, 
-      #{co,jdbcType=VARCHAR}, #{co2,jdbcType=VARCHAR}, #{db,jdbcType=VARCHAR}, #{h2,jdbcType=VARCHAR}, 
-      #{h2s,jdbcType=VARCHAR}, #{hcho,jdbcType=VARCHAR}, #{mpa,jdbcType=VARCHAR}, #{nh3,jdbcType=VARCHAR}, 
-      #{no,jdbcType=VARCHAR}, #{no2,jdbcType=VARCHAR}, #{noi,jdbcType=VARCHAR}, #{o2,jdbcType=VARCHAR}, 
-      #{o3,jdbcType=VARCHAR}, #{pm10,jdbcType=VARCHAR}, #{pm25,jdbcType=VARCHAR}, #{smog,jdbcType=VARCHAR}, 
-      #{so2,jdbcType=VARCHAR}, #{spd,jdbcType=VARCHAR}, #{temp,jdbcType=VARCHAR}, #{tsp,jdbcType=VARCHAR}, 
-      #{tvoc,jdbcType=VARCHAR}, #{ws,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+    values (#{id,jdbcType=INTEGER}, #{toiletId,jdbcType=INTEGER}, #{deviceNum,jdbcType=VARCHAR}, 
+      #{ch4,jdbcType=VARCHAR}, #{co,jdbcType=VARCHAR}, #{co2,jdbcType=VARCHAR}, #{db,jdbcType=VARCHAR}, 
+      #{h2,jdbcType=VARCHAR}, #{h2s,jdbcType=VARCHAR}, #{hcho,jdbcType=VARCHAR}, #{mpa,jdbcType=VARCHAR}, 
+      #{nh3,jdbcType=VARCHAR}, #{no,jdbcType=VARCHAR}, #{no2,jdbcType=VARCHAR}, #{noi,jdbcType=VARCHAR}, 
+      #{o2,jdbcType=VARCHAR}, #{o3,jdbcType=VARCHAR}, #{pm10,jdbcType=VARCHAR}, #{pm25,jdbcType=VARCHAR}, 
+      #{smog,jdbcType=VARCHAR}, #{so2,jdbcType=VARCHAR}, #{spd,jdbcType=VARCHAR}, #{temp,jdbcType=VARCHAR}, 
+      #{tsp,jdbcType=VARCHAR}, #{tvoc,jdbcType=VARCHAR}, #{ws,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsValue">
@@ -134,6 +135,9 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="toiletId != null">
+        toilet_id,
       </if>
       <if test="deviceNum != null">
         device_num,
@@ -214,6 +218,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="toiletId != null">
+        #{toiletId,jdbcType=INTEGER},
       </if>
       <if test="deviceNum != null">
         #{deviceNum,jdbcType=VARCHAR},
@@ -304,6 +311,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.toiletId != null">
+        toilet_id = #{record.toiletId,jdbcType=INTEGER},
+      </if>
       <if test="record.deviceNum != null">
         device_num = #{record.deviceNum,jdbcType=VARCHAR},
       </if>
@@ -387,6 +397,7 @@
   <update id="updateByExample" parameterType="map">
     update t_dws_zhcg_toilets_value
     set id = #{record.id,jdbcType=INTEGER},
+      toilet_id = #{record.toiletId,jdbcType=INTEGER},
       device_num = #{record.deviceNum,jdbcType=VARCHAR},
       cH4 = #{record.ch4,jdbcType=VARCHAR},
       cO = #{record.co,jdbcType=VARCHAR},

@@ -2,6 +2,7 @@ package com.ehl.tsq.data.business.service.ZHCG.vehicles;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ehl.tsq.data.business.service.ZHCG.BeanTransitUtil;
+import com.ehl.tsq.data.business.service.ZHCG.vo.DeviceTypeCodeEnum;
 import com.ehl.tsq.data.business.service.ZHCG.vo.ZHCGResp;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.DtsjCsglCsjcssjcMapper;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGEnvironmentalCarMapper;
@@ -81,7 +82,7 @@ public class VehicleService {
         long startTime = now - 24 * 60 * 60 * 1000;
         carList.stream().forEach(car -> {
             DtsjCsglCsjcssjcExample dtExample = new DtsjCsglCsjcssjcExample();
-            dtExample.createCriteria().andTypeCodeEqualTo("HWCL").andDeviceIdEqualTo(car.getId());
+            dtExample.createCriteria().andTypeCodeEqualTo(DeviceTypeCodeEnum.HWCL.getCode()).andDeviceIdEqualTo(car.getId());
             DtsjCsglCsjcssjc bean = new DtsjCsglCsjcssjc();
 
             StringBuilder url = new StringBuilder(vehiclesTrackUrl).append(car.getCarId())
@@ -97,7 +98,7 @@ public class VehicleService {
             }
             List<List<Map<String, String>>> trackList = resp.getData();
 
-            StringBuilder trackSB = new StringBuilder("(");
+            StringBuilder trackSB = new StringBuilder("[");
             trackList.get(0).stream().forEach(map -> {
                 ZHCGEnvironmentalCarTrack track = JSONObject.parseObject(
                         JSONObject.toJSONString(map), ZHCGEnvironmentalCarTrack.class);
@@ -111,8 +112,7 @@ public class VehicleService {
                 trackSB.append("(").append(track.getLongitude()).append(",")
                         .append(track.getLatitude()).append(")").append(",");
             });
-            trackSB.substring(0, trackSB.length() - 1);
-            bean.setGeometry(trackSB.append(")").toString());
+            bean.setGeometry(trackSB.substring(0, trackSB.length() - 1) + "]");
             bean.setUpdateTime(new Date());
             bean.setStarttime(new Date(startTime));
             bean.setStarttime(new Date(now));
