@@ -1,7 +1,7 @@
 package com.ehl.tsq.data.application;
 
 import com.ehl.tsq.data.business.common.vo.BaseResponse;
-import com.ehl.tsq.data.business.service.ZHCG.muck.MockMQProducer;
+import com.ehl.tsq.data.business.service.mock.MockMQProducer;
 import com.ehl.tsq.data.business.service.ZHCG.muck.MuckService;
 import com.ehl.tsq.data.business.service.ZHCG.station.StationsService;
 import com.ehl.tsq.data.business.service.ZHCG.toilets.ToiletService;

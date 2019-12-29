@@ -1,4 +1,4 @@
-package com.ehl.tsq.data.business.service.ZHCG.muck;
+package com.ehl.tsq.data.business.service.mock;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ehl.tsq.data.business.service.ZHCG.trash.vo.TrashAlarmMessage;

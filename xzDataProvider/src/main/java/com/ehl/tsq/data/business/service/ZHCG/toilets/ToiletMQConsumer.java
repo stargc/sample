@@ -38,6 +38,7 @@ public class ToiletMQConsumer {
         } catch (JMSException e) {
             log.error(ExceptionUtils.getStackTrace(e));
         }
+        log.info("MQ 获取公厕告警信息" + result);
         if (StringUtils.isBlank(result)){
             log.error("接收到 公厕告警信息 内容为空");
             return;

@@ -94,24 +94,24 @@ public class MuckService {
             DtsjCsglCsjcssjc bean = new DtsjCsglCsjcssjc();
             if (trackList.isEmpty()) {
                 //没有轨迹信息，保存线数据为0
-                bean.setGeometry("((0,0),(0,0))");
+                bean.setGeometry("[[0,0],[0,0]]");
                 bean.setGeometry("线");
                 dtsjCsglCsjcssjcMapper.updateByExampleSelective(bean, dtExample);
             }
 
-            StringBuilder trackSB = new StringBuilder("(");
+            StringBuilder trackSB = new StringBuilder("[");
             trackList.get(0).stream().forEach(map -> {
                 ZHCGMuckCarTrack track = JSONObject.parseObject(
                         JSONObject.toJSONString(map), ZHCGMuckCarTrack.class);
                 track.setCarId(car.getCarId());
                 trackMapper.insertSelective(track);
 
-                trackSB.append("(").append(track.getLongitude()).append(",")
-                        .append(track.getLatitude()).append(")").append(",");
+                trackSB.append("[").append(track.getLongitude()).append(",")
+                        .append(track.getLatitude()).append("]").append(",");
             });
 
             trackSB.substring(0, trackSB.length() - 1);
-            bean.setGeometry(trackSB.append(")").toString());
+            bean.setGeometry(trackSB.append("]").toString());
             bean.setGeometry("线");
             bean.setUpdateTime(new Date());
             bean.setStarttime(new Date(startTime));

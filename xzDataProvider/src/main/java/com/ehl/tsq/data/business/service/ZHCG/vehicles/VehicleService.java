@@ -92,7 +92,7 @@ public class VehicleService {
                     restTemplate.getForObject(url.toString(), ZHCGResp.class);
             if (resp == null || !"true".equals(resp.getSuccess()) || resp.getData().isEmpty()) {
                 log.error("访问 获取环卫车历史轨迹 接口返回内容为空");
-                bean.setGeometry("((0,0),(0,0))");
+                bean.setGeometry("[[0,0],[0,0]]");
                 dtsjCsglCsjcssjcMapper.updateByExampleSelective(bean, dtExample);
                 return;
             }
@@ -109,8 +109,8 @@ public class VehicleService {
                 if (trackMapper.selectByExample(trackExample).isEmpty()) {
                     trackMapper.insertSelective(track);
                 }
-                trackSB.append("(").append(track.getLongitude()).append(",")
-                        .append(track.getLatitude()).append(")").append(",");
+                trackSB.append("[").append(track.getLongitude()).append(",")
+                        .append(track.getLatitude()).append("]").append(",");
             });
             bean.setGeometry(trackSB.substring(0, trackSB.length() - 1) + "]");
             bean.setUpdateTime(new Date());
