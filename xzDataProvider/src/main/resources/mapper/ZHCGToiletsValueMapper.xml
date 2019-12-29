@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGToiletsValueMapper">
+  <resultMap id="BaseResultMap" type="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsValue">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="device_num" jdbcType="VARCHAR" property="deviceNum" />
+    <result column="cH4" jdbcType="VARCHAR" property="ch4" />
+    <result column="cO" jdbcType="VARCHAR" property="co" />
+    <result column="cO2" jdbcType="VARCHAR" property="co2" />
+    <result column="dB" jdbcType="VARCHAR" property="db" />
+    <result column="h2" jdbcType="VARCHAR" property="h2" />
+    <result column="h2S" jdbcType="VARCHAR" property="h2s" />
+    <result column="hCHO" jdbcType="VARCHAR" property="hcho" />
+    <result column="mPA" jdbcType="VARCHAR" property="mpa" />
+    <result column="nH3" jdbcType="VARCHAR" property="nh3" />
+    <result column="nO" jdbcType="VARCHAR" property="no" />
+    <result column="nO2" jdbcType="VARCHAR" property="no2" />
+    <result column="nOI" jdbcType="VARCHAR" property="noi" />
+    <result column="o2" jdbcType="VARCHAR" property="o2" />
+    <result column="o3" jdbcType="VARCHAR" property="o3" />
+    <result column="pM10" jdbcType="VARCHAR" property="pm10" />
+    <result column="pM25" jdbcType="VARCHAR" property="pm25" />
+    <result column="sMOG" jdbcType="VARCHAR" property="smog" />
+    <result column="sO2" jdbcType="VARCHAR" property="so2" />
+    <result column="sPD" jdbcType="VARCHAR" property="spd" />
+    <result column="tEMP" jdbcType="VARCHAR" property="temp" />
+    <result column="tSP" jdbcType="VARCHAR" property="tsp" />
+    <result column="tVOC" jdbcType="VARCHAR" property="tvoc" />
+    <result column="wS" jdbcType="VARCHAR" property="ws" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, device_num, cH4, cO, cO2, dB, h2, h2S, hCHO, mPA, nH3, nO, nO2, nOI, o2, o3, 
+    pM10, pM25, sMOG, sO2, sPD, tEMP, tSP, tVOC, wS, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsValueExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_dws_zhcg_toilets_value
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsValueExample">
+    delete from t_dws_zhcg_toilets_value
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsValue">
+    insert into t_dws_zhcg_toilets_value (id, device_num, cH4, 
+      cO, cO2, dB, h2, 
+      h2S, hCHO, mPA, nH3, 
+      nO, nO2, nOI, o2, 
+      o3, pM10, pM25, sMOG, 
+      sO2, sPD, tEMP, tSP, 
+      tVOC, wS, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{deviceNum,jdbcType=VARCHAR}, #{ch4,jdbcType=VARCHAR}, 
+      #{co,jdbcType=VARCHAR}, #{co2,jdbcType=VARCHAR}, #{db,jdbcType=VARCHAR}, #{h2,jdbcType=VARCHAR}, 
+      #{h2s,jdbcType=VARCHAR}, #{hcho,jdbcType=VARCHAR}, #{mpa,jdbcType=VARCHAR}, #{nh3,jdbcType=VARCHAR}, 
+      #{no,jdbcType=VARCHAR}, #{no2,jdbcType=VARCHAR}, #{noi,jdbcType=VARCHAR}, #{o2,jdbcType=VARCHAR}, 
+      #{o3,jdbcType=VARCHAR}, #{pm10,jdbcType=VARCHAR}, #{pm25,jdbcType=VARCHAR}, #{smog,jdbcType=VARCHAR}, 
+      #{so2,jdbcType=VARCHAR}, #{spd,jdbcType=VARCHAR}, #{temp,jdbcType=VARCHAR}, #{tsp,jdbcType=VARCHAR}, 
+      #{tvoc,jdbcType=VARCHAR}, #{ws,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsValue">
+    insert into t_dws_zhcg_toilets_value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="deviceNum != null">
+        device_num,
+      </if>
+      <if test="ch4 != null">
+        cH4,
+      </if>
+      <if test="co != null">
+        cO,
+      </if>
+      <if test="co2 != null">
+        cO2,
+      </if>
+      <if test="db != null">
+        dB,
+      </if>
+      <if test="h2 != null">
+        h2,
+      </if>
+      <if test="h2s != null">
+        h2S,
+      </if>
+      <if test="hcho != null">
+        hCHO,
+      </if>
+      <if test="mpa != null">
+        mPA,
+      </if>
+      <if test="nh3 != null">
+        nH3,
+      </if>
+      <if test="no != null">
+        nO,
+      </if>
+      <if test="no2 != null">
+        nO2,
+      </if>
+      <if test="noi != null">
+        nOI,
+      </if>
+      <if test="o2 != null">
+        o2,
+      </if>
+      <if test="o3 != null">
+        o3,
+      </if>
+      <if test="pm10 != null">
+        pM10,
+      </if>
+      <if test="pm25 != null">
+        pM25,
+      </if>
+      <if test="smog != null">
+        sMOG,
+      </if>
+      <if test="so2 != null">
+        sO2,
+      </if>
+      <if test="spd != null">
+        sPD,
+      </if>
+      <if test="temp != null">
+        tEMP,
+      </if>
+      <if test="tsp != null">
+        tSP,
+      </if>
+      <if test="tvoc != null">
+        tVOC,
+      </if>
+      <if test="ws != null">
+        wS,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deviceNum != null">
+        #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="ch4 != null">
+        #{ch4,jdbcType=VARCHAR},
+      </if>
+      <if test="co != null">
+        #{co,jdbcType=VARCHAR},
+      </if>
+      <if test="co2 != null">
+        #{co2,jdbcType=VARCHAR},
+      </if>
+      <if test="db != null">
+        #{db,jdbcType=VARCHAR},
+      </if>
+      <if test="h2 != null">
+        #{h2,jdbcType=VARCHAR},
+      </if>
+      <if test="h2s != null">
+        #{h2s,jdbcType=VARCHAR},
+      </if>
+      <if test="hcho != null">
+        #{hcho,jdbcType=VARCHAR},
+      </if>
+      <if test="mpa != null">
+        #{mpa,jdbcType=VARCHAR},
+      </if>
+      <if test="nh3 != null">
+        #{nh3,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null">
+        #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="no2 != null">
+        #{no2,jdbcType=VARCHAR},
+      </if>
+      <if test="noi != null">
+        #{noi,jdbcType=VARCHAR},
+      </if>
+      <if test="o2 != null">
+        #{o2,jdbcType=VARCHAR},
+      </if>
+      <if test="o3 != null">
+        #{o3,jdbcType=VARCHAR},
+      </if>
+      <if test="pm10 != null">
+        #{pm10,jdbcType=VARCHAR},
+      </if>
+      <if test="pm25 != null">
+        #{pm25,jdbcType=VARCHAR},
+      </if>
+      <if test="smog != null">
+        #{smog,jdbcType=VARCHAR},
+      </if>
+      <if test="so2 != null">
+        #{so2,jdbcType=VARCHAR},
+      </if>
+      <if test="spd != null">
+        #{spd,jdbcType=VARCHAR},
+      </if>
+      <if test="temp != null">
+        #{temp,jdbcType=VARCHAR},
+      </if>
+      <if test="tsp != null">
+        #{tsp,jdbcType=VARCHAR},
+      </if>
+      <if test="tvoc != null">
+        #{tvoc,jdbcType=VARCHAR},
+      </if>
+      <if test="ws != null">
+        #{ws,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGToiletsValueExample" resultType="java.lang.Integer">
+    select count(*) from t_dws_zhcg_toilets_value
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_dws_zhcg_toilets_value
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.deviceNum != null">
+        device_num = #{record.deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ch4 != null">
+        cH4 = #{record.ch4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.co != null">
+        cO = #{record.co,jdbcType=VARCHAR},
+      </if>
+      <if test="record.co2 != null">
+        cO2 = #{record.co2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.db != null">
+        dB = #{record.db,jdbcType=VARCHAR},
+      </if>
+      <if test="record.h2 != null">
+        h2 = #{record.h2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.h2s != null">
+        h2S = #{record.h2s,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hcho != null">
+        hCHO = #{record.hcho,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mpa != null">
+        mPA = #{record.mpa,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nh3 != null">
+        nH3 = #{record.nh3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.no != null">
+        nO = #{record.no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.no2 != null">
+        nO2 = #{record.no2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noi != null">
+        nOI = #{record.noi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.o2 != null">
+        o2 = #{record.o2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.o3 != null">
+        o3 = #{record.o3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pm10 != null">
+        pM10 = #{record.pm10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pm25 != null">
+        pM25 = #{record.pm25,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smog != null">
+        sMOG = #{record.smog,jdbcType=VARCHAR},
+      </if>
+      <if test="record.so2 != null">
+        sO2 = #{record.so2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spd != null">
+        sPD = #{record.spd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.temp != null">
+        tEMP = #{record.temp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tsp != null">
+        tSP = #{record.tsp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tvoc != null">
+        tVOC = #{record.tvoc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ws != null">
+        wS = #{record.ws,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_dws_zhcg_toilets_value
+    set id = #{record.id,jdbcType=INTEGER},
+      device_num = #{record.deviceNum,jdbcType=VARCHAR},
+      cH4 = #{record.ch4,jdbcType=VARCHAR},
+      cO = #{record.co,jdbcType=VARCHAR},
+      cO2 = #{record.co2,jdbcType=VARCHAR},
+      dB = #{record.db,jdbcType=VARCHAR},
+      h2 = #{record.h2,jdbcType=VARCHAR},
+      h2S = #{record.h2s,jdbcType=VARCHAR},
+      hCHO = #{record.hcho,jdbcType=VARCHAR},
+      mPA = #{record.mpa,jdbcType=VARCHAR},
+      nH3 = #{record.nh3,jdbcType=VARCHAR},
+      nO = #{record.no,jdbcType=VARCHAR},
+      nO2 = #{record.no2,jdbcType=VARCHAR},
+      nOI = #{record.noi,jdbcType=VARCHAR},
+      o2 = #{record.o2,jdbcType=VARCHAR},
+      o3 = #{record.o3,jdbcType=VARCHAR},
+      pM10 = #{record.pm10,jdbcType=VARCHAR},
+      pM25 = #{record.pm25,jdbcType=VARCHAR},
+      sMOG = #{record.smog,jdbcType=VARCHAR},
+      sO2 = #{record.so2,jdbcType=VARCHAR},
+      sPD = #{record.spd,jdbcType=VARCHAR},
+      tEMP = #{record.temp,jdbcType=VARCHAR},
+      tSP = #{record.tsp,jdbcType=VARCHAR},
+      tVOC = #{record.tvoc,jdbcType=VARCHAR},
+      wS = #{record.ws,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

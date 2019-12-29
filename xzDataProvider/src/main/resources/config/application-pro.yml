@@ -7,6 +7,10 @@ spring:
     url: jdbc:mysql://localhost:3306/stat?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
     password: ehl1234
+  activemq:
+    broker-url: tcp://172.28.17.68:61616
+    user: admin
+    password: admin
 
 mybatis:
   typeAliasesPackage: com.ehl.tsq.data.infrastructure.persistence.po
@@ -17,10 +21,10 @@ server:
   port: 22001
 
 ZHCG:
-  vehicles_page: http://157.0.243.32:18188/sanitation/settings/vehicles/page
-  vehicles_track: http://157.0.243.32:18188/sanitation/overview/vehicles/track/history/
-  toilets_page: http://157.0.243.32:18188/sanitation/settings/toilets/page
-  stations_page: http://157.0.243.32:18188/sanitation/settings/stations/page
-  trashes_page: http://157.0.243.32:18188/sanitation/settings/trashes/page
-  muck_tree: http://157.0.243.27:18097/view/muck/tree
-  muck_track: http://157.0.243.27:18097/view/muck/history/track/
+  vehicles_page: http://172.28.17.70:8188/sanitation/settings/vehicles/page
+  vehicles_track: http://172.28.17.70:8188/sanitation/overview/vehicles/track/history/
+  toilets_page: http://172.28.17.70:8188/sanitation/settings/toilets/page
+  stations_page: http://172.28.17.70:8188/sanitation/settings/stations/page
+  trashes_page: http://172.28.17.70:8188/sanitation/settings/trashes/page
+  muck_tree: http://172.28.17.66:8097/view/muck/tree
+  muck_track: http://172.28.17.70:8188/view/muck/history/track/

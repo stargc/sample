@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGTrashWarningMapper">
+  <resultMap id="BaseResultMap" type="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGTrashWarning">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="trash_id" jdbcType="INTEGER" property="trashId" />
+    <result column="trash_sensor_id" jdbcType="VARCHAR" property="trashSensorId" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="cmd" jdbcType="VARCHAR" property="cmd" />
+    <result column="sequence" jdbcType="INTEGER" property="sequence" />
+    <result column="rssi" jdbcType="INTEGER" property="rssi" />
+    <result column="distance" jdbcType="INTEGER" property="distance" />
+    <result column="pass_time" jdbcType="INTEGER" property="passTime" />
+    <result column="battary" jdbcType="INTEGER" property="battary" />
+    <result column="temperature" jdbcType="INTEGER" property="temperature" />
+    <result column="full" jdbcType="INTEGER" property="full" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, trash_id, trash_sensor_id, version, cmd, sequence, rssi, distance, pass_time,
+    battary, temperature, full, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGTrashWarningExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_dws_zhcg_trash_warning
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGTrashWarningExample">
+    delete from t_dws_zhcg_trash_warning
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGTrashWarning">
+    insert into t_dws_zhcg_trash_warning (id, trash_id, trash_sensor_id,
+      version, cmd, sequence,
+      rssi, distance, pass_time,
+      battary, temperature, full,
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{trashId,jdbcType=INTEGER}, #{trashSensorId,jdbcType=VARCHAR},
+      #{version,jdbcType=VARCHAR}, #{cmd,jdbcType=VARCHAR}, #{sequence,jdbcType=INTEGER},
+      #{rssi,jdbcType=INTEGER}, #{distance,jdbcType=INTEGER}, #{passTime,jdbcType=INTEGER},
+      #{battary,jdbcType=INTEGER}, #{temperature,jdbcType=INTEGER}, #{full,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGTrashWarning">
+    insert into t_dws_zhcg_trash_warning
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="trashId != null">
+        trash_id,
+      </if>
+      <if test="trashSensorId != null">
+        trash_sensor_id,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="cmd != null">
+        cmd,
+      </if>
+      <if test="sequence != null">
+        sequence,
+      </if>
+      <if test="rssi != null">
+        rssi,
+      </if>
+      <if test="distance != null">
+        distance,
+      </if>
+      <if test="passTime != null">
+        pass_time,
+      </if>
+      <if test="battary != null">
+        battary,
+      </if>
+      <if test="temperature != null">
+        temperature,
+      </if>
+      <if test="full != null">
+        full,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="trashId != null">
+        #{trashId,jdbcType=INTEGER},
+      </if>
+      <if test="trashSensorId != null">
+        #{trashSensorId,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="cmd != null">
+        #{cmd,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null">
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="rssi != null">
+        #{rssi,jdbcType=INTEGER},
+      </if>
+      <if test="distance != null">
+        #{distance,jdbcType=INTEGER},
+      </if>
+      <if test="passTime != null">
+        #{passTime,jdbcType=INTEGER},
+      </if>
+      <if test="battary != null">
+        #{battary,jdbcType=INTEGER},
+      </if>
+      <if test="temperature != null">
+        #{temperature,jdbcType=INTEGER},
+      </if>
+      <if test="full != null">
+        #{full,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.ZHCGTrashWarningExample" resultType="java.lang.Integer">
+    select count(*) from t_dws_zhcg_trash_warning
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_dws_zhcg_trash_warning
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.trashId != null">
+        trash_id = #{record.trashId,jdbcType=INTEGER},
+      </if>
+      <if test="record.trashSensorId != null">
+        trash_sensor_id = #{record.trashSensorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cmd != null">
+        cmd = #{record.cmd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sequence != null">
+        sequence = #{record.sequence,jdbcType=INTEGER},
+      </if>
+      <if test="record.rssi != null">
+        rssi = #{record.rssi,jdbcType=INTEGER},
+      </if>
+      <if test="record.distance != null">
+        distance = #{record.distance,jdbcType=INTEGER},
+      </if>
+      <if test="record.passTime != null">
+        pass_time = #{record.passTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.battary != null">
+        battary = #{record.battary,jdbcType=INTEGER},
+      </if>
+      <if test="record.temperature != null">
+        temperature = #{record.temperature,jdbcType=INTEGER},
+      </if>
+      <if test="record.full != null">
+        full = #{record.full,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_dws_zhcg_trash_warning
+    set id = #{record.id,jdbcType=INTEGER},
+      trash_id = #{record.trashId,jdbcType=INTEGER},
+      trash_sensor_id = #{record.trashSensorId,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=VARCHAR},
+      cmd = #{record.cmd,jdbcType=VARCHAR},
+      sequence = #{record.sequence,jdbcType=INTEGER},
+      rssi = #{record.rssi,jdbcType=INTEGER},
+      distance = #{record.distance,jdbcType=INTEGER},
+      pass_time = #{record.passTime,jdbcType=INTEGER},
+      battary = #{record.battary,jdbcType=INTEGER},
+      temperature = #{record.temperature,jdbcType=INTEGER},
+      full = #{record.full,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

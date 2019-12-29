@@ -1,10 +1,9 @@
-package com.ehl.tsq.data.business.service.ZHCG.trashe;
+package com.ehl.tsq.data.business.service.ZHCG.trash;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ehl.tsq.data.business.service.ZHCG.BeanTransitUtil;
 import com.ehl.tsq.data.business.service.ZHCG.vo.ZHCGResp;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.DtsjCsglCsjcssjcMapper;
-import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGStationsMapper;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGTrashMapper;
 import com.ehl.tsq.data.infrastructure.persistence.po.*;
 import lombok.extern.slf4j.Slf4j;

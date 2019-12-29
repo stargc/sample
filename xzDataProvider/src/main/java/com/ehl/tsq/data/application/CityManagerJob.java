@@ -52,7 +52,7 @@ public class CityManagerJob {
     /***
      * 统计当月 当年上报实时动态
      */
-//    @Scheduled(cron = "0 30 * * * ?")
+    @Scheduled(cron = "0 30 * * * ?")
     public void statCauseNum(){
         statCMCaseService.statCauseNumByDay(null);
         statCMCaseService.statCauseNumByMonth(null);

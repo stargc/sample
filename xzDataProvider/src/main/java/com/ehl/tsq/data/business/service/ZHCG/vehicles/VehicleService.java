@@ -74,17 +74,18 @@ public class VehicleService {
 
     public void queryVehicleTrack() {
         ZHCGEnvironmentalCarExample example = new ZHCGEnvironmentalCarExample();
-        example.createCriteria().andVehicleStateEqualTo(1);//查找状态为 在线车辆
+        example.createCriteria();//查找状态为 在线车辆
         List<ZHCGEnvironmentalCar> carList = carMapper.selectByExample(example);
 
         long now = System.currentTimeMillis();
+        long startTime = now - 24 * 60 * 60 * 1000;
         carList.stream().forEach(car -> {
             DtsjCsglCsjcssjcExample dtExample = new DtsjCsglCsjcssjcExample();
             dtExample.createCriteria().andTypeCodeEqualTo("HWCL").andDeviceIdEqualTo(car.getId());
             DtsjCsglCsjcssjc bean = new DtsjCsglCsjcssjc();
 
             StringBuilder url = new StringBuilder(vehiclesTrackUrl).append(car.getCarId())
-                    .append("?startTime=").append(now - 30 * 60 * 1000)
+                    .append("?startTime=").append(startTime)
                     .append("&endTime=").append(now);
             ZHCGResp<List<List<Map<String, String>>>> resp =
                     restTemplate.getForObject(url.toString(), ZHCGResp.class);
@@ -113,6 +114,8 @@ public class VehicleService {
             trackSB.substring(0, trackSB.length() - 1);
             bean.setGeometry(trackSB.append(")").toString());
             bean.setUpdateTime(new Date());
+            bean.setStarttime(new Date(startTime));
+            bean.setStarttime(new Date(now));
             dtsjCsglCsjcssjcMapper.updateByExampleSelective(bean, dtExample);
         });
     }

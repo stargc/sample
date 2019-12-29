@@ -75,9 +75,10 @@ public class MuckService {
         List<ZHCGMuckCar> carList = carMapper.selectByExample(example);
 
         long now = System.currentTimeMillis();
+        long startTime = now  - 24 * 60 * 60 * 1000;
         carList.stream().forEach(car -> {
             StringBuilder url = new StringBuilder(muckTrackUrl).append(car.getName())
-                    .append("?startTime=").append(now - 30 * 60 * 1000)
+                    .append("?startTime=").append(startTime)
                     .append("&endTime=").append(now);
             ZHCGResp<List<List<Map<String, String>>>> resp =
                     restTemplate.getForObject(url.toString(), ZHCGResp.class);
@@ -92,8 +93,10 @@ public class MuckService {
             if (trackList.isEmpty()) {
                 //没有轨迹信息，保存线数据为0
                 bean.setGeometry("((0,0),(0,0))");
+                bean.setGeometry("线");
                 dtsjCsglCsjcssjcMapper.updateByExampleSelective(bean, dtExample);
             }
+
             StringBuilder trackSB = new StringBuilder("(");
             trackList.get(0).stream().forEach(map -> {
                 ZHCGMuckCarTrack track = JSONObject.parseObject(
@@ -104,9 +107,13 @@ public class MuckService {
                 trackSB.append("(").append(track.getLongitude()).append(",")
                         .append(track.getLatitude()).append(")").append(",");
             });
+
             trackSB.substring(0, trackSB.length() - 1);
             bean.setGeometry(trackSB.append(")").toString());
+            bean.setGeometry("线");
             bean.setUpdateTime(new Date());
+            bean.setStarttime(new Date(startTime));
+            bean.setEndtime(new Date(now));
             dtsjCsglCsjcssjcMapper.updateByExampleSelective(bean, dtExample);
         });
     }

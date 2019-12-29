@@ -19,8 +19,6 @@ public class DtsjCsglCsjcssjc {
 
     private String url;
 
-    private String geometry;
-
     private String type;
 
     private String geometryType;
@@ -33,11 +31,17 @@ public class DtsjCsglCsjcssjc {
 
     private String isTrue;
 
+    private Date starttime;
+
+    private Date endtime;
+
     private String typeCode;
 
     private Integer deviceId;
 
     private Date updateTime;
+
+    private String geometry;
 
     public Integer getId() {
         return id;
@@ -103,14 +107,6 @@ public class DtsjCsglCsjcssjc {
         this.url = url == null ? null : url.trim();
     }
 
-    public String getGeometry() {
-        return geometry;
-    }
-
-    public void setGeometry(String geometry) {
-        this.geometry = geometry == null ? null : geometry.trim();
-    }
-
     public String getType() {
         return type;
     }
@@ -159,6 +155,22 @@ public class DtsjCsglCsjcssjc {
         this.isTrue = isTrue == null ? null : isTrue.trim();
     }
 
+    public Date getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(Date starttime) {
+        this.starttime = starttime;
+    }
+
+    public Date getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(Date endtime) {
+        this.endtime = endtime;
+    }
+
     public String getTypeCode() {
         return typeCode;
     }
@@ -181,5 +193,13 @@ public class DtsjCsglCsjcssjc {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getGeometry() {
+        return geometry;
+    }
+
+    public void setGeometry(String geometry) {
+        this.geometry = geometry == null ? null : geometry.trim();
     }
 }

@@ -4,9 +4,17 @@ spring:
   application:
     name: empty
   datasource:
-    url: jdbc:mysql://221.229.208.19:3306/stat_test_copy?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://221.229.208.19:3306/stat?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
     password: ehl1234
+  activemq:
+    broker-url: tcp://157.0.243.29:61616
+    user: admin
+    password: admin
+    pool:
+      enabled: true
+      max-connections: 10
+      idle-timeout: 30000
 
 mybatis:
   typeAliasesPackage: com.ehl.tsq.data.infrastructure.persistence.po

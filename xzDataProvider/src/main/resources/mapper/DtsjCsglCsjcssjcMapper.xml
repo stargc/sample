@@ -10,16 +10,20 @@
     <result column="street_area" jdbcType="VARCHAR" property="streetArea" />
     <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="geometry" jdbcType="VARCHAR" property="geometry" />
     <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="geometry_type" jdbcType="VARCHAR" property="geometryType" />
     <result column="date" jdbcType="TIMESTAMP" property="date" />
     <result column="warning" jdbcType="VARCHAR" property="warning" />
     <result column="warning_time" jdbcType="TIMESTAMP" property="warningTime" />
     <result column="is_true" jdbcType="VARCHAR" property="isTrue" />
+    <result column="startTime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="endTime" jdbcType="TIMESTAMP" property="endtime" />
     <result column="type_code" jdbcType="VARCHAR" property="typeCode" />
     <result column="device_id" jdbcType="INTEGER" property="deviceId" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ehl.tsq.data.infrastructure.persistence.po.DtsjCsglCsjcssjc">
+    <result column="geometry" jdbcType="LONGVARCHAR" property="geometry" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -80,9 +84,28 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, address, principal, tel, street_area, area, url, geometry, type, geometry_type, 
-    date, warning, warning_time, is_true, type_code, device_id, update_time
+    id, name, address, principal, tel, street_area, area, url, type, geometry_type, date, 
+    warning, warning_time, is_true, startTime, endTime, type_code, device_id, update_time
   </sql>
+  <sql id="Blob_Column_List">
+    geometry
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.DtsjCsglCsjcssjcExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_dws_dtsj_csgl_csjcssjc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.DtsjCsglCsjcssjcExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -106,18 +129,18 @@
   <insert id="insert" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.DtsjCsglCsjcssjc">
     insert into t_dws_dtsj_csgl_csjcssjc (id, name, address, 
       principal, tel, street_area, 
-      area, url, geometry, 
-      type, geometry_type, date, 
-      warning, warning_time, is_true, 
-      type_code, device_id, update_time
-      )
+      area, url, type, geometry_type, 
+      date, warning, warning_time, 
+      is_true, startTime, endTime, 
+      type_code, device_id, update_time, 
+      geometry)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{principal,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{streetArea,jdbcType=VARCHAR}, 
-      #{area,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{geometry,jdbcType=VARCHAR}, 
-      #{type,jdbcType=VARCHAR}, #{geometryType,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, 
-      #{warning,jdbcType=VARCHAR}, #{warningTime,jdbcType=TIMESTAMP}, #{isTrue,jdbcType=VARCHAR}, 
-      #{typeCode,jdbcType=VARCHAR}, #{deviceId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{area,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{geometryType,jdbcType=VARCHAR}, 
+      #{date,jdbcType=TIMESTAMP}, #{warning,jdbcType=VARCHAR}, #{warningTime,jdbcType=TIMESTAMP}, 
+      #{isTrue,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{typeCode,jdbcType=VARCHAR}, #{deviceId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{geometry,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ehl.tsq.data.infrastructure.persistence.po.DtsjCsglCsjcssjc">
     insert into t_dws_dtsj_csgl_csjcssjc
@@ -146,9 +169,6 @@
       <if test="url != null">
         url,
       </if>
-      <if test="geometry != null">
-        geometry,
-      </if>
       <if test="type != null">
         type,
       </if>
@@ -167,6 +187,12 @@
       <if test="isTrue != null">
         is_true,
       </if>
+      <if test="starttime != null">
+        startTime,
+      </if>
+      <if test="endtime != null">
+        endTime,
+      </if>
       <if test="typeCode != null">
         type_code,
       </if>
@@ -175,6 +201,9 @@
       </if>
       <if test="updateTime != null">
         update_time,
+      </if>
+      <if test="geometry != null">
+        geometry,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -202,9 +231,6 @@
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
-      <if test="geometry != null">
-        #{geometry,jdbcType=VARCHAR},
-      </if>
       <if test="type != null">
         #{type,jdbcType=VARCHAR},
       </if>
@@ -223,6 +249,12 @@
       <if test="isTrue != null">
         #{isTrue,jdbcType=VARCHAR},
       </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
       <if test="typeCode != null">
         #{typeCode,jdbcType=VARCHAR},
       </if>
@@ -231,6 +263,9 @@
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="geometry != null">
+        #{geometry,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -267,9 +302,6 @@
       <if test="record.url != null">
         url = #{record.url,jdbcType=VARCHAR},
       </if>
-      <if test="record.geometry != null">
-        geometry = #{record.geometry,jdbcType=VARCHAR},
-      </if>
       <if test="record.type != null">
         type = #{record.type,jdbcType=VARCHAR},
       </if>
@@ -288,6 +320,12 @@
       <if test="record.isTrue != null">
         is_true = #{record.isTrue,jdbcType=VARCHAR},
       </if>
+      <if test="record.starttime != null">
+        startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null">
+        endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.typeCode != null">
         type_code = #{record.typeCode,jdbcType=VARCHAR},
       </if>
@@ -297,7 +335,36 @@
       <if test="record.updateTime != null">
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.geometry != null">
+        geometry = #{record.geometry,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_dws_dtsj_csgl_csjcssjc
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      principal = #{record.principal,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      street_area = #{record.streetArea,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      geometry_type = #{record.geometryType,jdbcType=VARCHAR},
+      date = #{record.date,jdbcType=TIMESTAMP},
+      warning = #{record.warning,jdbcType=VARCHAR},
+      warning_time = #{record.warningTime,jdbcType=TIMESTAMP},
+      is_true = #{record.isTrue,jdbcType=VARCHAR},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      type_code = #{record.typeCode,jdbcType=VARCHAR},
+      device_id = #{record.deviceId,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      geometry = #{record.geometry,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -312,13 +379,14 @@
       street_area = #{record.streetArea,jdbcType=VARCHAR},
       area = #{record.area,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
-      geometry = #{record.geometry,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=VARCHAR},
       geometry_type = #{record.geometryType,jdbcType=VARCHAR},
       date = #{record.date,jdbcType=TIMESTAMP},
       warning = #{record.warning,jdbcType=VARCHAR},
       warning_time = #{record.warningTime,jdbcType=TIMESTAMP},
       is_true = #{record.isTrue,jdbcType=VARCHAR},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      endTime = #{record.endtime,jdbcType=TIMESTAMP},
       type_code = #{record.typeCode,jdbcType=VARCHAR},
       device_id = #{record.deviceId,jdbcType=INTEGER},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}

@@ -1,23 +1,22 @@
 package com.ehl.tsq.data.application;
 
 import com.ehl.tsq.data.business.common.vo.BaseResponse;
-import com.ehl.tsq.data.business.service.ZHCG.muck.MockMQProducer;
 import com.ehl.tsq.data.business.service.ZHCG.muck.MuckService;
 import com.ehl.tsq.data.business.service.ZHCG.station.StationsService;
 import com.ehl.tsq.data.business.service.ZHCG.toilets.ToiletService;
 import com.ehl.tsq.data.business.service.ZHCG.trash.TrasheService;
 import com.ehl.tsq.data.business.service.ZHCG.vehicles.VehicleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 /**
- * 对接智慧城管
- * @author created by guanchen on 2019/12/28 10:25
+ * @author created by guanchen on 2019/12/29 10:30
  */
-@RestController
-public class ZHCGController {
+@Component
+@Slf4j
+public class ZHCGJob {
     @Autowired
     private VehicleService vehicleService;
     @Autowired
@@ -28,49 +27,46 @@ public class ZHCGController {
     private TrasheService trasheService;
     @Autowired
     private MuckService muckService;
-    @Autowired
-    private MockMQProducer mockMQProducer;
 
-    @GetMapping("ZHCG/getVehicles")
+//    @Scheduled(cron = "0 0 23 ? * MON")//每次周一 晚上23点 运行一次
     public BaseResponse getVehicles(){
         vehicleService.queryVehicleInfo();
         return new BaseResponse(BaseResponse.SUCCESS,"SUCCESS");
     }
 
-    @GetMapping("ZHCG/getVehicleTrack")
+    @Scheduled(cron = "0 0 20 ? * *")
     public BaseResponse getVehicleTrack(){
         vehicleService.queryVehicleTrack();
         return new BaseResponse(BaseResponse.SUCCESS,"SUCCESS");
     }
-    @GetMapping("ZHCG/gettoilet")
+
+//    @Scheduled(cron = "0 0 23 ? * MON")
     public BaseResponse gettoilet(){
         toiletService.queryToiletInfo();
         return new BaseResponse(BaseResponse.SUCCESS,"SUCCESS");
     }
-    @GetMapping("ZHCG/getStation")
+
+//    @Scheduled(cron = "0 0 23 ? * MON")
     public BaseResponse getStation(){
         stationsService.queryStationInfo();
         return new BaseResponse(BaseResponse.SUCCESS,"SUCCESS");
     }
-    @GetMapping("ZHCG/getTrashe")
+
+//    @Scheduled(cron = "0 0 23 ? * MON")
     public BaseResponse getTrashe(){
         trasheService.queryTransheInfo();
         return new BaseResponse(BaseResponse.SUCCESS,"SUCCESS");
     }
-    @GetMapping("ZHCG/queryMuckCarInfo")
+
+//    @Scheduled(cron = "0 0 23 ? * MON")
     public BaseResponse queryMuckCarInfo(){
         muckService.queryMuckCarInfo();
         return new BaseResponse(BaseResponse.SUCCESS,"SUCCESS");
     }
-    @GetMapping("ZHCG/queryMuckCarTrack")
+
+//    @Scheduled(cron = "0 0 23 ? * MON")
     public BaseResponse queryMuckCarTrack(){
         muckService.queryMuckCarTrack();
-        return new BaseResponse(BaseResponse.SUCCESS,"SUCCESS");
-    }
-
-    @GetMapping("ZHCG/muckMQ")
-    public BaseResponse muckMQ(@RequestParam String queue,@RequestParam String msg){
-        mockMQProducer.send(queue,msg);
         return new BaseResponse(BaseResponse.SUCCESS,"SUCCESS");
     }
 }

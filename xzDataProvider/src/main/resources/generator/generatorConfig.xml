@@ -40,7 +40,7 @@
         </javaClientGenerator>
 
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
-        <!--<table tableName="t_dws_zhcg_muck_car_track" domainObjectName="ZHCGMuckCarTrack"-->
+        <!--<table tableName="t_dws_zhcg_toilets_value" domainObjectName="ZHCGToiletsValue"-->
                <!--enableSelectByPrimaryKey="true"-->
                <!--enableSelectByExample="true"-->
                <!--enableCountByExample="true"-->
@@ -48,7 +48,7 @@
                <!--enableUpdateByExample="true">-->
         <!--</table>-->
 
-        <table tableName="t_dws_zhcg_muck_car" domainObjectName="ZHCGMuckCar"
+        <table tableName="t_dws_zhcg_trash_warning" domainObjectName="ZHCGTrashWarning"
                enableSelectByPrimaryKey="true"
                enableSelectByExample="true"
                enableCountByExample="true"

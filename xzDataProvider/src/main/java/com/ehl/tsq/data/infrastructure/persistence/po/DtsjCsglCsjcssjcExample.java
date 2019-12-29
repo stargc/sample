@@ -655,76 +655,6 @@ public class DtsjCsglCsjcssjcExample {
             return (Criteria) this;
         }
 
-        public Criteria andGeometryIsNull() {
-            addCriterion("geometry is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryIsNotNull() {
-            addCriterion("geometry is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryEqualTo(String value) {
-            addCriterion("geometry =", value, "geometry");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryNotEqualTo(String value) {
-            addCriterion("geometry <>", value, "geometry");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryGreaterThan(String value) {
-            addCriterion("geometry >", value, "geometry");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryGreaterThanOrEqualTo(String value) {
-            addCriterion("geometry >=", value, "geometry");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryLessThan(String value) {
-            addCriterion("geometry <", value, "geometry");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryLessThanOrEqualTo(String value) {
-            addCriterion("geometry <=", value, "geometry");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryLike(String value) {
-            addCriterion("geometry like", value, "geometry");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryNotLike(String value) {
-            addCriterion("geometry not like", value, "geometry");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryIn(List<String> values) {
-            addCriterion("geometry in", values, "geometry");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryNotIn(List<String> values) {
-            addCriterion("geometry not in", values, "geometry");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryBetween(String value1, String value2) {
-            addCriterion("geometry between", value1, value2, "geometry");
-            return (Criteria) this;
-        }
-
-        public Criteria andGeometryNotBetween(String value1, String value2) {
-            addCriterion("geometry not between", value1, value2, "geometry");
-            return (Criteria) this;
-        }
-
         public Criteria andTypeIsNull() {
             addCriterion("type is null");
             return (Criteria) this;
@@ -1122,6 +1052,126 @@ public class DtsjCsglCsjcssjcExample {
 
         public Criteria andIsTrueNotBetween(String value1, String value2) {
             addCriterion("is_true not between", value1, value2, "isTrue");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeIsNull() {
+            addCriterion("startTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeIsNotNull() {
+            addCriterion("startTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeEqualTo(Date value) {
+            addCriterion("startTime =", value, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeNotEqualTo(Date value) {
+            addCriterion("startTime <>", value, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeGreaterThan(Date value) {
+            addCriterion("startTime >", value, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("startTime >=", value, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeLessThan(Date value) {
+            addCriterion("startTime <", value, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeLessThanOrEqualTo(Date value) {
+            addCriterion("startTime <=", value, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeIn(List<Date> values) {
+            addCriterion("startTime in", values, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeNotIn(List<Date> values) {
+            addCriterion("startTime not in", values, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeBetween(Date value1, Date value2) {
+            addCriterion("startTime between", value1, value2, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeNotBetween(Date value1, Date value2) {
+            addCriterion("startTime not between", value1, value2, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeIsNull() {
+            addCriterion("endTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeIsNotNull() {
+            addCriterion("endTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeEqualTo(Date value) {
+            addCriterion("endTime =", value, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeNotEqualTo(Date value) {
+            addCriterion("endTime <>", value, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeGreaterThan(Date value) {
+            addCriterion("endTime >", value, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("endTime >=", value, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeLessThan(Date value) {
+            addCriterion("endTime <", value, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeLessThanOrEqualTo(Date value) {
+            addCriterion("endTime <=", value, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeIn(List<Date> values) {
+            addCriterion("endTime in", values, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeNotIn(List<Date> values) {
+            addCriterion("endTime not in", values, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeBetween(Date value1, Date value2) {
+            addCriterion("endTime between", value1, value2, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeNotBetween(Date value1, Date value2) {
+            addCriterion("endTime not between", value1, value2, "endtime");
             return (Criteria) this;
         }
 

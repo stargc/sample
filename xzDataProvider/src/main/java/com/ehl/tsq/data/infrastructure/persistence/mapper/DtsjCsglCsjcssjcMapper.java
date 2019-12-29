@@ -14,9 +14,13 @@ public interface DtsjCsglCsjcssjcMapper {
 
     int insertSelective(DtsjCsglCsjcssjc record);
 
+    List<DtsjCsglCsjcssjc> selectByExampleWithBLOBs(DtsjCsglCsjcssjcExample example);
+
     List<DtsjCsglCsjcssjc> selectByExample(DtsjCsglCsjcssjcExample example);
 
     int updateByExampleSelective(@Param("record") DtsjCsglCsjcssjc record, @Param("example") DtsjCsglCsjcssjcExample example);
+
+    int updateByExampleWithBLOBs(@Param("record") DtsjCsglCsjcssjc record, @Param("example") DtsjCsglCsjcssjcExample example);
 
     int updateByExample(@Param("record") DtsjCsglCsjcssjc record, @Param("example") DtsjCsglCsjcssjcExample example);
 }

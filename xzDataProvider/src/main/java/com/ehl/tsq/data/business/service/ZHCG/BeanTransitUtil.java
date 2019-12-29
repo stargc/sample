@@ -19,7 +19,7 @@ public class BeanTransitUtil {
         bean.setUrl(car.getEnclosureUrl());
         bean.setGeometry(null);
         bean.setGeometryType("线");
-        bean.setType("环卫车辆");
+        bean.setType("环保车辆");
         bean.setDate(new Date());
         bean.setWarning(null);
         bean.setWarningTime(null);
@@ -40,7 +40,7 @@ public class BeanTransitUtil {
         bean.setUrl(toilet.getEnclosureUrl());
         bean.setGeometry("("+toilet.getLongitude() + "," + toilet.getLatitude() + ")");
         bean.setGeometryType("点");
-        bean.setType("公厕");
+        bean.setType("公共厕所");
         bean.setDate(new Date());
         bean.setWarning(null);
         bean.setWarningTime(null);
@@ -87,7 +87,7 @@ public class BeanTransitUtil {
         bean.setWarning(null);
         bean.setWarningTime(null);
         bean.setIsTrue("TRUE");
-        bean.setTypeCode("GC");
+        bean.setTypeCode("LJT");
         bean.setDeviceId(trash.getId());
         return bean;
     }
@@ -101,8 +101,8 @@ public class BeanTransitUtil {
         bean.setArea(null);
         bean.setUrl(null);
         bean.setGeometry("("+car.getLongitude() + "," + car.getLatitude() + ")");
-        bean.setGeometryType("线");
-        bean.setType("渣土车");
+        bean.setGeometryType("点");
+        bean.setType("渣土车辆");
         bean.setDate(new Date());
         bean.setWarning(null);
         bean.setWarningTime(null);
