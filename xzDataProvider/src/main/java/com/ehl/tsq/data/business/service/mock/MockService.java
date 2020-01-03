@@ -4,7 +4,6 @@ import com.ehl.tsq.data.business.service.statCityManager.constant.BaseStatistics
 import com.ehl.tsq.data.infrastructure.persistence.mapper.BaseStatisticsMapper;
 import com.ehl.tsq.data.infrastructure.persistence.po.BaseStatistics;
 import com.ehl.tsq.data.infrastructure.persistence.po.BaseStatisticsExample;
-import com.ehl.tsq.data.infrastructure.persistence.po.CsglDtsjJcyjSjxxExample;
 import com.ehl.tsq.data.infrastructure.util.EHLDateUtil;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +39,12 @@ public class MockService {
             month.setTime(now.getTime());
             month.set(Calendar.MONTH,now.get(Calendar.MONTH) - i);
             Date monthStart = EHLDateUtil.getMonthStart(month.getTime());
-            Date monthEnd = EHLDateUtil.getMonthEnd(month.getTime());
 
             BaseStatistics baseStatistics = new BaseStatistics();
             baseStatistics.setValue(Double.valueOf(RandomUtils.nextInt(minValue,maxValue)));
             baseStatistics.setDate(monthStart);
             baseStatistics.setDes(statistics.getMsg());
-            baseStatistics.setIsTrue("TRUE");
+            baseStatistics.setIsTrue("FALSE");
             baseStatistics.setName(statistics.getName());
             baseStatistics.setUnit(statistics.getUnit());
             baseStatisticsMapper.insertSelective(baseStatistics);

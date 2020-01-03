@@ -1,6 +1,5 @@
 package com.ehl.tsq.data.business.common.vo;
 
-import jdk.nashorn.internal.objects.annotations.Constructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

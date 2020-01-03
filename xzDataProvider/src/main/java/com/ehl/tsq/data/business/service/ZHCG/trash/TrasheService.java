@@ -1,11 +1,13 @@
 package com.ehl.tsq.data.business.service.ZHCG.trash;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 import com.ehl.tsq.data.business.service.ZHCG.BeanTransitUtil;
 import com.ehl.tsq.data.business.service.ZHCG.vo.ZHCGResp;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.DtsjCsglCsjcssjcMapper;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGTrashMapper;
-import com.ehl.tsq.data.infrastructure.persistence.po.*;
+import com.ehl.tsq.data.infrastructure.persistence.po.DtsjCsglCsjcssjc;
+import com.ehl.tsq.data.infrastructure.persistence.po.ZHCGTrash;
+import com.ehl.tsq.data.infrastructure.persistence.po.ZHCGTrashExample;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,7 +44,7 @@ public class TrasheService {
         log.info("获取垃圾桶条数：" + resp.getTotalCount());
         List<Map<String, String>> trashList = resp.getData();
         trashList.stream().forEach(map -> {
-            ZHCGTrash trash = JSONObject.parseObject(JSONObject.toJSONString(map), ZHCGTrash.class);
+            ZHCGTrash trash = JSON.parseObject(JSON.toJSONString(map), ZHCGTrash.class);
 
             ZHCGTrashExample example = new ZHCGTrashExample();
             example.createCriteria().andTrashIdEqualTo(trash.getTrashId());

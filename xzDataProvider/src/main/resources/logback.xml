@@ -10,7 +10,7 @@
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>../logs/dataProvider.log</file>
 　　　　　<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-　　　　　　　<fileNamePattern>../logs/empty.%d{yyyy-MM-dd}.log</fileNamePattern>
+　　　　　　　<fileNamePattern>../logs/dataProvider.%d{yyyy-MM-dd}.log</fileNamePattern>
 　　　　　　　<maxHistory>30</maxHistory>
 　　　　　</rollingPolicy>
 　　　　　<encoder>
@@ -24,7 +24,7 @@
         </filter>
         <file>../logs/dataProvider_error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>../logs/empty_error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>../logs/dataProvider_error.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>

@@ -955,73 +955,73 @@ public class ZHCGToiletsExample {
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanIsNull() {
-            addCriterion("sensor_d_Woman is null");
+        public Criteria andSensorIdWomanIsNull() {
+            addCriterion("sensor_id_Woman is null");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanIsNotNull() {
-            addCriterion("sensor_d_Woman is not null");
+        public Criteria andSensorIdWomanIsNotNull() {
+            addCriterion("sensor_id_Woman is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanEqualTo(String value) {
-            addCriterion("sensor_d_Woman =", value, "sensorDWoman");
+        public Criteria andSensorIdWomanEqualTo(String value) {
+            addCriterion("sensor_id_Woman =", value, "sensorIdWoman");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanNotEqualTo(String value) {
-            addCriterion("sensor_d_Woman <>", value, "sensorDWoman");
+        public Criteria andSensorIdWomanNotEqualTo(String value) {
+            addCriterion("sensor_id_Woman <>", value, "sensorIdWoman");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanGreaterThan(String value) {
-            addCriterion("sensor_d_Woman >", value, "sensorDWoman");
+        public Criteria andSensorIdWomanGreaterThan(String value) {
+            addCriterion("sensor_id_Woman >", value, "sensorIdWoman");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanGreaterThanOrEqualTo(String value) {
-            addCriterion("sensor_d_Woman >=", value, "sensorDWoman");
+        public Criteria andSensorIdWomanGreaterThanOrEqualTo(String value) {
+            addCriterion("sensor_id_Woman >=", value, "sensorIdWoman");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanLessThan(String value) {
-            addCriterion("sensor_d_Woman <", value, "sensorDWoman");
+        public Criteria andSensorIdWomanLessThan(String value) {
+            addCriterion("sensor_id_Woman <", value, "sensorIdWoman");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanLessThanOrEqualTo(String value) {
-            addCriterion("sensor_d_Woman <=", value, "sensorDWoman");
+        public Criteria andSensorIdWomanLessThanOrEqualTo(String value) {
+            addCriterion("sensor_id_Woman <=", value, "sensorIdWoman");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanLike(String value) {
-            addCriterion("sensor_d_Woman like", value, "sensorDWoman");
+        public Criteria andSensorIdWomanLike(String value) {
+            addCriterion("sensor_id_Woman like", value, "sensorIdWoman");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanNotLike(String value) {
-            addCriterion("sensor_d_Woman not like", value, "sensorDWoman");
+        public Criteria andSensorIdWomanNotLike(String value) {
+            addCriterion("sensor_id_Woman not like", value, "sensorIdWoman");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanIn(List<String> values) {
-            addCriterion("sensor_d_Woman in", values, "sensorDWoman");
+        public Criteria andSensorIdWomanIn(List<String> values) {
+            addCriterion("sensor_id_Woman in", values, "sensorIdWoman");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanNotIn(List<String> values) {
-            addCriterion("sensor_d_Woman not in", values, "sensorDWoman");
+        public Criteria andSensorIdWomanNotIn(List<String> values) {
+            addCriterion("sensor_id_Woman not in", values, "sensorIdWoman");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanBetween(String value1, String value2) {
-            addCriterion("sensor_d_Woman between", value1, value2, "sensorDWoman");
+        public Criteria andSensorIdWomanBetween(String value1, String value2) {
+            addCriterion("sensor_id_Woman between", value1, value2, "sensorIdWoman");
             return (Criteria) this;
         }
 
-        public Criteria andSensorDWomanNotBetween(String value1, String value2) {
-            addCriterion("sensor_d_Woman not between", value1, value2, "sensorDWoman");
+        public Criteria andSensorIdWomanNotBetween(String value1, String value2) {
+            addCriterion("sensor_id_Woman not between", value1, value2, "sensorIdWoman");
             return (Criteria) this;
         }
 

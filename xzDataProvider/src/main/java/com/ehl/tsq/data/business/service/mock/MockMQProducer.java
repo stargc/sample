@@ -3,7 +3,7 @@ package com.ehl.tsq.data.business.service.mock;
 import com.alibaba.fastjson.JSONObject;
 import com.ehl.tsq.data.business.service.ZHCG.trash.vo.TrashAlarmMessage;
 import com.ehl.tsq.data.business.service.ZHCG.trash.vo.TrashStateData;
-import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class MockMQProducer {
 
     public void send(String quere,String msg) {
         this.jmsMessagingTemplate.convertAndSend(
-                new ActiveMQQueue(quere),
+                new ActiveMQTopic(quere),
                 msg);
     }
 

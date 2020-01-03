@@ -1,20 +1,24 @@
 package com.ehl.tsq.data.business.service.ZHCG.toilets;
 
-import com.alibaba.fastjson.JSONObject;
-import com.ehl.tsq.data.business.service.ZHCG.trash.vo.TrashAlarmMessage;
+import com.alibaba.fastjson.JSON;
 import com.ehl.tsq.data.business.service.ZHCG.vo.DeviceTypeCodeEnum;
 import com.ehl.tsq.data.business.service.ZHCG.vo.ZHCGResp;
-import com.ehl.tsq.data.infrastructure.persistence.mapper.*;
+import com.ehl.tsq.data.infrastructure.persistence.mapper.DtsjCsglCsjcssjcMapper;
+import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGToiletsMapper;
+import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGToiletsValueMapper;
 import com.ehl.tsq.data.infrastructure.persistence.po.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.activemq.command.ActiveMQTextMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.TextMessage;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -30,11 +34,11 @@ public class ToiletMQConsumer {
     @Autowired
     private DtsjCsglCsjcssjcMapper dtsjCsglCsjcssjcMapper;
 
-    @JmsListener(destination = "toilet_alarm_topic_public")
-    public void handleMessage(final ActiveMQTextMessage json) {
+    @JmsListener(destination = "toilet_alarm_topic_public", containerFactory = "topicListenerContainerFactory")
+    public void handleMessage(Message json) {
         String result = "";
         try {
-            result = json.getText();
+            result = ((TextMessage)json).getText();
         } catch (JMSException e) {
             log.error(ExceptionUtils.getStackTrace(e));
         }
@@ -43,19 +47,19 @@ public class ToiletMQConsumer {
             log.error("接收到 公厕告警信息 内容为空");
             return;
         }
-        ZHCGResp<ZHCGToiletsValue> resp = JSONObject.parseObject(result, ZHCGResp.class);
+        ZHCGResp<ZHCGToiletsValue> resp = JSON.parseObject(result, ZHCGResp.class);
         if (resp == null || resp.getData() == null){
-            log.error("接收到 垃圾桶信息 内容为空");
+            log.error("接收到 公厕信息 内容为空");
             return;
         }
-        ZHCGToiletsValue alarmMessage = JSONObject.parseObject(JSONObject.toJSONString(resp.getData()),ZHCGToiletsValue.class);
+        ZHCGToiletsValue alarmMessage = JSON.parseObject(JSON.toJSONString(resp.getData()),ZHCGToiletsValue.class);
 
         ZHCGToiletsExample example = new ZHCGToiletsExample();
         example.createCriteria().andSensorIdManEqualTo(alarmMessage.getDeviceNum());
-        example.or(example.createCriteria().andSensorDWomanEqualTo(alarmMessage.getDeviceNum()));
+        example.or(example.createCriteria().andSensorIdWomanEqualTo(alarmMessage.getDeviceNum()));
         List<ZHCGToilets> toiletsList = toiletsMapper.selectByExample(example);
         if (toiletsList.isEmpty()){
-            log.error("没有找到对应的垃圾桶编号,：" + alarmMessage.getDeviceNum());
+            log.error("没有找到对应的公厕编号,：" + alarmMessage.getDeviceNum());
             return;
         }
         alarmMessage.setToiletId(toiletsList.get(0).getId());
@@ -64,10 +68,10 @@ public class ToiletMQConsumer {
 
         DtsjCsglCsjcssjcExample warnExample = new DtsjCsglCsjcssjcExample();
         warnExample.createCriteria().andTypeCodeEqualTo(DeviceTypeCodeEnum.GC.getCode()).
-                andDeviceIdEqualTo(Integer.valueOf(alarmMessage.getToiletId()));
+                andDeviceIdEqualTo(alarmMessage.getToiletId());
         List<DtsjCsglCsjcssjc> deviceList = dtsjCsglCsjcssjcMapper.selectByExample(warnExample);
         if (deviceList.isEmpty()){
-            log.error("没有找到对应的垃圾桶,：" + alarmMessage.getDeviceNum());
+            log.error("没有找到对应的公厕,：" + alarmMessage.getDeviceNum());
             return;
         }
         DtsjCsglCsjcssjc bean = new DtsjCsglCsjcssjc();
@@ -107,13 +111,14 @@ public class ToiletMQConsumer {
      * @param max
      * @return
      */
-    private boolean isIn(String value,String min,String max) throws RuntimeException{
-        BigDecimal v = new BigDecimal(value);
-        BigDecimal maxValue = new BigDecimal(max);
+    private boolean isIn(String value,String min,String max){
+        Assert.isTrue(BigDecimalValidator.getInstance().isValid(value),"value 不是数字类型");
+        Assert.isTrue(BigDecimalValidator.getInstance().isValid(min),"min 不是数字类型");
+        Assert.isTrue(BigDecimalValidator.getInstance().isValid(max),"max 不是数字类型");
+
+        BigDecimal numberValue = new BigDecimal(value);
         BigDecimal minValue = new BigDecimal(min);
-        if (v.compareTo(maxValue) > 0 || v.compareTo(minValue) < 0){
-            return true;
-        }
-        return false;
+        BigDecimal maxValue = new BigDecimal(max);
+        return BigDecimalValidator.getInstance().isInRange(numberValue,minValue.doubleValue(),maxValue.doubleValue());
     }
 }

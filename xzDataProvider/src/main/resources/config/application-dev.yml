@@ -21,6 +21,13 @@ mybatis:
   mapperLocations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
+threadPool:
+  corePoolSize: 50
+  maxPoolSize: 80
+  queueCapacity: 9999
+  keepAliveSeconds: 60
+
 server:
   port: 22001
 

@@ -1,10 +1,8 @@
 package com.ehl.tsq.data.business.service.ZHCG.trash;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 import com.ehl.tsq.data.business.service.ZHCG.trash.vo.TrashAlarmMessage;
-import com.ehl.tsq.data.business.service.ZHCG.trash.vo.TrashStateData;
 import com.ehl.tsq.data.business.service.ZHCG.vo.DeviceTypeCodeEnum;
-import com.ehl.tsq.data.business.service.ZHCG.vo.ZHCGResp;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.DtsjCsglCsjcssjcMapper;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGTrashMapper;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGTrashWarningMapper;
@@ -32,7 +30,7 @@ public class TrashMQConsumer {
     @Autowired
     private DtsjCsglCsjcssjcMapper dtsjCsglCsjcssjcMapper;
 
-    @JmsListener(destination = "trash_alarm_topic_public")
+    @JmsListener(destination = "trash_alarm_topic_public", containerFactory = "topicListenerContainerFactory")
     public void handleMessage(final ActiveMQTextMessage json) {
         String result = "";
         try {
@@ -45,12 +43,7 @@ public class TrashMQConsumer {
             log.error("接收到 垃圾桶信息 内容为空");
             return;
         }
-        ZHCGResp<TrashAlarmMessage> resp = JSONObject.parseObject(result, ZHCGResp.class);
-        if (resp == null || resp.getData() == null){
-            log.error("接收到 垃圾桶信息 内容为空");
-            return;
-        }
-        TrashAlarmMessage alarmMessage = JSONObject.parseObject(JSONObject.toJSONString(resp.getData()),TrashAlarmMessage.class);
+        TrashAlarmMessage alarmMessage = JSON.parseObject(result, TrashAlarmMessage.class);
 
         ZHCGTrashWarning alarm = alarmMessage.alarm2Bean();
         ZHCGTrashExample example = new ZHCGTrashExample();

@@ -30,7 +30,7 @@ public class EHLDateUtil {
     }
     public static Date getDayEnd(Date date){
         Calendar dayEnd = Calendar.getInstance();
-        if (dayEnd != null){
+        if (date != null){
             dayEnd.setTime(date);
         }
         dayEnd.set(Calendar.HOUR_OF_DAY,23);
@@ -72,7 +72,6 @@ public class EHLDateUtil {
     }
 
     public static Date getMonthStart(int year,int month){
-        Calendar now = Calendar.getInstance();
         Calendar monthStart = Calendar.getInstance();
         monthStart.clear();
         monthStart.set(Calendar.YEAR, year);
@@ -91,7 +90,6 @@ public class EHLDateUtil {
     }
 
     public static Date getMonthEnd(int year,int month){
-        Calendar now = Calendar.getInstance();
         Calendar monthEnd = Calendar.getInstance();
         monthEnd.clear();
         monthEnd.set(Calendar.YEAR, year);

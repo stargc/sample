@@ -32,7 +32,7 @@ public class ZHCGToilets {
 
     private String sensorIdMan;
 
-    private String sensorDWoman;
+    private String sensorIdWoman;
 
     private String enclosureUrl;
 
@@ -148,12 +148,12 @@ public class ZHCGToilets {
         this.sensorIdMan = sensorIdMan == null ? null : sensorIdMan.trim();
     }
 
-    public String getSensorDWoman() {
-        return sensorDWoman;
+    public String getSensorIdWoman() {
+        return sensorIdWoman;
     }
 
-    public void setSensorDWoman(String sensorDWoman) {
-        this.sensorDWoman = sensorDWoman == null ? null : sensorDWoman.trim();
+    public void setSensorIdWoman(String sensorIdWoman) {
+        this.sensorIdWoman = sensorIdWoman == null ? null : sensorIdWoman.trim();
     }
 
     public String getEnclosureUrl() {

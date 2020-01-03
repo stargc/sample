@@ -1,6 +1,6 @@
 package com.ehl.tsq.data.business.service.ZHCG.toilets;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 import com.ehl.tsq.data.business.service.ZHCG.BeanTransitUtil;
 import com.ehl.tsq.data.business.service.ZHCG.vo.ZHCGResp;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.DtsjCsglCsjcssjcMapper;
@@ -43,14 +43,14 @@ public class ToiletService {
         log.info("获取公厕条数：" + resp.getTotalCount());
         List<Map<String, String>> toiletList = resp.getData();
         toiletList.stream().forEach(map -> {
-            ZHCGToilets toilet = JSONObject.parseObject(JSONObject.toJSONString(map), ZHCGToilets.class);
+            ZHCGToilets toilet = JSON.parseObject(JSON.toJSONString(map), ZHCGToilets.class);
 
             ZHCGToiletsExample example = new ZHCGToiletsExample();
             example.createCriteria().andToiletIdEqualTo(toilet.getToiletId());
             List<ZHCGToilets> exitList = toiletsMapper.selectByExample(example);
             if (!exitList.isEmpty()){
-                if (!exitList.get(0).getSensorIdMan().equals(toilet.getSensorIdMan())
-                        ||!exitList.get(0).getSensorDWoman().equals(toilet.getSensorDWoman())){
+                if ((toilet.getSensorIdMan() != null && !toilet.getSensorIdMan().equals(exitList.get(0).getSensorIdMan()))
+                        ||(toilet.getSensorIdWoman() != null && !toilet.getSensorIdWoman().equals(exitList.get(0).getSensorIdWoman()))){
                     toilet.setUpdateTime(new Date());
                     toiletsMapper.updateByExampleSelective(toilet,example);
                 }

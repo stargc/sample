@@ -13,7 +13,7 @@ public enum DeviceTypeCodeEnum {
 
 
 
-    DeviceTypeCodeEnum(String code, String msg) {
+    DeviceTypeCodeEnum(String code, String name) {
         this.code = code;
         this.name = name;
     }

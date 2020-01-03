@@ -8,6 +8,10 @@ import java.util.Map;
  */
 public class BaseStatisticsEnumTool {
 
+    private BaseStatisticsEnumTool(){
+        throw new IllegalStateException("Utility class");
+    }
+
     /** 今日进度 数量 **/
     public static final String CSGL_AJCLQK_DONE = "DONE";//已办结
     public static final String CSGL_AJCLQK_DOING = "DOING";//办理中

@@ -1,10 +1,13 @@
 package com.ehl.tsq.data.business.service.ZHCG.muck;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ehl.tsq.data.business.service.ZHCG.BeanTransitUtil;
 import com.ehl.tsq.data.business.service.ZHCG.vo.DeviceTypeCodeEnum;
 import com.ehl.tsq.data.business.service.ZHCG.vo.ZHCGResp;
-import com.ehl.tsq.data.infrastructure.persistence.mapper.*;
+import com.ehl.tsq.data.infrastructure.persistence.mapper.DtsjCsglCsjcssjcMapper;
+import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGMuckCarMapper;
+import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGMuckCarTrackMapper;
 import com.ehl.tsq.data.infrastructure.persistence.po.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +48,7 @@ public class MuckService {
         }
         log.info("获取渣土车辆条数：" + resp.getTotalCount());
         resp.getData().stream().forEach(map -> {
-            MuckInfoResp muckInfo = JSONObject.parseObject(JSONObject.toJSONString(map), MuckInfoResp.class);
+            MuckInfoResp muckInfo = JSON.parseObject(JSON.toJSONString(map), MuckInfoResp.class);
             saveMuck(muckInfo);
 
         });
@@ -70,6 +72,7 @@ public class MuckService {
         });
     }
 
+    //智慧城管方表示，渣土车暂时没GPS 所以不记录渣土车历史轨迹信息
     public void queryMuckCarTrack() {
         ZHCGMuckCarExample example = new ZHCGMuckCarExample();
         example.createCriteria().andVehicleStateEqualTo(1);//查找状态为 在线车辆
@@ -101,8 +104,8 @@ public class MuckService {
 
             StringBuilder trackSB = new StringBuilder("[");
             trackList.get(0).stream().forEach(map -> {
-                ZHCGMuckCarTrack track = JSONObject.parseObject(
-                        JSONObject.toJSONString(map), ZHCGMuckCarTrack.class);
+                ZHCGMuckCarTrack track = JSON.parseObject(
+                        JSON.toJSONString(map), ZHCGMuckCarTrack.class);
                 track.setCarId(car.getCarId());
                 trackMapper.insertSelective(track);
 

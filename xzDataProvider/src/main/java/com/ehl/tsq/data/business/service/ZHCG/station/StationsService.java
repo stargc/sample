@@ -1,12 +1,13 @@
 package com.ehl.tsq.data.business.service.ZHCG.station;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 import com.ehl.tsq.data.business.service.ZHCG.BeanTransitUtil;
 import com.ehl.tsq.data.business.service.ZHCG.vo.ZHCGResp;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.DtsjCsglCsjcssjcMapper;
 import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGStationsMapper;
-import com.ehl.tsq.data.infrastructure.persistence.mapper.ZHCGToiletsMapper;
-import com.ehl.tsq.data.infrastructure.persistence.po.*;
+import com.ehl.tsq.data.infrastructure.persistence.po.DtsjCsglCsjcssjc;
+import com.ehl.tsq.data.infrastructure.persistence.po.ZHCGStations;
+import com.ehl.tsq.data.infrastructure.persistence.po.ZHCGStationsExample;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +44,7 @@ public class StationsService {
         log.info("获取垃圾中转站条数：" + resp.getTotalCount());
         List<Map<String, String>> stationList = resp.getData();
         stationList.stream().forEach(map -> {
-            ZHCGStations station = JSONObject.parseObject(JSONObject.toJSONString(map), ZHCGStations.class);
+            ZHCGStations station = JSON.parseObject(JSON.toJSONString(map), ZHCGStations.class);
 
             ZHCGStationsExample example = new ZHCGStationsExample();
             example.createCriteria().andStationIdEqualTo(station.getStationId());

@@ -9,6 +9,9 @@ import java.util.Date;
  * @author created by guanchen on 2019/12/28 12:16
  */
 public class BeanTransitUtil {
+    private BeanTransitUtil(){
+        throw new IllegalStateException("Utility class");
+    }
     public static DtsjCsglCsjcssjc cat2Bean(ZHCGEnvironmentalCar car){
         DtsjCsglCsjcssjc bean = new DtsjCsglCsjcssjc();
         bean.setName(car.getVehicleNo());
