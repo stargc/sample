@@ -1,0 +1,8 @@
+pring:
+  application:
+    name: empty
+server:
+  port: 22003
+
+elasticsearch:
+  address: 10.150.27.223:9200
