@@ -1,0 +1,38 @@
+package com.ehualu.data.business.delivery.controller;
+
+import com.ehualu.data.business.delivery.model.DeliveryReq;
+import com.ehualu.data.business.delivery.service.DeliveryService;
+import com.ehualu.data.common.model.Message;
+import com.ehualu.data.common.util.MessageBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+/**
+ * @author created by guanchen on 2020/3/19 10:36
+ */
+@RestController
+@RequestMapping("/api/delivery")
+public class DeliveryController {
+
+    @Autowired
+    private DeliveryService deliveryService;
+
+    @PostMapping("add")
+    public Message doDelivery(@RequestBody @Valid DeliveryReq req){
+        deliveryService.delivery(req);
+        return new MessageBuilder.Builder<>()
+                .setStatus(Message.Code.OK)
+                .builder();
+    }
+
+
+    @GetMapping("delete")
+    public Message deleteDelivery(){
+        deliveryService.deleteOverdue();
+        return new MessageBuilder.Builder<>()
+                .setStatus(Message.Code.OK)
+                .builder();
+    }
+}
