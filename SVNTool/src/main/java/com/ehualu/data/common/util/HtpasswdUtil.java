@@ -8,7 +8,6 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
 
@@ -19,7 +18,7 @@ import java.net.URL;
 public class HtpasswdUtil {
     private static HtpasswdUtil mInstance;
     private static ScriptEngine script;
-    private static final String JS_PATH = "webapp/common/js/htpasswd.js";
+    private static final String JS_PATH = "static/js/htpasswd.js";
 
     @SneakyThrows
     private HtpasswdUtil(){

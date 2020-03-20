@@ -38,7 +38,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } finally {
-            if (request.getRequestURI().startsWith("/census/img")) return;
+            if (request.getRequestURI().startsWith("/svn/page")) return;
             if(!filterList.contains(request.getRequestURI())){
                 logRequest(request);
                 logResponse((ResponseWrapper) response,request);

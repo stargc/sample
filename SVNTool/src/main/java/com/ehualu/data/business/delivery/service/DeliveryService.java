@@ -1,9 +1,8 @@
 package com.ehualu.data.business.delivery.service;
 
+import com.ehualu.data.business.delivery.dao.DeliveryInfoViewMapper;
 import com.ehualu.data.business.delivery.dao.DeliveryMapper;
-import com.ehualu.data.business.delivery.model.Delivery;
-import com.ehualu.data.business.delivery.model.DeliveryExample;
-import com.ehualu.data.business.delivery.model.DeliveryReq;
+import com.ehualu.data.business.delivery.model.*;
 import com.ehualu.data.business.product.service.ProductService;
 import com.ehualu.data.business.repositories.model.RepositoriesConfig;
 import com.ehualu.data.business.repositories.service.RepositoriesService;
@@ -54,6 +53,8 @@ public class DeliveryService {
     private SvnUserService svnUserService;
     @Autowired
     private UserRoleService userRoleService;
+    @Autowired
+    private DeliveryInfoViewMapper deliveryInfoViewMapper;
 
 
     public void delivery(DeliveryReq req){
@@ -75,7 +76,7 @@ public class DeliveryService {
 
         /** svn进行copy操作*/
         try {
-            svnFileService.doCopy(svnBasePath + sourcePath, svnBasePath + deliveryPath);
+            svnFileService.doCopy(svnBasePath + SYMBOL + sourcePath, svnBasePath + deliveryPath);
         } catch (SVNException e) {
             log.error(ExceptionUtils.getStackTrace(e));
             throw  new MessageException("执行操作错误");
@@ -131,5 +132,29 @@ public class DeliveryService {
             }
         });
         log.info(String.format("处理过期出库数据，总条数{%d}成功条数{%d}",deliveryList.size(), successCount[0]));
+    }
+
+    public SearchResp search(SearchReq req){
+        SearchResp resp = new SearchResp();
+        DeliveryInfoViewExample example = new DeliveryInfoViewExample();
+        DeliveryInfoViewExample.Criteria criteria = example.createCriteria();
+        if (req.getUserId() != 0){
+            criteria.andUserIdEqualTo(req.getUserId());
+        }
+        if (req.getProductId() != 0){
+            criteria.andProductIdEqualTo(req.getProductId());
+        }
+        if (StringUtils.isNotBlank(req.getProjectCode())){
+            criteria.andProjectCodeEqualTo(req.getProjectCode());
+        }
+        long count = deliveryInfoViewMapper.countByExample(example);
+        if (count <= 0) throw new MessageException("查询结果为空");
+        resp.setCount(count);
+
+        example.setStartRow(req.getIndex());
+        example.setPageSize(req.getNum());
+        resp.setViews(deliveryInfoViewMapper.selectByExample(example));
+
+        return resp;
     }
 }

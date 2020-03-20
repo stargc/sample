@@ -25,7 +25,7 @@
         </javaTypeResolver>
 
         <!-- 生成模型的包名和位置-->
-        <javaModelGenerator targetPackage="com.ehualu.data.business.svnuser.model"
+        <javaModelGenerator targetPackage="com.ehualu.data.business.delivery.model"
                             targetProject="./src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
@@ -35,12 +35,12 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.ehualu.data.business.svnuser.dao" targetProject="./src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.ehualu.data.business.delivery.dao" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
-        <table tableName="t_svn_user" domainObjectName="SvnUser"
+        <table tableName="v_delivery_info" domainObjectName="DeliveryInfoView"
                enableSelectByPrimaryKey="true"
                enableSelectByExample="true"
                enableCountByExample="true"

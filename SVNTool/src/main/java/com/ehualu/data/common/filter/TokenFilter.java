@@ -15,8 +15,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Component
-//@WebFilter(urlPatterns = "/svn/*")
+@Component
+@WebFilter(urlPatterns = "/svn/*")
 @Slf4j
 public class TokenFilter implements Filter {
     private static List<String> paseUrl = new ArrayList<>();

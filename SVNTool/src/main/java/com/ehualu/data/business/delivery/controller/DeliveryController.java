@@ -1,6 +1,8 @@
 package com.ehualu.data.business.delivery.controller;
 
 import com.ehualu.data.business.delivery.model.DeliveryReq;
+import com.ehualu.data.business.delivery.model.SearchReq;
+import com.ehualu.data.business.delivery.model.SearchResp;
 import com.ehualu.data.business.delivery.service.DeliveryService;
 import com.ehualu.data.common.model.Message;
 import com.ehualu.data.common.util.MessageBuilder;
@@ -33,6 +35,15 @@ public class DeliveryController {
         deliveryService.deleteOverdue();
         return new MessageBuilder.Builder<>()
                 .setStatus(Message.Code.OK)
+                .builder();
+    }
+
+    @PostMapping("_search")
+    public Message<SearchResp> search(@RequestBody @Valid SearchReq req){
+        SearchResp resp = deliveryService.search(req);
+        return new MessageBuilder.Builder<SearchResp>()
+                .setStatus(Message.Code.OK)
+                .setData(resp)
                 .builder();
     }
 }

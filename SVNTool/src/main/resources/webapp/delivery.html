@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SVN管理工具</title>
+    <link th:src="@{/lib/jquery-2.1.1/jquery.js}" />
+</head>
+<body>
+<label>选择产品：</label>
+<select id="product" onchange="getChilds(this.value)">
+    <option th:each="product : ${productList}"
+            th:value="${product.getId()}" th:text="${product.getName()}">Credit card
+    </option>
+</select>
+<br/>
+<label>选择用户。</label>
+<select class="user" onchange="getChilds(this.value)" multiple="multiple">
+    <option th:each="user : ${userList}"
+            th:value="${user.getId()}" th:text="${user.getRealName()} + ' (' + ${user.getUserName()} + ')'">Credit card
+    </option>
+</select>
+<br/>
+<label>过期时间</label>
+<input id="overdueDate" type="date" th:value="${now}"/>
+<br/>
+<label>项目代码</label>
+<input id="projectCode" class="projectCode"/>
+<br/>
+<label>项目名称</label>
+<input id="projectName" class="projectName"/>
+
+<button th:onclick="'javascript:add()'">出库</button>
+
+</body>
+</html>
+<script>
+    window.onload = function () {
+        $('#user').multipleSelect({
+            addTitle: true, //鼠标点悬停在下拉框时是否显示被选中的值
+            selectAll: false, //是否显示全部复选框，默认显示
+            name: "质控级别",
+            selectAllText: "选择全部", //选择全部的复选框的text值
+            delimiter: ', ', //多个值直接的间隔符，默认是逗号
+            placeholder: "质控级别" //不选择时下拉框显示的内容
+        });
+    }
+
+    function add() {
+        alert(document.getElementById("projectName").value);
+        alert(document.getElementById("projectCode").value);
+        alert(document.getElementById("overdueDate").value);
+    }
+
+    function getChilds(value) {
+        alert("选中的值是" + value);
+    }
+</script>
