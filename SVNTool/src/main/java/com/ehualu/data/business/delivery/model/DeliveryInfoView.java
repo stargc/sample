@@ -1,5 +1,8 @@
 package com.ehualu.data.business.delivery.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class DeliveryInfoView {
@@ -13,6 +16,7 @@ public class DeliveryInfoView {
 
     private String status;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date overdueTime;
 
     private String deliveryPath;

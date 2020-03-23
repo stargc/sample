@@ -1,9 +1,14 @@
 package com.ehualu.data.common.filter;
 
+import com.alibaba.fastjson.JSONObject;
+import com.ehualu.data.common.model.Message;
 import com.ehualu.data.common.util.AESUtil;
+import com.ehualu.data.common.util.MessageBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -15,8 +20,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+@ConditionalOnProperty(name="spring.profiles.active", havingValue="pro")
 @Component
-@WebFilter(urlPatterns = "/svn/*")
+@WebFilter(urlPatterns = "/svn/api/*")
 @Slf4j
 public class TokenFilter implements Filter {
     private static List<String> paseUrl = new ArrayList<>();
@@ -34,19 +40,19 @@ public class TokenFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         String path = httpServletRequest.getRequestURI();
 
-        if (paseUrl.contains(path) || path.startsWith("/svn/page/")) {
+        if (paseUrl.contains(path) || !path.startsWith("/svn/api")) {
             chain.doFilter(request, response);
             return;
         }
         String token = httpServletRequest.getHeader("token");
         if (StringUtils.isBlank(token)){
-            goToLogin(request,response);
+            sendError(httpServletResponse,"token不存在");
             return;
         }
 
         String[] info = token.split("\\.");
         if (info.length != 3) {
-            goToLogin(request,response);
+            sendError(httpServletResponse,"token验证失败");
             return;
         }
         long overdueTime = 0;
@@ -57,12 +63,12 @@ public class TokenFilter implements Filter {
             userId = Integer.valueOf(AESUtil.decrypt(info[1]));
             overdueTime = Long.valueOf(AESUtil.decrypt(info[2]));
         } catch (Exception e) {
-            goToLogin(request,response);
+            sendError(httpServletResponse,"token验证失败");
             return;
         }
 
         if (overdueTime < System.currentTimeMillis()) {
-            goToLogin(request,response);
+            sendError(httpServletResponse,"token已过期");
             return;
         }
         RequestHolder.setUserId(userId);
@@ -70,12 +76,23 @@ public class TokenFilter implements Filter {
         chain.doFilter(request, response);
     }
 
-    public void goToLogin(ServletRequest request, ServletResponse response) {
+    private void goToLogin(ServletRequest request, ServletResponse response) {
         try {
             ((HttpServletResponse)response).sendRedirect("/svn/page/login");
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));
         }
+    }
+
+    private void sendError(HttpServletResponse httpServletResponse, String errorMsg) throws IOException {
+        Message<Void> responseMessage = new MessageBuilder.Builder<Void>().setErrorCode(Message.Code.ERROR)
+                .setStatus(Message.Code.ERROR).setError(errorMsg).builder();
+        {
+            httpServletResponse.setContentType("application/json;charset=utf-8");
+            httpServletResponse.getWriter().write(JSONObject.toJSONString(responseMessage));
+            return;
+        }
+
     }
 
 }

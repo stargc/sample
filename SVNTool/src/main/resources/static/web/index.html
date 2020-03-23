@@ -1,0 +1,165 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVN-Tool</title>
+	<link type="text/css" rel="stylesheet" href="./lib/elementui.css"/>
+	<link type="text/css" rel="stylesheet" href="./index.css"/>
+</head>
+<body>
+<section class="log-page">
+  <div class="main" id="logMain">
+	<el-form :model="logParams" :rules="rules" ref="logForm" inline-message=true label-width="80px" size="large" v-loading="loading">
+	  <el-form-item label="用户名:" prop="userInput">
+	    <el-input v-model="logParams.userInput" placeholder="请输入" style="width:260px"></el-input>
+	  </el-form-item>
+	  <el-form-item label="密&emsp;码:" prop="passwordInput">
+	    <el-input v-model="logParams.passwordInput" placeholder="请输入" show-password style="width:260px"></el-input>
+	  </el-form-item>
+	  <el-form-item style="margin-left:90px">
+        <el-button type="primary" @click="log('logForm')" plain>登录</el-button>
+      </el-form-item>
+	</el-form>
+  </div>
+
+</section>
+
+
+<section id="mainContainer" style="display:none;">
+<div id="test">
+  <div class="menu">    
+    <el-menu :default-active="activeIndex" class="my-menu" mode="horizontal" @select="handleSelect">
+	  <el-menu-item index="1">出库</el-menu-item>
+	  <el-menu-item index="2">出库状态</el-menu-item>
+	  <el-menu-item index="3">绑定姓名</el-menu-item>
+    </el-menu>
+  
+    <div class="user-info"><i class="el-icon-user-solid" style="margin-right:10px;"></i><span>{{userName}}</span></div>
+  </div>
+  <div class="main-page">
+	<div style="width:350px;padding:6%;margin:0 auto;" v-show="activeIndex == 1" v-loading="actionLoading">
+	  	<el-form ref="exportForm" label-width="110px" >
+	  	  <el-form-item label="选择产品:">
+		<el-select v-model="productValue" placeholder="请选择"  @focus="getProduct()" :loading="selectLoading">
+		  <el-option
+			v-for="item in productOptions"
+			:key="item.value"
+			:label="item.label"
+			:value="item.value">
+		  </el-option>
+		</el-select>
+	  </el-form-item>
+		<el-form-item label="选择用户:">
+	    <el-select v-model="selectedUser" multiple collapse-tags placeholder="请选择" @focus="getUsers()" :loading="selectLoading">
+		  <el-option
+		    v-for="item in userOptions"
+			:key="item.value"
+			:label="item.label"
+			:value="item.value">
+		  </el-option>
+		</el-select>
+	  </el-form-item>
+		<el-form-item label="选择日期:">
+		<el-date-picker
+		  v-model="timeValue"
+		  type="date"
+		  value-format="yyyy-MM-dd"
+	      placeholder="选择日期">
+		</el-date-picker>
+	  </el-form-item>
+	  <el-form-item label="出库项目code:">
+	  <el-input v-model="exportCode" placeholder="请输入" style="width:260px;"></el-input>
+	  </el-form-item>
+	  <el-form-item label="出库项目名称:">
+	  <el-input v-model="exportName" placeholder="请输入" style="width:260px;"></el-input>
+	  </el-form-item>
+	  <el-form-item>
+	  <el-button type="primary" plain @click="exportProduct" >出库</el-button>
+	  </el-form-item>
+	  </el-form>
+	  </div>
+	  
+	  <div style="padding:6%;" v-show="activeIndex == 2" v-loading="actionLoading">
+	  <div style="width:350px;margin:0 auto;">
+	  <el-form ref="stateForm" label-width="110px" >
+	  	<el-form-item label="选择人员:">
+	    <el-select v-model="selectedUser" multiple collapse-tags placeholder="请选择" @focus="getUsers()" :loading="selectLoading">
+		  <el-option
+		    v-for="item in userOptions"
+			:key="item.value"
+			:label="item.label"
+			:value="item.value">
+		  </el-option>
+		</el-select>
+	  </el-form-item>
+	  	<el-form-item label="选择产品:">
+		<el-select v-model="productValue" placeholder="请选择"  @focus="getProduct()" :loading="selectLoading">
+		  <el-option
+			v-for="item in productOptions"
+			:key="item.value"
+			:label="item.label"
+			:value="item.value">
+		  </el-option>
+		</el-select>
+	  </el-form-item>
+	  <el-form-item label="出库项目code:">
+	    <el-input v-model="exportCode" placeholder="请输入" style="width:260px;"></el-input>
+	  </el-form-item>
+	  <el-form-item>
+	    <el-button type="primary" plain @click="search" >查询</el-button>
+	  </el-form-item>
+	  </el-form>
+	  </div>
+	  <el-table :key="tableKey" :data="tableData" header-row-class-name="table-header" row-class-name="table-row" cell-class-name="table-cell" height="260" border style="width: 60%;margin:0 auto;">
+		<el-table-column prop="userName" label="用户" width="100" align="center" header-align="center"></el-table-column>
+		<el-table-column prop="name" label="产品" width="100" align="center" header-align="center"></el-table-column>
+		<el-table-column prop="version" label="版本" width="100" align="center" header-align="center"></el-table-column>
+		<el-table-column prop="deliveryPath" label="出库地址" width="100" align="center" header-align="center"></el-table-column>
+		<el-table-column prop="overdueTime" label="到期时间" width="100" align="center" header-align="center"></el-table-column>
+		<el-table-column prop="access" label="用户权限" width="100" align="center" header-align="center"></el-table-column>
+		<el-table-column prop="projectCode" label="项目code" width="100" align="center" header-align="center"></el-table-column>
+		<el-table-column prop="projectName" label="项目名称" width="100" align="center" header-align="center"></el-table-column>
+	  </el-table>
+  <div class="block" style="width:60%;margin:0 auto;">
+    <el-pagination
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-size="pageSize"
+      layout="total, prev, pager, next"
+      :total="totalSize">
+    </el-pagination>
+  </div>
+	  </div>
+ 
+	<div style="width:350px;padding:6%;margin:0 auto" v-show="activeIndex == 3" v-loading="actionLoading">
+	  <el-form ref="bindForm" label-width="110px" >
+	  <el-form-item label="SVN用户名:">
+	    <el-select v-model="selectedUser" multiple collapse-tags placeholder="请选择" @focus="getUsers()" :loading="selectLoading">
+		  <el-option
+		    v-for="item in userOptions"
+			:key="item.value"
+			:label="item.label"
+			:value="item.value">
+		  </el-option>
+		</el-select>
+	  </el-form-item>
+	  <el-form-item label="真实姓名:">
+	    <el-input v-model="realNameInput" placeholder="请输入" style="width:260px;"></el-input>
+	  </el-form-item>
+	  <el-form-item>
+	    <el-button type="primary" plain @click="bindName">绑定</el-button>
+	  </el-form-item>
+	  </el-form>
+	  </div> 
+  </div>
+
+</div>
+</section>
+
+
+<script src="./lib/jquery-3.4.1.min.js"></script>
+<script src="./lib/vue.min.js"></script>
+<script src="./lib/elementui.js"></script>
+<script src="./lib/md5.js"></script>
+<script src="./index.js"></script>
+</body>
+</html>
