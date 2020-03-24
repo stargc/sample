@@ -1,4 +1,8 @@
 $(document).ready(function(){
+	if(window.sessionStorage.getItem('accountInfo')){
+		$(".log-page").hide()
+		$("#mainContainer").show();
+    }
   let vm = new Vue ({
 	el: "#logMain",
     data() {
@@ -28,23 +32,21 @@ $(document).ready(function(){
 			data: {userName:name,password:pwd},
             success : function(result) {
 				vm.loading = false
-			  if(result.errorCode == 0){
+			    if(result.status != 0){
+				  vm.$message({message: result.error,type: 'error'});
+				  return false 
+			    }
 			    var token = result.data || ""
-				window.sessionStorage.setItem("accountInfo", token);
+				window.sessionStorage.setItem("accountInfo", JSON.stringify({"token":token,"name":name}));
 			    vm.$message({message: '登录成功！',type: 'success'})	
 				vm_1.userName = name
 			    $(".log-page").hide()
 			    $("#mainContainer").show();
-				}
-			  else {
-				  vm.$message({message: result.error,type: 'error'});
-				  return false
-			  }
             },
             error : function(e){
 				vm.loading = false
 				vm.$message({message: '登录失败！',type: 'error'});
-                console.log(e.responseText);
+                console.log(e);
 				return false
             }
           });
@@ -61,7 +63,7 @@ $(document).ready(function(){
       return {
 		activeIndex: "1",
         activeName: 'first',
-		userName:"",
+		userName: window.sessionStorage.getItem('accountInfo') == null ? "" : JSON.parse(window.sessionStorage.getItem('accountInfo')).name,
 		productOptions: [],
 		productValue: "",
 		userOptions: [],
@@ -82,7 +84,7 @@ $(document).ready(function(){
     },
     methods: {
 	  handleSelect(key, keyPath) {
-		  this.activeIndex=parseInt(key);
+		  this.activeIndex=key;
 	      vm_1.productValue = ""
 		  vm_1.selectedUser= []
 		  vm_1.timeValue = ""
@@ -104,7 +106,7 @@ $(document).ready(function(){
             contentType: "application/json;charset=UTF-8",
             url : "http://localhost:22006/svn/api/delivery/add",
 			data: JSON.stringify(data),
-			headers: {token: window.sessionStorage.getItem('accountInfo') || ""},
+			headers: {token: JSON.parse(window.sessionStorage.getItem('accountInfo')).token || ""},
             success : function(result) {
 			  vm_1.actionLoading = false
 			   if(result.status != 0) {
@@ -129,7 +131,7 @@ $(document).ready(function(){
             contentType: "application/json;charset=UTF-8",
             url : "http://localhost:22006/svn/api/svnuser/updateUser",
 			data: JSON.stringify(data),
-			headers: {token: window.sessionStorage.getItem('accountInfo') || ""},
+			headers: {token: JSON.parse(window.sessionStorage.getItem('accountInfo')).token || ""},
             success : function(result) {
 			   vm_1.actionLoading = false
 			   if(result.status != 0) {
@@ -151,16 +153,17 @@ $(document).ready(function(){
 			"userId":vm_1.selectedUser.join(","),
 			"productId":vm_1.productValue,
 			"projectCode":vm_1.exportCode,
-			"index":vm_1.currentPage,
+			"index":vm_1.currentPage-1,
 			"num":vm_1.pageSize
 			}  
 		vm_1.actionLoading = true
+		vm_1.tableData.length = 0
           $.ajax({
             type : "POST",
             contentType: "application/json;charset=UTF-8",
             url : "http://localhost:22006/svn/api/delivery/_search",
 			data: JSON.stringify(data),
-			headers: {token: window.sessionStorage.getItem('accountInfo') || ""},
+			headers: {token: JSON.parse(window.sessionStorage.getItem('accountInfo')).token || ""},
             success : function(result) {
 			   vm_1.actionLoading = false
 			   if(result.status != 0) {
@@ -191,7 +194,7 @@ $(document).ready(function(){
             type : "GET",
             dataType: "JSON",
             url : "http://localhost:22006/svn/api/product/_searchAll",
-			headers: {token: window.sessionStorage.getItem('accountInfo') || ""},
+			headers: {token: JSON.parse(window.sessionStorage.getItem('accountInfo')).token || ""},
             success : function(result) {
 				vm_1.selectLoading = false
 			   if(result.status != 0) {return}
@@ -214,7 +217,7 @@ $(document).ready(function(){
             type : "GET",
             dataType: "JSON",
             url : "http://localhost:22006/svn/api/svnuser/_searchAll",
-			headers: {token: window.sessionStorage.getItem('accountInfo') || ""},
+			headers: {token: JSON.parse(window.sessionStorage.getItem('accountInfo')).token || ""},
             success : function(result) {
 			   vm_1.selectLoading = false
 			   if(result.status != 0) {return}

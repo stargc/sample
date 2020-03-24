@@ -68,11 +68,7 @@ public class DeliveryService {
         String sourcePath = productService.searchById(req.getProductId()).getRepositoryUrl();
 
         /** 生成出库文件 svn访问地址*/
-        String deliveryPath = new StringBuilder()
-                .append(DELIVERY_BASE_PATH)
-                .append(sourcePath)
-                .append(SYMBOL)
-                .append(System.currentTimeMillis()).toString();
+        String deliveryPath = getDeliveryPath(sourcePath);
 
         /** svn进行copy操作*/
         try {
@@ -106,6 +102,15 @@ public class DeliveryService {
             role.setDeliveryId(delivery.getId());
             userRoleService.add(role);
         });
+    }
+
+    private synchronized String getDeliveryPath(String sourcePath){
+        return new StringBuilder()
+                .append(DELIVERY_BASE_PATH)
+                .append(SYMBOL)
+                .append(sourcePath)
+                .append(SYMBOL)
+                .append(System.currentTimeMillis()).toString();
     }
 
     public void deleteOverdue(){
