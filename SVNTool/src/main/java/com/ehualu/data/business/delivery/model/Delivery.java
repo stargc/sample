@@ -5,8 +5,6 @@ import java.util.Date;
 public class Delivery {
     private Integer id;
 
-    private Integer productId;
-
     private String status;
 
     private Date overdueTime;
@@ -31,14 +29,6 @@ public class Delivery {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
     }
 
     public String getStatus() {

@@ -1,6 +1,7 @@
 package com.ehualu.data.business.delivery.controller;
 
 import com.ehualu.data.business.delivery.model.DeliveryReq;
+import com.ehualu.data.business.delivery.model.DeliveryResp;
 import com.ehualu.data.business.delivery.model.SearchReq;
 import com.ehualu.data.business.delivery.model.SearchResp;
 import com.ehualu.data.business.delivery.service.DeliveryService;
@@ -22,13 +23,13 @@ public class DeliveryController {
     private DeliveryService deliveryService;
 
     @PostMapping("add")
-    public Message doDelivery(@RequestBody @Valid DeliveryReq req){
-        deliveryService.delivery(req);
-        return new MessageBuilder.Builder<>()
+    public Message<DeliveryResp> doDelivery(@RequestBody @Valid DeliveryReq req){
+        DeliveryResp resp = deliveryService.delivery(req);
+        return new MessageBuilder.Builder<DeliveryResp>()
                 .setStatus(Message.Code.OK)
+                .setData(resp)
                 .builder();
     }
-
 
     @GetMapping("delete")
     public Message deleteDelivery(){

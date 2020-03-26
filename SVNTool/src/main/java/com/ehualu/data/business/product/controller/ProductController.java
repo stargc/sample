@@ -5,9 +5,7 @@ import com.ehualu.data.business.product.service.ProductService;
 import com.ehualu.data.common.model.Message;
 import com.ehualu.data.common.util.MessageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +25,30 @@ public class ProductController {
         return new MessageBuilder.Builder<List<Product>>()
                 .setStatus(Message.Code.OK)
                 .setData(productList)
+                .builder();
+    }
+
+    @PostMapping("add")
+    public Message add(@RequestBody Product product){
+        productService.add(product);
+        return new MessageBuilder.Builder<List<Product>>()
+                .setStatus(Message.Code.OK)
+                .builder();
+    }
+
+    @PutMapping("updateUser")
+    public Message updateUser(@RequestBody Product product){
+        productService.update(product);
+        return new MessageBuilder.Builder<List<Product>>()
+                .setStatus(Message.Code.OK)
+                .builder();
+    }
+
+    @DeleteMapping("{id}")
+    public Message delete(@PathVariable String id){
+        productService.delete(id);
+        return new MessageBuilder.Builder<List<Product>>()
+                .setStatus(Message.Code.OK)
                 .builder();
     }
 }

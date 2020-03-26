@@ -12,7 +12,8 @@ import java.util.Date;
 @Data
 public class DeliveryReq {
 
-    private int productId;
+    @NotBlank(message = "产品不能为空")
+    private String productIds;
 
     @NotBlank(message = "用户不能为空")
     private String svnUserids;

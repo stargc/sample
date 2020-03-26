@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ehualu.data.business.delivery.dao.DeliveryInfoViewMapper" >
   <resultMap id="BaseResultMap" type="com.ehualu.data.business.delivery.model.DeliveryInfoView" >
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
     <result column="access" property="access" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="delivery_id" property="deliveryId" jdbcType="INTEGER" />
@@ -11,15 +12,14 @@
     <result column="delivery_path" property="deliveryPath" jdbcType="VARCHAR" />
     <result column="project_name" property="projectName" jdbcType="VARCHAR" />
     <result column="project_code" property="projectCode" jdbcType="VARCHAR" />
-    <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="VARCHAR" />
-    <result column="version" property="version" jdbcType="VARCHAR" />
-    <result column="repository_url" property="repositoryUrl" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="real_name" property="realName" jdbcType="VARCHAR" />
-    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="repository_url" property="repositoryUrl" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -80,9 +80,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    access, user_id, delivery_id, product_id, status, overdue_time, delivery_path, project_name, 
-    project_code, description, name, type, version, repository_url, user_name, password, 
-    real_name, role_id
+    role_id, access, user_id, delivery_id, product_id, status, overdue_time, delivery_path, 
+    project_name, project_code, user_name, password, real_name, version, name, description, 
+    type, repository_url
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ehualu.data.business.delivery.model.DeliveryInfoViewExample" >
     select
@@ -108,24 +108,27 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ehualu.data.business.delivery.model.DeliveryInfoView" >
-    insert into v_delivery_info (access, user_id, delivery_id, 
-      product_id, status, overdue_time, 
-      delivery_path, project_name, project_code, 
-      description, name, type, 
-      version, repository_url, user_name, 
-      password, real_name, role_id
+    insert into v_delivery_info (role_id, access, user_id, 
+      delivery_id, product_id, status, 
+      overdue_time, delivery_path, project_name, 
+      project_code, user_name, password, 
+      real_name, version, name, 
+      description, type, repository_url
       )
-    values (#{access,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{deliveryId,jdbcType=INTEGER}, 
-      #{productId,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, #{overdueTime,jdbcType=TIMESTAMP}, 
-      #{deliveryPath,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{projectCode,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{version,jdbcType=VARCHAR}, #{repositoryUrl,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}
+    values (#{roleId,jdbcType=INTEGER}, #{access,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{deliveryId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, 
+      #{overdueTime,jdbcType=TIMESTAMP}, #{deliveryPath,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, 
+      #{projectCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{realName,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{repositoryUrl,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ehualu.data.business.delivery.model.DeliveryInfoView" >
     insert into v_delivery_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
       <if test="access != null" >
         access,
       </if>
@@ -153,21 +156,6 @@
       <if test="projectCode != null" >
         project_code,
       </if>
-      <if test="description != null" >
-        description,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="type != null" >
-        type,
-      </if>
-      <if test="version != null" >
-        version,
-      </if>
-      <if test="repositoryUrl != null" >
-        repository_url,
-      </if>
       <if test="userName != null" >
         user_name,
       </if>
@@ -177,11 +165,26 @@
       <if test="realName != null" >
         real_name,
       </if>
-      <if test="roleId != null" >
-        role_id,
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="repositoryUrl != null" >
+        repository_url,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
       <if test="access != null" >
         #{access,jdbcType=VARCHAR},
       </if>
@@ -209,21 +212,6 @@
       <if test="projectCode != null" >
         #{projectCode,jdbcType=VARCHAR},
       </if>
-      <if test="description != null" >
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null" >
-        #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="version != null" >
-        #{version,jdbcType=VARCHAR},
-      </if>
-      <if test="repositoryUrl != null" >
-        #{repositoryUrl,jdbcType=VARCHAR},
-      </if>
       <if test="userName != null" >
         #{userName,jdbcType=VARCHAR},
       </if>
@@ -233,8 +221,20 @@
       <if test="realName != null" >
         #{realName,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null" >
-        #{roleId,jdbcType=INTEGER},
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="repositoryUrl != null" >
+        #{repositoryUrl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -247,6 +247,9 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update v_delivery_info
     <set >
+      <if test="record.roleId != null" >
+        role_id = #{record.roleId,jdbcType=INTEGER},
+      </if>
       <if test="record.access != null" >
         access = #{record.access,jdbcType=VARCHAR},
       </if>
@@ -274,21 +277,6 @@
       <if test="record.projectCode != null" >
         project_code = #{record.projectCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.description != null" >
-        description = #{record.description,jdbcType=VARCHAR},
-      </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.type != null" >
-        type = #{record.type,jdbcType=VARCHAR},
-      </if>
-      <if test="record.version != null" >
-        version = #{record.version,jdbcType=VARCHAR},
-      </if>
-      <if test="record.repositoryUrl != null" >
-        repository_url = #{record.repositoryUrl,jdbcType=VARCHAR},
-      </if>
       <if test="record.userName != null" >
         user_name = #{record.userName,jdbcType=VARCHAR},
       </if>
@@ -298,8 +286,20 @@
       <if test="record.realName != null" >
         real_name = #{record.realName,jdbcType=VARCHAR},
       </if>
-      <if test="record.roleId != null" >
-        role_id = #{record.roleId,jdbcType=INTEGER},
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repositoryUrl != null" >
+        repository_url = #{record.repositoryUrl,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -308,7 +308,8 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update v_delivery_info
-    set access = #{record.access,jdbcType=VARCHAR},
+    set role_id = #{record.roleId,jdbcType=INTEGER},
+      access = #{record.access,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=INTEGER},
       delivery_id = #{record.deliveryId,jdbcType=INTEGER},
       product_id = #{record.productId,jdbcType=INTEGER},
@@ -317,15 +318,14 @@
       delivery_path = #{record.deliveryPath,jdbcType=VARCHAR},
       project_name = #{record.projectName,jdbcType=VARCHAR},
       project_code = #{record.projectCode,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=VARCHAR},
-      version = #{record.version,jdbcType=VARCHAR},
-      repository_url = #{record.repositoryUrl,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       real_name = #{record.realName,jdbcType=VARCHAR},
-      role_id = #{record.roleId,jdbcType=INTEGER}
+      version = #{record.version,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      repository_url = #{record.repositoryUrl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>

@@ -2,6 +2,7 @@ package com.ehualu.data.business.delivery.service;
 
 import com.ehualu.data.business.delivery.dao.DeliveryInfoViewMapper;
 import com.ehualu.data.business.delivery.dao.DeliveryMapper;
+import com.ehualu.data.business.delivery.dao.ProductDeliveryRelMapper;
 import com.ehualu.data.business.delivery.model.*;
 import com.ehualu.data.business.product.service.ProductService;
 import com.ehualu.data.business.repositories.model.RepositoriesConfig;
@@ -21,9 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tmatesoft.svn.core.SVNException;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -42,6 +41,8 @@ public class DeliveryService {
     @Autowired
     private DeliveryMapper deliveryMapper;
     @Autowired
+    private ProductDeliveryRelMapper relMapper;
+    @Autowired
     private SVNFileService svnFileService;
     @Autowired
     private RepositoriesService repositoriesService;
@@ -57,7 +58,7 @@ public class DeliveryService {
     private DeliveryInfoViewMapper deliveryInfoViewMapper;
 
 
-    public void delivery(DeliveryReq req){
+    public DeliveryResp delivery(DeliveryReq req){
         /** 获取用户名和用户ID list*/
         List<String> userIDList = Arrays.stream(req.getSvnUserids().split(",")).collect(Collectors.toList());
         List<String> userNameList = userIDList.stream().map(id -> svnUserService.selectById(Integer.valueOf(id)).getUserName()).filter(StringUtils::isNotBlank).collect(Collectors.toList());
@@ -65,34 +66,47 @@ public class DeliveryService {
         /** 生成原始文件 svn访问地址*/
         RepositoriesConfig config = repositoriesService.getRepConfig();
         String svnBasePath = config.getAccessBaseUrl();
-        String sourcePath = productService.searchById(req.getProductId()).getRepositoryUrl();
 
         /** 生成出库文件 svn访问地址*/
-        String deliveryPath = getDeliveryPath(sourcePath);
+        String deliveryPath = new StringBuilder()
+                .append(DELIVERY_BASE_PATH)
+                .append(SYMBOL)
+                .append(req.getProjectCode())
+                .append(SYMBOL)
+                .append(UUID.randomUUID()).toString();
 
-        /** svn进行copy操作*/
-        try {
-            svnFileService.doCopy(svnBasePath + SYMBOL + sourcePath, svnBasePath + deliveryPath);
-        } catch (SVNException e) {
-            log.error(ExceptionUtils.getStackTrace(e));
-            throw  new MessageException("执行操作错误");
-        }
-
-        /**  给用户添加指定权限*/
-        svnPermissionService.addPermission2File(config.getDbBasePath() + SVN_DB_PERMISSION_FILE,
-                deliveryPath,userNameList, FilePermission.READ.getCode());
+        Date overdueDate = getDayEnd(req.getOverdueDate());
 
         /** 添加出库记录表*/
         Delivery delivery = new Delivery();
         delivery.setCreateTime(new Date());
         delivery.setCreateUserId(RequestHolder.getUserId());
-        delivery.setOverdueTime(req.getOverdueDate());
-        delivery.setProductId(req.getProductId());
+        delivery.setOverdueTime(overdueDate);
         delivery.setProjectCode(req.getProjectCode());
         delivery.setProjectName(req.getProjectName());
         delivery.setStatus(DELIVERY_STATUS_DONE);
         delivery.setDeliveryPath(svnBasePath + deliveryPath);
         deliveryMapper.insertSelective(delivery);
+
+        Arrays.stream(req.getProductIds().split(",")).forEach(id -> {
+            String sourcePath = productService.searchById(Integer.valueOf(id)).getRepositoryUrl();
+
+            /** svn进行copy操作*/
+            try {
+                svnFileService.doCopy(svnBasePath + SYMBOL + sourcePath, svnBasePath + deliveryPath + SYMBOL + sourcePath);
+            } catch (SVNException e) {
+                log.error(ExceptionUtils.getStackTrace(e));
+                throw  new MessageException("执行操作错误");
+            }
+            ProductDeliveryRel rel = new ProductDeliveryRel();
+            rel.setDeliveryId(delivery.getId());
+            rel.setProductId(Integer.valueOf(id));
+            relMapper.insert(rel);
+        });
+
+        /**  给用户添加指定权限*/
+        svnPermissionService.addPermission2File(config.getDbBasePath() + SVN_DB_PERMISSION_FILE,
+                deliveryPath,userNameList, FilePermission.READ.getCode());
 
         /** 添加用户权限表*/
         userIDList.stream().forEach(userID ->{
@@ -102,16 +116,13 @@ public class DeliveryService {
             role.setDeliveryId(delivery.getId());
             userRoleService.add(role);
         });
+        DeliveryResp resp = new DeliveryResp();
+        resp.setOverdueDate(overdueDate);
+        resp.setRepositoryUrl(deliveryPath);
+        resp.setSvnUser(String.join(",",userNameList));
+        return resp;
     }
 
-    private synchronized String getDeliveryPath(String sourcePath){
-        return new StringBuilder()
-                .append(DELIVERY_BASE_PATH)
-                .append(SYMBOL)
-                .append(sourcePath)
-                .append(SYMBOL)
-                .append(System.currentTimeMillis()).toString();
-    }
 
     public void deleteOverdue(){
         DeliveryExample example = new DeliveryExample();
@@ -161,5 +172,15 @@ public class DeliveryService {
         resp.setViews(deliveryInfoViewMapper.selectByExample(example));
 
         return resp;
+    }
+    public Date getDayEnd(Date date){
+        Calendar dayEnd = Calendar.getInstance();
+        if (date != null){
+            dayEnd.setTime(date);
+        }
+        dayEnd.set(Calendar.HOUR_OF_DAY,23);
+        dayEnd.set(Calendar.MINUTE,59);
+        dayEnd.set(Calendar.SECOND,59);
+        return dayEnd.getTime();
     }
 }

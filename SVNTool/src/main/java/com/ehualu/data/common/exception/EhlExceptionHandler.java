@@ -39,7 +39,6 @@ public class EhlExceptionHandler {
 	@ExceptionHandler(BindException.class)
 	@ResponseBody
 	public Object handleBindException(HttpServletRequest request, BindException e) {
-		logger.error(ExceptionUtils.getStackTrace(e));
 		BindingResult result = e.getBindingResult();
 		Message<String> message = new Message<>();
 		message.setStatus(Message.Code.ERROR);
@@ -55,7 +54,6 @@ public class EhlExceptionHandler {
 	@ExceptionHandler(value = MethodArgumentNotValidException.class)
 	@ResponseBody
 	public Object handleParmValidationException(HttpServletRequest request, MethodArgumentNotValidException e) {
-		logger.error(ExceptionUtils.getStackTrace(e));
 		BindingResult result = e.getBindingResult();
 		Message<String> message = new Message<>();
 		message.setStatus(Message.Code.ERROR);

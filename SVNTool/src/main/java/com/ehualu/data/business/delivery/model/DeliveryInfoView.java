@@ -1,11 +1,12 @@
 package com.ehualu.data.business.delivery.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
 public class DeliveryInfoView {
+    private Integer roleId;
+
     private String access;
 
     private Integer userId;
@@ -25,23 +26,29 @@ public class DeliveryInfoView {
 
     private String projectCode;
 
-    private String description;
-
-    private String name;
-
-    private String type;
-
-    private String version;
-
-    private String repositoryUrl;
-
     private String userName;
 
     private String password;
 
     private String realName;
 
-    private Integer roleId;
+    private String version;
+
+    private String name;
+
+    private String description;
+
+    private String type;
+
+    private String repositoryUrl;
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
 
     public String getAccess() {
         return access;
@@ -115,46 +122,6 @@ public class DeliveryInfoView {
         this.projectCode = projectCode == null ? null : projectCode.trim();
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version == null ? null : version.trim();
-    }
-
-    public String getRepositoryUrl() {
-        return repositoryUrl;
-    }
-
-    public void setRepositoryUrl(String repositoryUrl) {
-        this.repositoryUrl = repositoryUrl == null ? null : repositoryUrl.trim();
-    }
-
     public String getUserName() {
         return userName;
     }
@@ -179,11 +146,43 @@ public class DeliveryInfoView {
         this.realName = realName == null ? null : realName.trim();
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    public String getVersion() {
+        return version;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setVersion(String version) {
+        this.version = version == null ? null : version.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
+
+    public String getRepositoryUrl() {
+        return repositoryUrl;
+    }
+
+    public void setRepositoryUrl(String repositoryUrl) {
+        this.repositoryUrl = repositoryUrl == null ? null : repositoryUrl.trim();
     }
 }
