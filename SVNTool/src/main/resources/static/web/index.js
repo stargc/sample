@@ -3,6 +3,8 @@ $(document).ready(function(){
 		$(".log-page").hide()
 		$("#mainContainer").show();
     }
+			$(".log-page").hide()
+		$("#mainContainer").show();
   let vm = new Vue ({
 	el: "#logMain",
     data() {
@@ -61,11 +63,11 @@ $(document).ready(function(){
 	el: "#test",
     data() {
       return {
-		activeIndex: "1",
+		activeIndex: "4",
         activeName: 'first',
 		userName: window.sessionStorage.getItem('accountInfo') == null ? "" : JSON.parse(window.sessionStorage.getItem('accountInfo')).name,
 		productOptions: [],
-		productValue: "",
+		productValue: [],
 		userOptions: [],
 		selectedUser: [],
 		timeValue: "",
@@ -78,15 +80,26 @@ $(document).ready(function(){
 		totalSize: 0,
 		tableKey: 0,
 		selectLoading: false,
-		actionLoading: false
+		actionLoading: false,
+		
+		addDialogVisible: false,
+		editDialogVisible: false,
+		productTable: {
+			tableKey: 0,
+			tableData: [{name:"",repositoryUrl:"",description:""}],
+			addFormData: {name:"",description:"",repositoryUrl:""}, 
+			updateFormData: {id:"",name:"",description:"",repositoryUrl:""},
+			currentPage: 1,
+			totalSize: 0
+		}
 		
       };
     },
     methods: {
 	  handleSelect(key, keyPath) {
 		  this.activeIndex=key;
-	      vm_1.productValue = ""
-		  vm_1.selectedUser= []
+	      vm_1.productValue = key == 1 ? [] : ""
+		  vm_1.selectedUser= key == 1 ? [] : ""
 		  vm_1.timeValue = ""
 		  vm_1.exportCode = ""
 		  vm_1.exportName = ""
@@ -94,7 +107,7 @@ $(document).ready(function(){
 	  },
 	  exportProduct() {
 		var data = {
-			"productId": this.productValue,
+			"productIds": this.productValue.join(","),
 			"svnUserids": this.selectedUser.join(","),
 			"overdueDate": this.timeValue,
 			"projectCode": this.exportCode,
@@ -113,7 +126,18 @@ $(document).ready(function(){
 				   vm_1.$message({message: result.error,type: 'error'});
 				   return
 				}			  
-			  vm_1.$message({message: '出库成功！',type: 'success'});
+			  //vm_1.$message({message: '出库成功！',type: 'success'});
+		    var userNames = result.svnUser || ""
+			var svnPath = result.repositoryUrl || ""
+			var time = result.overdueDate || ""
+			vm_1.$notify({
+				title: '出库成功',
+				dangerouslyUseHTMLString: true,
+				message: `<div style="word-break:break-all"><p>您好：</p><span>申请的产品已出库，访问信息如下：</br><div style="display:inline-block;width: 4px;height: 4px;margin-bottom:2px;border: 1px solid black;border-radius: 8px;background-color: black;opacity: 0.5;"></div> SVN用户名：${userNames}</br><div style="display:inline-block;width: 4px;height: 4px;margin-bottom:2px;border: 1px solid black;border-radius: 8px;background-color: black;opacity: 0.5;"></div> 初始密码：ehl1234 </br><div style="display:inline-block;width: 4px;height: 4px;margin-bottom:2px;border: 1px solid black;border-radius: 8px;background-color: black;opacity: 0.5;"></div>  SVN路径：${svnPath}</br><p style="font-weight:bold;color:#FFFF00"><i class="el-icon-warning-outline"></i> 温馨提示：</p>安装文件有效期至${time}，请尽快完成下载！</span></div>`,
+				type: 'success',
+				duration: 0,
+				offset: 52
+				});	
             },
             error : function(e){
 		      vm_1.actionLoading = false
@@ -123,7 +147,7 @@ $(document).ready(function(){
 	  },
 	  bindName() {
 		this.actionLoading = true 
-		var data = { "id":this.selectedUser.join(","),
+		var data = { "id":this.selectedUser,
 					 "realName":this.realNameInput
 				}
           $.ajax({
@@ -150,7 +174,7 @@ $(document).ready(function(){
 	  },
 	  search() {
 		var data = {
-			"userId":vm_1.selectedUser.join(","),
+			"userId":vm_1.selectedUser,
 			"productId":vm_1.productValue,
 			"projectCode":vm_1.exportCode,
 			"index":vm_1.currentPage-1,
@@ -186,6 +210,34 @@ $(document).ready(function(){
             }
           });		  
 		  
+		  
+	  },
+	  addProduct() {this.productTable.addFormData = {name:"",description:"",repositoryUrl:""};this.addDialogVisible=true},
+	  doAddProduct() {
+          var data = this.productTable.addFormData
+		  this.actionLoading = true
+		  $.ajax({
+            type : "POST",
+            contentType: "application/json;charset=UTF-8",
+            url : "http://localhost:22006/svn/api/product/add",
+			data: JSON.stringify(data),
+			headers: {token: JSON.parse(window.sessionStorage.getItem('accountInfo')).token || ""},
+            success : function(result) {
+			   vm_1.actionLoading = false
+			   vm_1.addDialogVisible = false
+			   if(result.status != 0) {
+				   vm_1.$message({message: result.error,type: 'error'});
+				   return
+				}				
+                vm_1.$message({message: '添加成功！',type: 'success'});
+				vm_1.handleTableLoad();
+            },
+            error : function(e){
+				vm_1.actionLoading = false
+                vm_1.$message({message: '添加失败！',type: 'error'});
+                console.log(e);
+            }
+          });			  
 		  
 	  },
 	  getProduct() {this.productOptions.length = 0;
@@ -224,13 +276,21 @@ $(document).ready(function(){
 			   for(var item of result.data){
                  vm_1.userOptions.push({
 				  value: item.id,
-				  label: item.userName
+				  label: item.userName + " (" + item.realName + ")"
 				 })
 			   }
             },
             error : function(e){
 				vm_1.selectLoading = false
                 console.log(e);
+				                 vm_1.userOptions.push({
+				  value:"01",
+				  label: "yonghu1"
+				 })
+				 				                 vm_1.userOptions.push({
+				  value:"02",
+				  label: "yonghu2"
+				 })
             }
           });	    	  
 	  },
@@ -238,12 +298,111 @@ $(document).ready(function(){
 		  this.currentPage = val;
 		  this.search();
       },
+	  handleProductCurrentChange(val){
+		  this.productTable.currentPage = val
+	  },
+	  handleEdit(index, row){
+		 for(let key in this.productTable.updateFormData){
+			this.productTable.updateFormData[key] = row[key] || "" 
+		 }		 
+		 this.editDialogVisible = true
+	  },
+	  doUpdateProduct() {
+          var data = this.productTable.updateFormData
+		  this.actionLoading = true
+		  $.ajax({
+            type : "PUT",
+            contentType: "application/json;charset=UTF-8",
+            url : "http://localhost:22006/svn/api/product/updateUser",
+			data: JSON.stringify(data),
+			headers: {token: JSON.parse(window.sessionStorage.getItem('accountInfo')).token || "","X-HTTP-Method-Override": "PUT" },
+            success : function(result) {
+			   vm_1.actionLoading = false
+			   vm_1.editDialogVisible = false
+			   if(result.status != 0) {
+				   vm_1.$message({message: result.error,type: 'error'});
+				   return
+				}				
+                vm_1.$message({message: '修改成功！',type: 'success'});
+				vm_1.handleTableLoad();
+            },
+            error : function(e){
+				vm_1.actionLoading = false
+                vm_1.$message({message: '修改失败！',type: 'error'});
+                console.log(e);
+            }
+          });			   
+	  },
+	  
+	  handleDelete(index, row){
+		  this.actionLoading = true
+		  $.ajax({
+            type : "DELETE",
+            contentType: "application/json;charset=UTF-8",
+            url : `http://localhost:22006/svn/api/product/${row.id}`,
+			headers: {token: JSON.parse(window.sessionStorage.getItem('accountInfo')).token || ""},
+            success : function(result) {
+			   vm_1.actionLoading = false
+			   if(result.status != 0) {
+				   vm_1.$message({message: result.error,type: 'error'});
+				   return
+				}				
+                vm_1.$message({message: '删除成功！',type: 'success'});
+				vm_1.handleTableLoad();
+            },
+            error : function(e){
+				vm_1.actionLoading = false
+                vm_1.$message({message: '删除失败！',type: 'error'});
+                console.log(e);
+            }
+          });			  
+		  
+	  },
+	  handleTableLoad() {
+          this.actionLoading = true
+		  $.ajax({
+            type : "GET",
+            dataType: "JSON",
+            url : "http://localhost:22006/svn/api/product/_searchAll",
+			headers: {token: JSON.parse(window.sessionStorage.getItem('accountInfo')).token || ""},
+            success : function(result) {
+			   vm_1.actionLoading = false
+			   if(result.status != 0) {return}
+			   vm_1.productTable.tableData = result.data
+			   vm_1.productTable.totalSize = result.data.length
+			   
+            },
+            error : function(e){
+			    vm_1.actionLoading = false
+                console.log(e);
+            }
+          });	
+	  },
 	  handleLogTimeout() {
 		 vm_1.$message({message: '请重新登录！',type: 'error'});
 		 $("#mainContainer").hide();
 		 $(".log-page").show() 
 	  }
-    }
+    },
+	created: function(){
+          this.actionLoading = true
+		  $.ajax({
+            type : "GET",
+            dataType: "JSON",
+            url : "http://localhost:22006/svn/api/product/_searchAll",
+			headers: {token: JSON.parse(window.sessionStorage.getItem('accountInfo')).token || ""},
+            success : function(result) {
+			   vm_1.actionLoading = false
+			   if(result.status != 0) {return}
+			   vm_1.productTable.tableData = result.data
+			   vm_1.productTable.totalSize = result.data.length
+            },
+            error : function(e){
+			    vm_1.actionLoading = false
+                console.log(e);
+            }
+          });	 
+	}
   });
 
 

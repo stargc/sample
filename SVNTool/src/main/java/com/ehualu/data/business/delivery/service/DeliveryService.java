@@ -154,11 +154,11 @@ public class DeliveryService {
         SearchResp resp = new SearchResp();
         DeliveryInfoViewExample example = new DeliveryInfoViewExample();
         DeliveryInfoViewExample.Criteria criteria = example.createCriteria();
-        if (req.getUserId() != 0){
-            criteria.andUserIdEqualTo(req.getUserId());
+        if (StringUtils.isNotBlank(req.getUserId())){
+            criteria.andUserIdEqualTo(Integer.valueOf(req.getUserId()));
         }
-        if (req.getProductId() != 0){
-            criteria.andProductIdEqualTo(req.getProductId());
+        if (StringUtils.isNotBlank(req.getProductId())){
+            criteria.andProductIdEqualTo(Integer.valueOf(req.getProductId()));
         }
         if (StringUtils.isNotBlank(req.getProjectCode())){
             criteria.andProjectCodeEqualTo(req.getProjectCode());

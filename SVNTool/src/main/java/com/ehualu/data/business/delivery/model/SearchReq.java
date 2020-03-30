@@ -8,8 +8,8 @@ import lombok.Data;
 @Data
 public class SearchReq {
 
-    public int userId;
-    public int productId;
+    public String userId;
+    public String productId;
     public String projectCode;
 
     public int index;
