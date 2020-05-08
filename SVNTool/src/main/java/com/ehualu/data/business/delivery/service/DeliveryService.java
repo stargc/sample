@@ -118,7 +118,7 @@ public class DeliveryService {
         });
         DeliveryResp resp = new DeliveryResp();
         resp.setOverdueDate(overdueDate);
-        resp.setRepositoryUrl(deliveryPath);
+        resp.setRepositoryUrl(svnBasePath + deliveryPath);
         resp.setSvnUser(String.join(",",userNameList));
         return resp;
     }

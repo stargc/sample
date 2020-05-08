@@ -5,4 +5,4 @@ server:
   port: 22003
 
 elasticsearch:
-  address: 10.150.27.223:9200
+  address: 172.38.50.223:9200

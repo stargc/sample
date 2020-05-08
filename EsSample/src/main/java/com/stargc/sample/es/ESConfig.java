@@ -39,11 +39,10 @@ public class ESConfig {
     @Bean
     public RestClientBuilder restClientBuilder() {
         HttpHost[] hosts = Arrays.stream(address)
-                .filter(addr -> !addr.equals("10.150.27.224:9200"))
                 .map(this::makeHttpHost)
                 .filter(Objects::nonNull)
                 .toArray(HttpHost[]::new);
-        log.debug("hosts:{}", Arrays.toString(hosts));
+        log.info("hosts:{}", Arrays.toString(hosts));
         //配置权限验证
 //        credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
         RestClientBuilder restClientBuilder = RestClient.builder(hosts).setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {

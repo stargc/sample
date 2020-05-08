@@ -8,6 +8,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.util.CollectionUtils;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -40,7 +41,7 @@ public class ESSearchService {
             SearchRequest request = new SearchRequest();
             //索引
             request.indices("systemlog");
-            sourceBuilder.from(1);
+            sourceBuilder.from(0);
             sourceBuilder.size();
 
             BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
@@ -60,9 +61,48 @@ public class ESSearchService {
                 result = Collections.emptyList();
             }
             //获取source
-            result = Arrays.stream(response.getHits().getHits()).map(b -> {
-                return b.getSourceAsMap();
-            }).collect(Collectors.toList());
+            result = Arrays.stream(response.getHits().getHits()).map(b -> b.getSourceAsMap()).collect(Collectors.toList());
+        } catch (IOException e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+        }
+        return result;
+    }
+
+
+    public List<Map<String, Object>> multiSearch(String searchText) {
+        List<Map<String, Object>> result = Collections.EMPTY_LIST;
+        try {
+            SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+            SearchRequest request = new SearchRequest();
+            //索引
+            request.indices("systemlog");
+            //分页
+            sourceBuilder.from(0);
+            sourceBuilder.size(10);
+
+//            BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+//            boolQueryBuilder.must(QueryBuilders.wildcardQuery("bussiness","test1"));
+//            sourceBuilder.query(boolQueryBuilder);
+
+            //全文检索
+            MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(searchText);
+            sourceBuilder.query(multiMatchQueryBuilder);
+
+            //按评分排序
+            sourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));
+
+            //各种组合条件
+            request.source(sourceBuilder);
+            //请求
+            log.info(String.format("查询条件：%s",request.source().toString()));
+            SearchResponse response = restHighLevelClient.search(request);
+            //解析返回
+            if (response.status() != RestStatus.OK || response.getHits().getTotalHits() <= 0) {
+                result = Collections.emptyList();
+            }
+            log.info("获取结果总数：{}",response.getHits().getTotalHits() );
+            //获取source
+            result = Arrays.stream(response.getHits().getHits()).map(b -> b.getSourceAsMap()).collect(Collectors.toList());
         } catch (IOException e) {
             log.error(ExceptionUtils.getStackTrace(e));
         }
@@ -131,15 +171,15 @@ public class ESSearchService {
                 sourceBuilder.fetchSource(includeFields, excludeFields);
             }
 
-            SearchRequest rq = new SearchRequest();
+            SearchRequest request = new SearchRequest();
             //索引
-            rq.indices(index);
+            request.indices(index);
             //各种组合条件
-            rq.source(sourceBuilder);
+            request.source(sourceBuilder);
 
             //请求
-            System.out.println(rq.source().toString());
-            SearchResponse rp = restHighLevelClient.search(rq);
+            log.info(String.format("查询条件：%s",request.source().toString()));
+            SearchResponse rp = restHighLevelClient.search(request);
 
             //解析返回
             if (rp.status() != RestStatus.OK || rp.getHits().getTotalHits() <= 0) {

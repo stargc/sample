@@ -3,8 +3,6 @@ $(document).ready(function(){
 		$(".log-page").hide()
 		$("#mainContainer").show();
     }
-			$(".log-page").hide()
-		$("#mainContainer").show();
   let vm = new Vue ({
 	el: "#logMain",
     data() {
