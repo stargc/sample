@@ -3,11 +3,8 @@ package com.stargc.sample.es;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -34,30 +31,22 @@ public class ESConfig {
      * 使用冒号隔开ip和端口
      */
     @Value("${elasticsearch.address}")
-    private String[] address;
+    private String[] addresses;
 
     @Bean
     public RestClientBuilder restClientBuilder() {
-        HttpHost[] hosts = Arrays.stream(address)
+        HttpHost[] hosts = Arrays.stream(addresses)
                 .map(this::makeHttpHost)
                 .filter(Objects::nonNull)
                 .toArray(HttpHost[]::new);
         log.info("hosts:{}", Arrays.toString(hosts));
-        //配置权限验证
-//        credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
-        RestClientBuilder restClientBuilder = RestClient.builder(hosts).setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
-            @Override
-            public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
-                return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
-            }
-        });
-        return restClientBuilder;
+        return RestClient.builder(hosts).setHttpClientConfigCallback(
+                httpClientBuilder -> httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider));
     }
 
 
     @Bean(name = "highLevelClient")
     public RestHighLevelClient highLevelClient(@Autowired RestClientBuilder restClientBuilder) {
-//        restClientBuilder.setMaxRetryTimeoutMillis(60000);
         return new RestHighLevelClient(restClientBuilder);
     }
 
