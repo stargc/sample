@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: ehl-population-collection
+  datasource:
+    druid:
+      reset-stat-enable: true
+      filters: stat,wall,slf4j
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: admin
+management:
+  endpoint:
+    consul:
+      enabled: false
+
+  endpoints:
+    web:
+      exposure:
+        #默认放开所有端点
+        include: '*'

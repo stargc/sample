@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehualu.data.business.resource.dao.FieldMapper" >
+  <resultMap id="BaseResultMap" type="com.ehualu.data.business.resource.model.Field" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="des" property="des" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="dict_name" property="dictName" jdbcType="VARCHAR" />
+    <result column="sample_data1" property="sampleData1" jdbcType="VARCHAR" />
+    <result column="sample_data2" property="sampleData2" jdbcType="VARCHAR" />
+    <result column="sample_data3" property="sampleData3" jdbcType="VARCHAR" />
+    <result column="sample_data4" property="sampleData4" jdbcType="VARCHAR" />
+    <result column="sample_data5" property="sampleData5" jdbcType="VARCHAR" />
+    <result column="sample_data6" property="sampleData6" jdbcType="VARCHAR" />
+    <result column="sample_data7" property="sampleData7" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, table_name, name, des, type, dict_name, sample_data1, sample_data2, sample_data3, 
+    sample_data4, sample_data5, sample_data6, sample_data7
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ehualu.data.business.resource.model.FieldExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jy_field
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ehualu.data.business.resource.model.FieldExample" >
+    delete from jy_field
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ehualu.data.business.resource.model.Field" useGeneratedKeys="true" keyProperty="id" >
+    insert into jy_field (table_name, name, des, 
+      type, dict_name, sample_data1, 
+      sample_data2, sample_data3, sample_data4, 
+      sample_data5, sample_data6, sample_data7
+      )
+    values (#{tableName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{dictName,jdbcType=VARCHAR}, #{sampleData1,jdbcType=VARCHAR}, 
+      #{sampleData2,jdbcType=VARCHAR}, #{sampleData3,jdbcType=VARCHAR}, #{sampleData4,jdbcType=VARCHAR}, 
+      #{sampleData5,jdbcType=VARCHAR}, #{sampleData6,jdbcType=VARCHAR}, #{sampleData7,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ehualu.data.business.resource.model.Field" useGeneratedKeys="true" keyProperty="id" >
+    insert into jy_field
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tableName != null" >
+        table_name,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="des != null" >
+        des,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="dictName != null" >
+        dict_name,
+      </if>
+      <if test="sampleData1 != null" >
+        sample_data1,
+      </if>
+      <if test="sampleData2 != null" >
+        sample_data2,
+      </if>
+      <if test="sampleData3 != null" >
+        sample_data3,
+      </if>
+      <if test="sampleData4 != null" >
+        sample_data4,
+      </if>
+      <if test="sampleData5 != null" >
+        sample_data5,
+      </if>
+      <if test="sampleData6 != null" >
+        sample_data6,
+      </if>
+      <if test="sampleData7 != null" >
+        sample_data7,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tableName != null" >
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="des != null" >
+        #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null" >
+        #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData1 != null" >
+        #{sampleData1,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData2 != null" >
+        #{sampleData2,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData3 != null" >
+        #{sampleData3,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData4 != null" >
+        #{sampleData4,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData5 != null" >
+        #{sampleData5,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData6 != null" >
+        #{sampleData6,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData7 != null" >
+        #{sampleData7,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ehualu.data.business.resource.model.FieldExample" resultType="java.lang.Integer" >
+    select count(*) from jy_field
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update jy_field
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.tableName != null" >
+        table_name = #{record.tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.des != null" >
+        des = #{record.des,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictName != null" >
+        dict_name = #{record.dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData1 != null" >
+        sample_data1 = #{record.sampleData1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData2 != null" >
+        sample_data2 = #{record.sampleData2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData3 != null" >
+        sample_data3 = #{record.sampleData3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData4 != null" >
+        sample_data4 = #{record.sampleData4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData5 != null" >
+        sample_data5 = #{record.sampleData5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData6 != null" >
+        sample_data6 = #{record.sampleData6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData7 != null" >
+        sample_data7 = #{record.sampleData7,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update jy_field
+    set id = #{record.id,jdbcType=INTEGER},
+      table_name = #{record.tableName,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      des = #{record.des,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      dict_name = #{record.dictName,jdbcType=VARCHAR},
+      sample_data1 = #{record.sampleData1,jdbcType=VARCHAR},
+      sample_data2 = #{record.sampleData2,jdbcType=VARCHAR},
+      sample_data3 = #{record.sampleData3,jdbcType=VARCHAR},
+      sample_data4 = #{record.sampleData4,jdbcType=VARCHAR},
+      sample_data5 = #{record.sampleData5,jdbcType=VARCHAR},
+      sample_data6 = #{record.sampleData6,jdbcType=VARCHAR},
+      sample_data7 = #{record.sampleData7,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
