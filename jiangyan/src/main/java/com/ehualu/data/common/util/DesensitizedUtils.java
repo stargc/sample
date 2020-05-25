@@ -64,9 +64,6 @@ public class DesensitizedUtils {
         return StringUtils.left(num, 3).concat(StringUtils.removeStart(StringUtils.leftPad(StringUtils.right(num, 4), StringUtils.length(num), "*"), "***"));
     }
 
-    public static void main(String[] args) {
-        System.out.println(mobilePhone("15122201963"));
-    }
 
     /**
      * 【地址】只显示到地区，不显示详细地址，比如：北京市海淀区****
@@ -140,6 +137,36 @@ public class DesensitizedUtils {
         return StringUtils.left(carNumber, 2).
                 concat(StringUtils.removeStart(StringUtils.leftPad(StringUtils.right(carNumber, 1), StringUtils.length(carNumber), "*"), "**"));
 
+    }
+    /**
+     * 长字符传 脱敏。 保留前200个字符
+     *
+     * @param bigText
+     * @return
+     */
+    public static String bigText(String bigText) {
+        if (StringUtils.isBlank(bigText)) {
+            return "";
+        }
+        if (bigText.length() < 200) return bigText;
+        String text = StringUtils.left(bigText, 200);
+        return text.concat("***");
+    }
+
+    public static String desensitized(String str){
+        if (StringUtils.isBlank(str)) return str;
+        if (str.length() > 9){
+            String start = StringUtils.left(str, 6);
+            int num = str.length() - 3;
+            String end = StringUtils.right(str,3);
+            return StringUtils.rightPad(start,num, "***").concat(end);
+        }
+        return str;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(bigText("15122201963"));
+        System.out.println(bigText("我局在侦查施全雷控告朱某职务侵占、挪用资金案中发现，在2014年8月29日农武安置小区二期土建工程招标过程中朱雨兴、施全雷同时挂靠三家公司进行投标，并共同筹措缴纳三家投标公司保证金每家580万元，最终由二人挂靠的江苏荣泽建筑工程有限公司中标。朱雨兴、施全雷涉嫌串通投标罪。我局在侦查施全雷控告朱某职务侵占、挪用资金案中发现，在2014年8月29日农武安置小区二期土建工程招标过程中朱雨兴、施全雷同时挂靠三家公司进行投标，并共同筹措缴纳三家投标公司保证金每家580万元，最终由二人挂靠的江苏荣泽建筑工程有限公司中标。朱雨兴、施全雷涉嫌串通投标罪。"));
     }
 }
 

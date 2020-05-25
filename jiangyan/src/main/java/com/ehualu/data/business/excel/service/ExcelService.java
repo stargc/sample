@@ -1,6 +1,7 @@
-package com.ehualu.data.business.excel;
+package com.ehualu.data.business.excel.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ehualu.data.business.excel.model.SampleBean;
 import com.ehualu.data.common.util.CheckUtil;
 import com.ehualu.data.common.util.DesensitizedUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -49,11 +50,11 @@ public class ExcelService {
             // 读取excel中的数据
             for (int j = 0; j < 55; j++) {
                 Sheet sheet = workbook.getSheetAt(j);
-                System.out.println("do ==" + sheet.getSheetName());
+                System.out.println("excel ==" + sheet.getSheetName());
                 Map<String, Integer> map = getRowNumberMap(sheet);
                 String json = getValue(sheet);
                 if (StringUtils.isBlank(json)) continue;
-                Bean bean = JSONObject.parseObject(json, Bean.class);
+                SampleBean bean = JSONObject.parseObject(json, SampleBean.class);
                 AtomicInteger i = new AtomicInteger();
                 Map<String, Integer> finalMap = map;
                 bean.getData().forEach(data -> {
