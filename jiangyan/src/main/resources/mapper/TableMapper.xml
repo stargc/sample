@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehualu.data.business.resource.dao.TableMapper" >
+  <resultMap id="BaseResultMap" type="com.ehualu.data.business.resource.model.Table" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="resource_code" property="resourceCode" jdbcType="VARCHAR" />
+    <result column="resource_name" property="resourceName" jdbcType="VARCHAR" />
+    <result column="resource_table_code" property="resourceTableCode" jdbcType="VARCHAR" />
+    <result column="resource_table_name" property="resourceTableName" jdbcType="VARCHAR" />
+    <result column="table_physical_name" property="tablePhysicalName" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="BIGINT" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, resource_code, resource_name, resource_table_code, resource_table_name, table_physical_name, 
+    count, level
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ehualu.data.business.resource.model.TableExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jy_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null and pageSize != null and pageSize != 0">
+      limit #{startRow},#{pageSize}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ehualu.data.business.resource.model.TableExample" >
+    delete from jy_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ehualu.data.business.resource.model.Table" useGeneratedKeys="true" keyProperty="id" >
+    insert into jy_table (resource_code, resource_name, resource_table_code, 
+      resource_table_name, table_physical_name, count, 
+      level)
+    values (#{resourceCode,jdbcType=VARCHAR}, #{resourceName,jdbcType=VARCHAR}, #{resourceTableCode,jdbcType=VARCHAR}, 
+      #{resourceTableName,jdbcType=VARCHAR}, #{tablePhysicalName,jdbcType=VARCHAR}, #{count,jdbcType=BIGINT}, 
+      #{level,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ehualu.data.business.resource.model.Table" useGeneratedKeys="true" keyProperty="id" >
+    insert into jy_table
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resourceCode != null" >
+        resource_code,
+      </if>
+      <if test="resourceName != null" >
+        resource_name,
+      </if>
+      <if test="resourceTableCode != null" >
+        resource_table_code,
+      </if>
+      <if test="resourceTableName != null" >
+        resource_table_name,
+      </if>
+      <if test="tablePhysicalName != null" >
+        table_physical_name,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resourceCode != null" >
+        #{resourceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceName != null" >
+        #{resourceName,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceTableCode != null" >
+        #{resourceTableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceTableName != null" >
+        #{resourceTableName,jdbcType=VARCHAR},
+      </if>
+      <if test="tablePhysicalName != null" >
+        #{tablePhysicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=BIGINT},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ehualu.data.business.resource.model.TableExample" resultType="java.lang.Integer" >
+    select count(*) from jy_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update jy_table
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.resourceCode != null" >
+        resource_code = #{record.resourceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resourceName != null" >
+        resource_name = #{record.resourceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resourceTableCode != null" >
+        resource_table_code = #{record.resourceTableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resourceTableName != null" >
+        resource_table_name = #{record.resourceTableName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tablePhysicalName != null" >
+        table_physical_name = #{record.tablePhysicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=BIGINT},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update jy_table
+    set id = #{record.id,jdbcType=INTEGER},
+      resource_code = #{record.resourceCode,jdbcType=VARCHAR},
+      resource_name = #{record.resourceName,jdbcType=VARCHAR},
+      resource_table_code = #{record.resourceTableCode,jdbcType=VARCHAR},
+      resource_table_name = #{record.resourceTableName,jdbcType=VARCHAR},
+      table_physical_name = #{record.tablePhysicalName,jdbcType=VARCHAR},
+      count = #{record.count,jdbcType=BIGINT},
+      level = #{record.level,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

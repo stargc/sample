@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehualu.data.business.resource.dao.ColumnMapper" >
+  <resultMap id="BaseResultMap" type="com.ehualu.data.business.resource.model.Column" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="resource_name" property="resourceName" jdbcType="VARCHAR" />
+    <result column="resource_table_name" property="resourceTableName" jdbcType="VARCHAR" />
+    <result column="resource_table_code" property="resourceTableCode" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="des" property="des" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="length" property="length" jdbcType="INTEGER" />
+    <result column="dict_table_code" property="dictTableCode" jdbcType="VARCHAR" />
+    <result column="dict_table_name" property="dictTableName" jdbcType="VARCHAR" />
+    <result column="dict_group_code" property="dictGroupCode" jdbcType="VARCHAR" />
+    <result column="dict_group_name" property="dictGroupName" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="sample_data1" property="sampleData1" jdbcType="VARCHAR" />
+    <result column="sample_data2" property="sampleData2" jdbcType="VARCHAR" />
+    <result column="sample_data3" property="sampleData3" jdbcType="VARCHAR" />
+    <result column="sample_data4" property="sampleData4" jdbcType="VARCHAR" />
+    <result column="sample_data5" property="sampleData5" jdbcType="VARCHAR" />
+    <result column="sample_data6" property="sampleData6" jdbcType="VARCHAR" />
+    <result column="sample_data7" property="sampleData7" jdbcType="VARCHAR" />
+    <result column="sample_data8" property="sampleData8" jdbcType="VARCHAR" />
+    <result column="sample_data9" property="sampleData9" jdbcType="VARCHAR" />
+    <result column="sample_data10" property="sampleData10" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, resource_name, resource_table_name, resource_table_code, name, des, type, length, 
+    dict_table_code, dict_table_name, dict_group_code, dict_group_name, level, sample_data1, 
+    sample_data2, sample_data3, sample_data4, sample_data5, sample_data6, sample_data7, 
+    sample_data8, sample_data9, sample_data10
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ehualu.data.business.resource.model.ColumnExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jy_column
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ehualu.data.business.resource.model.ColumnExample" >
+    delete from jy_column
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ehualu.data.business.resource.model.Column" useGeneratedKeys="true" keyProperty="id" >
+    insert into jy_column (resource_name, resource_table_name, 
+      resource_table_code, name, des, 
+      type, length, dict_table_code, 
+      dict_table_name, dict_group_code, dict_group_name, 
+      level, sample_data1, sample_data2, 
+      sample_data3, sample_data4, sample_data5, 
+      sample_data6, sample_data7, sample_data8, 
+      sample_data9, sample_data10)
+    values (#{resourceName,jdbcType=VARCHAR}, #{resourceTableName,jdbcType=VARCHAR}, 
+      #{resourceTableCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{length,jdbcType=INTEGER}, #{dictTableCode,jdbcType=VARCHAR}, 
+      #{dictTableName,jdbcType=VARCHAR}, #{dictGroupCode,jdbcType=VARCHAR}, #{dictGroupName,jdbcType=VARCHAR}, 
+      #{level,jdbcType=VARCHAR}, #{sampleData1,jdbcType=VARCHAR}, #{sampleData2,jdbcType=VARCHAR}, 
+      #{sampleData3,jdbcType=VARCHAR}, #{sampleData4,jdbcType=VARCHAR}, #{sampleData5,jdbcType=VARCHAR}, 
+      #{sampleData6,jdbcType=VARCHAR}, #{sampleData7,jdbcType=VARCHAR}, #{sampleData8,jdbcType=VARCHAR}, 
+      #{sampleData9,jdbcType=VARCHAR}, #{sampleData10,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ehualu.data.business.resource.model.Column" useGeneratedKeys="true" keyProperty="id" >
+    insert into jy_column
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resourceName != null" >
+        resource_name,
+      </if>
+      <if test="resourceTableName != null" >
+        resource_table_name,
+      </if>
+      <if test="resourceTableCode != null" >
+        resource_table_code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="des != null" >
+        des,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="dictTableCode != null" >
+        dict_table_code,
+      </if>
+      <if test="dictTableName != null" >
+        dict_table_name,
+      </if>
+      <if test="dictGroupCode != null" >
+        dict_group_code,
+      </if>
+      <if test="dictGroupName != null" >
+        dict_group_name,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="sampleData1 != null" >
+        sample_data1,
+      </if>
+      <if test="sampleData2 != null" >
+        sample_data2,
+      </if>
+      <if test="sampleData3 != null" >
+        sample_data3,
+      </if>
+      <if test="sampleData4 != null" >
+        sample_data4,
+      </if>
+      <if test="sampleData5 != null" >
+        sample_data5,
+      </if>
+      <if test="sampleData6 != null" >
+        sample_data6,
+      </if>
+      <if test="sampleData7 != null" >
+        sample_data7,
+      </if>
+      <if test="sampleData8 != null" >
+        sample_data8,
+      </if>
+      <if test="sampleData9 != null" >
+        sample_data9,
+      </if>
+      <if test="sampleData10 != null" >
+        sample_data10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resourceName != null" >
+        #{resourceName,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceTableName != null" >
+        #{resourceTableName,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceTableCode != null" >
+        #{resourceTableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="des != null" >
+        #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=INTEGER},
+      </if>
+      <if test="dictTableCode != null" >
+        #{dictTableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictTableName != null" >
+        #{dictTableName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictGroupCode != null" >
+        #{dictGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictGroupName != null" >
+        #{dictGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData1 != null" >
+        #{sampleData1,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData2 != null" >
+        #{sampleData2,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData3 != null" >
+        #{sampleData3,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData4 != null" >
+        #{sampleData4,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData5 != null" >
+        #{sampleData5,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData6 != null" >
+        #{sampleData6,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData7 != null" >
+        #{sampleData7,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData8 != null" >
+        #{sampleData8,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData9 != null" >
+        #{sampleData9,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleData10 != null" >
+        #{sampleData10,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ehualu.data.business.resource.model.ColumnExample" resultType="java.lang.Integer" >
+    select count(*) from jy_column
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update jy_column
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.resourceName != null" >
+        resource_name = #{record.resourceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resourceTableName != null" >
+        resource_table_name = #{record.resourceTableName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resourceTableCode != null" >
+        resource_table_code = #{record.resourceTableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.des != null" >
+        des = #{record.des,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.length != null" >
+        length = #{record.length,jdbcType=INTEGER},
+      </if>
+      <if test="record.dictTableCode != null" >
+        dict_table_code = #{record.dictTableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictTableName != null" >
+        dict_table_name = #{record.dictTableName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictGroupCode != null" >
+        dict_group_code = #{record.dictGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictGroupName != null" >
+        dict_group_name = #{record.dictGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData1 != null" >
+        sample_data1 = #{record.sampleData1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData2 != null" >
+        sample_data2 = #{record.sampleData2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData3 != null" >
+        sample_data3 = #{record.sampleData3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData4 != null" >
+        sample_data4 = #{record.sampleData4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData5 != null" >
+        sample_data5 = #{record.sampleData5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData6 != null" >
+        sample_data6 = #{record.sampleData6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData7 != null" >
+        sample_data7 = #{record.sampleData7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData8 != null" >
+        sample_data8 = #{record.sampleData8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData9 != null" >
+        sample_data9 = #{record.sampleData9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleData10 != null" >
+        sample_data10 = #{record.sampleData10,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update jy_column
+    set id = #{record.id,jdbcType=INTEGER},
+      resource_name = #{record.resourceName,jdbcType=VARCHAR},
+      resource_table_name = #{record.resourceTableName,jdbcType=VARCHAR},
+      resource_table_code = #{record.resourceTableCode,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      des = #{record.des,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      length = #{record.length,jdbcType=INTEGER},
+      dict_table_code = #{record.dictTableCode,jdbcType=VARCHAR},
+      dict_table_name = #{record.dictTableName,jdbcType=VARCHAR},
+      dict_group_code = #{record.dictGroupCode,jdbcType=VARCHAR},
+      dict_group_name = #{record.dictGroupName,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=VARCHAR},
+      sample_data1 = #{record.sampleData1,jdbcType=VARCHAR},
+      sample_data2 = #{record.sampleData2,jdbcType=VARCHAR},
+      sample_data3 = #{record.sampleData3,jdbcType=VARCHAR},
+      sample_data4 = #{record.sampleData4,jdbcType=VARCHAR},
+      sample_data5 = #{record.sampleData5,jdbcType=VARCHAR},
+      sample_data6 = #{record.sampleData6,jdbcType=VARCHAR},
+      sample_data7 = #{record.sampleData7,jdbcType=VARCHAR},
+      sample_data8 = #{record.sampleData8,jdbcType=VARCHAR},
+      sample_data9 = #{record.sampleData9,jdbcType=VARCHAR},
+      sample_data10 = #{record.sampleData10,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

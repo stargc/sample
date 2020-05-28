@@ -6,6 +6,7 @@ import com.ehualu.data.business.resource.model.Column;
 import com.ehualu.data.business.resource.model.ColumnExample;
 import com.ehualu.data.business.resource.model.Table;
 import com.ehualu.data.business.resource.model.TableExample;
+import com.ehualu.data.common.util.DesensitizedUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -32,16 +33,21 @@ public class ExcelExportService {
     private ColumnMapper columnMapper;
 
     @SneakyThrows
-    public void doExport(FileOutputStream fout) {
+    public void doExport(FileOutputStream fout,int pageNum,int pageSize) {
         HSSFWorkbook workbook = new HSSFWorkbook();
-        createSummaryTable(workbook);
+        createSummaryTable(workbook,pageNum,pageSize);
         workbook.write(fout);
+        workbook.close();
     }
 
-    private void createSummaryTable(HSSFWorkbook workbook) {
+    private void createSummaryTable(HSSFWorkbook workbook,int pageNum,int pageSize) {
         TableExample tableExample = new TableExample();
-        List<Table> tables = tableMapper.selectByExample(tableExample);
+        tableExample.createCriteria().andLevelEqualTo("1");
+        int start = (pageNum -1 ) * pageSize;
+        tableExample.setStartRow(start);
+        tableExample.setPageSize(pageSize);
 
+        List<Table> tables = tableMapper.selectByExample(tableExample);
         HSSFSheet sheet = workbook.createSheet("概览信息");
         String[] headers = {"序号", "表名称", "数据量", "数据来源系统", "数据来源方式", "表中文名称"
                 , "自增字段", "主键字段"};
@@ -49,6 +55,7 @@ public class ExcelExportService {
 
         AtomicInteger rowIndex = new AtomicInteger(1);
         tables.forEach(table -> {
+            log.info("export table == " + table.getResourceName());
             HSSFRow row = sheet.createRow(rowIndex.get());
             AtomicInteger cellIndex = new AtomicInteger(0);
             setCellValue(row.createCell(cellIndex.getAndIncrement()), rowIndex.get());
@@ -57,7 +64,7 @@ public class ExcelExportService {
             rowIndex.getAndIncrement();
 
             ColumnExample columnExample = new ColumnExample();
-            columnExample.createCriteria().andResourceNameEqualTo(table.getResourceName());
+            columnExample.createCriteria().andResourceNameEqualTo(table.getResourceName()).andLevelEqualTo("1");
             List<Column> columnList = columnMapper.selectByExample(columnExample);
             addColumnInfo(workbook,table,columnList);
         });
@@ -84,7 +91,8 @@ public class ExcelExportService {
     }
 
     private void addColumnInfo(HSSFWorkbook workbook,Table table,List<Column> columnList){
-        HSSFSheet sheet = workbook.createSheet(table.getResourceName());
+        String resourceName = StringUtils.isBlank(table.getResourceName()) ? table.getResourceTableName() : table.getResourceName();
+        HSSFSheet sheet = workbook.createSheet(DesensitizedUtils.replaceSymbol(resourceName));
         addColumnHeader(sheet);
         AtomicInteger rowIndex = new AtomicInteger(1);
         columnList.forEach(column -> {

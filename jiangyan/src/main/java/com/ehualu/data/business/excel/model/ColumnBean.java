@@ -16,6 +16,8 @@ public class ColumnBean {
     private String dataMetaName;
     private String dataMetaFlagCode;
 
+    private String dictTableCode;
+    private String dictGroupValue;
     private String dictTableName;
 
 }

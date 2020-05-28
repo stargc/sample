@@ -9,6 +9,7 @@ import com.ehualu.data.business.resource.model.Table;
 import com.ehualu.data.common.util.CheckUtil;
 import com.ehualu.data.common.util.DesensitizedUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,9 +59,9 @@ public class TableService {
                 column.setType(item.getDataItemType());
                 column.setLength(item.getLength());
 
-                column.setDictGroupCode(item.getDataMetaFlagCode());
-                column.setDictGroupName(item.getDataMetaName());
-                column.setDictTableCode(item.getDictTableName());
+                column.setDictGroupName(item.getDictGroupValue());
+                column.setDictTableCode(item.getDictTableCode());
+                column.setDictTableName(item.getDictTableName());
 
                 columnMap.put(column.getName(), column);
             });

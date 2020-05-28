@@ -1,11 +1,10 @@
 package com.ehualu.data.business.excel;
 
+import com.ehualu.data.business.excel.model.InfoBean;
+import com.ehualu.data.business.excel.model.JsonBean;
+import com.ehualu.data.business.excel.service.*;
 import com.ehualu.data.business.excel.test.Entity;
 import com.ehualu.data.business.excel.test.TestParam;
-import com.ehualu.data.business.excel.service.ExcelExportService;
-import com.ehualu.data.business.excel.service.ExcelResourceService;
-import com.ehualu.data.business.excel.service.ExcelService;
-import com.ehualu.data.business.excel.service.TableService;
 import com.ehualu.data.business.excel.test.bean;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -38,15 +37,9 @@ public class ExcelController {
     private TableService tableService;
     @Autowired
     private ExcelExportService exportService;
+    @Autowired
+    private JsonResourceService jsonResourceService;
 
-    @SneakyThrows
-    @PostMapping("doExcel2")
-    public String doExcel2(){
-        File file = new File("D:\\数据项整理.xls");
-        FileOutputStream fout = new FileOutputStream("D:\\数据项整理1.xls");
-        excelService.fillExcel(new FileInputStream(file.getPath()),file.getName(),fout);
-        return "SUCCESS";
-    }
     @SneakyThrows
     @PostMapping("doExcel")
     public String doExcel(){
@@ -55,11 +48,18 @@ public class ExcelController {
                 excelResourceService.readExcel(new FileInputStream(file.getPath()),file.getName()));
         return "SUCCESS";
     }
+
+    @PostMapping("doExcel1")
+    public String doExcel1(){
+        jsonResourceService.readJson();
+        return "SUCCESS";
+    }
+
     @SneakyThrows
     @GetMapping("export")
-    public String export(String path){
+    public String export(String path,int pageNum,int pageSize){
         FileOutputStream fout = new FileOutputStream(path);
-        exportService.doExport(fout);
+        exportService.doExport(fout,pageNum,pageSize);
         return "SUCCESS";
     }
 

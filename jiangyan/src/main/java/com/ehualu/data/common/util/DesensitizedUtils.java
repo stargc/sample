@@ -2,6 +2,9 @@ package com.ehualu.data.common.util;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * @Title: DesensitizedUtils
@@ -164,9 +167,14 @@ public class DesensitizedUtils {
         return str;
     }
 
+    public static String replaceSymbol(String str){
+        if (StringUtils.isBlank(str)) return str;
+        String regEx="[\n`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。， 、？]";
+        return str.replaceAll(regEx,"").trim();
+    }
+
     public static void main(String[] args) {
-        System.out.println(bigText("15122201963"));
-        System.out.println(bigText("我局在侦查施全雷控告朱某职务侵占、挪用资金案中发现，在2014年8月29日农武安置小区二期土建工程招标过程中朱雨兴、施全雷同时挂靠三家公司进行投标，并共同筹措缴纳三家投标公司保证金每家580万元，最终由二人挂靠的江苏荣泽建筑工程有限公司中标。朱雨兴、施全雷涉嫌串通投标罪。我局在侦查施全雷控告朱某职务侵占、挪用资金案中发现，在2014年8月29日农武安置小区二期土建工程招标过程中朱雨兴、施全雷同时挂靠三家公司进行投标，并共同筹措缴纳三家投标公司保证金每家580万元，最终由二人挂靠的江苏荣泽建筑工程有限公司中标。朱雨兴、施全雷涉嫌串通投标罪。"));
+        System.out.println(replaceSymbol("[asdasd]"));
     }
 }
 
