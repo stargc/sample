@@ -1,0 +1,12 @@
+
+server:
+  port: 22010
+  server:
+    servlet:
+      context-path: /ferry
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
+

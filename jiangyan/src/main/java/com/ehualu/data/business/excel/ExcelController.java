@@ -39,13 +39,18 @@ public class ExcelController {
     private ExcelExportService exportService;
     @Autowired
     private JsonResourceService jsonResourceService;
+    @Autowired
+    private CreateSqlService createSqlService;
+    @Autowired
+    private DictService dictService;
 
     @SneakyThrows
     @PostMapping("doExcel")
     public String doExcel(){
-        File file = new File("D:\\数据项整理.xls");
-        tableService.addData(
-                excelResourceService.readExcel(new FileInputStream(file.getPath()),file.getName()));
+//        File file = new File("D:\\数据项整理.xls");
+//        tableService.addData(
+//                excelResourceService.readExcel(new FileInputStream(file.getPath()),file.getName()));
+        tableService.addData(null);
         return "SUCCESS";
     }
 
@@ -53,6 +58,13 @@ public class ExcelController {
     public String doExcel1(){
         jsonResourceService.readJson();
         return "SUCCESS";
+    }
+
+    @PostMapping("getCreateSql")
+    public String getCreateSql(){
+        createSqlService.createSql();
+        return "SUCCESS";
+//        return createSqlService.createSql();
     }
 
     @SneakyThrows

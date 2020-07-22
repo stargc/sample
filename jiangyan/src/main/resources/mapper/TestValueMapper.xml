@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ehualu.data.business.resource.dao.DictMapper" >
-  <resultMap id="BaseResultMap" type="com.ehualu.data.business.resource.model.Dict" >
+<mapper namespace="com.ehualu.data.business.resource.dao.TestValueMapper" >
+  <resultMap id="BaseResultMap" type="com.ehualu.data.business.resource.model.TestValue" >
     <result column="id" property="id" jdbcType="INTEGER" />
-    <result column="table_name" property="tableName" jdbcType="VARCHAR" />
-    <result column="dict_group_code" property="dictGroupCode" jdbcType="VARCHAR" />
-    <result column="dict_group_name" property="dictGroupName" jdbcType="VARCHAR" />
-    <result column="dict_code" property="dictCode" jdbcType="VARCHAR" />
-    <result column="dict_value" property="dictValue" jdbcType="VARCHAR" />
+    <result column="text1" property="text1" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,15 +64,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, table_name, dict_group_code, dict_group_name, dict_code, dict_value
+    id, text1
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ehualu.data.business.resource.model.DictExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ehualu.data.business.resource.model.TestValueExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from jy_dict
+    from t_test_value
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,81 +80,43 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.ehualu.data.business.resource.model.DictExample" >
-    delete from jy_dict
+  <delete id="deleteByExample" parameterType="com.ehualu.data.business.resource.model.TestValueExample" >
+    delete from t_test_value
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ehualu.data.business.resource.model.Dict" useGeneratedKeys="true" keyProperty="id" >
-    insert into jy_dict (table_name, dict_group_code, dict_group_name, 
-      dict_code, dict_value)
-    values (#{tableName,jdbcType=VARCHAR}, #{dictGroupCode,jdbcType=VARCHAR}, #{dictGroupName,jdbcType=VARCHAR}, 
-      #{dictCode,jdbcType=VARCHAR}, #{dictValue,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.ehualu.data.business.resource.model.TestValue" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_test_value (text1)
+    values (#{text1,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.ehualu.data.business.resource.model.Dict" useGeneratedKeys="true" keyProperty="id" >
-    insert into jy_dict
+  <insert id="insertSelective" parameterType="com.ehualu.data.business.resource.model.TestValue" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_test_value
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="tableName != null" >
-        table_name,
-      </if>
-      <if test="dictGroupCode != null" >
-        dict_group_code,
-      </if>
-      <if test="dictGroupName != null" >
-        dict_group_name,
-      </if>
-      <if test="dictCode != null" >
-        dict_code,
-      </if>
-      <if test="dictValue != null" >
-        dict_value,
+      <if test="text1 != null" >
+        text1,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="tableName != null" >
-        #{tableName,jdbcType=VARCHAR},
-      </if>
-      <if test="dictGroupCode != null" >
-        #{dictGroupCode,jdbcType=VARCHAR},
-      </if>
-      <if test="dictGroupName != null" >
-        #{dictGroupName,jdbcType=VARCHAR},
-      </if>
-      <if test="dictCode != null" >
-        #{dictCode,jdbcType=VARCHAR},
-      </if>
-      <if test="dictValue != null" >
-        #{dictValue,jdbcType=VARCHAR},
+      <if test="text1 != null" >
+        #{text1,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ehualu.data.business.resource.model.DictExample" resultType="java.lang.Integer" >
-    select count(*) from jy_dict
+  <select id="countByExample" parameterType="com.ehualu.data.business.resource.model.TestValueExample" resultType="java.lang.Integer" >
+    select count(*) from t_test_value
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update jy_dict
+    update t_test_value
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.tableName != null" >
-        table_name = #{record.tableName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.dictGroupCode != null" >
-        dict_group_code = #{record.dictGroupCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.dictGroupName != null" >
-        dict_group_name = #{record.dictGroupName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.dictCode != null" >
-        dict_code = #{record.dictCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.dictValue != null" >
-        dict_value = #{record.dictValue,jdbcType=VARCHAR},
+      <if test="record.text1 != null" >
+        text1 = #{record.text1,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -166,13 +124,9 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update jy_dict
+    update t_test_value
     set id = #{record.id,jdbcType=INTEGER},
-      table_name = #{record.tableName,jdbcType=VARCHAR},
-      dict_group_code = #{record.dictGroupCode,jdbcType=VARCHAR},
-      dict_group_name = #{record.dictGroupName,jdbcType=VARCHAR},
-      dict_code = #{record.dictCode,jdbcType=VARCHAR},
-      dict_value = #{record.dictValue,jdbcType=VARCHAR}
+      text1 = #{record.text1,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>

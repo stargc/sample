@@ -1,6 +1,6 @@
 package com.ehualu.data.business.resource.model;
 
-public class Dict {
+public class DictTest {
     private Integer id;
 
     private String tableName;
@@ -12,6 +12,8 @@ public class Dict {
     private String dictCode;
 
     private String dictValue;
+
+    private String text;
 
     public Integer getId() {
         return id;
@@ -59,5 +61,13 @@ public class Dict {
 
     public void setDictValue(String dictValue) {
         this.dictValue = dictValue == null ? null : dictValue.trim();
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text == null ? null : text.trim();
     }
 }

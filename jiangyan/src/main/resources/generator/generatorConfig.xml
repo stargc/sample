@@ -40,7 +40,7 @@
         </javaClientGenerator>
 
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
-        <table tableName="jy_column" domainObjectName="Column"
+        <table tableName="jy_dict_text" domainObjectName="DictTest"
                enableSelectByPrimaryKey="true"
                enableSelectByExample="true"
                enableCountByExample="true"
@@ -49,6 +49,14 @@
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
 
+<!--        <table tableName="jy_dict" domainObjectName="Dict"-->
+<!--               enableSelectByPrimaryKey="true"-->
+<!--               enableSelectByExample="true"-->
+<!--               enableCountByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableUpdateByExample="true">-->
+<!--            <generatedKey column="id" sqlStatement="JDBC"/>-->
+<!--        </table>-->
 <!--        <table tableName="jy_table" domainObjectName="Table"-->
 <!--               enableSelectByPrimaryKey="true"-->
 <!--               enableSelectByExample="true"-->

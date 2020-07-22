@@ -3,14 +3,14 @@ package com.ehualu.data.business.resource.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DictExample {
+public class DictTestExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public DictExample() {
+    public DictTestExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
