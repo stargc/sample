@@ -1,0 +1,41 @@
+
+server:
+  port: 22010
+  servlet:
+    context-path: /ferry
+spring:
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
+
+kafka:
+  bootstrap-servers: 172.38.40.146:9092
+  producer:
+    acks: all
+    key-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+    value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+  consumer:
+    group-id: test
+    enable-auto-commit: true
+    auto-commit-interval: 1000
+    key-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    max-poll-records: 5
+  handler:
+    thread-num: 3
+threadPool:
+  corePoolSize: 50
+  maxPoolSize: 80
+  queueCapacity: 9999
+  keepAliveSeconds: 60
+ftp:
+  client:
+    username: EDZ
+    password: 123
+    host: 192.168.232.1
+    port: 21
+  local:
+    temp-path: D:/test/
+    size-limit: 10
