@@ -21,6 +21,7 @@ import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Stream;
 
 /**
  * @author created by guanchen on 2020/7/28 16:16
@@ -58,9 +59,10 @@ public class FileStoreJob {
         //计算文件总大小
         AtomicLong fileSize = new AtomicLong();
         List<Path> files = new ArrayList<>();
+        Stream<Path> fileListStream = null;
         try {
-            Files.list(Paths.get(localTempPath))
-                    .filter(file -> file.getFileName().toString().endsWith(".file"))
+            fileListStream =  Files.list(Paths.get(localTempPath));
+            fileListStream.filter(file -> file.getFileName().toString().endsWith(".file"))
                     .forEach(path -> {
                         try {
                             if (fileSize.longValue() < sizeLimit * 1024 * 1024) {
@@ -73,6 +75,8 @@ public class FileStoreJob {
                     });
         } catch (IOException e) {
             logger.error(ExceptionUtils.getStackTrace(e));
+        } finally {
+            if (fileListStream != null) fileListStream.close();
         }
 
         if (fileSize.longValue() <= sizeLimit * 1024 * 1024 || files.isEmpty()) {
@@ -104,9 +108,7 @@ public class FileStoreJob {
 
         threadQueueNum.incrementAndGet();
         //3. 文件打包上传ftp,并清理文件夹
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
+        executor.execute(() ->{
                 try {
                     logger.info(String.format(String.format("任务%s- 开始进行打包上传", jobId.get())));
                     storeFiles(zipFoldName, zipFold);
@@ -116,7 +118,7 @@ public class FileStoreJob {
                 } catch (IOException e) {
                     logger.error(ExceptionUtils.getStackTrace(e));
                 }
-            }
+
         });
 
     }
@@ -132,13 +134,15 @@ public class FileStoreJob {
         FileStoreUtil.zip(zipFold, Paths.get(localTempPath, zipFoldName + ZIP_SUFFIX));
         FileStoreUtil.upload(client, Paths.get(localTempPath, zipFoldName + ZIP_SUFFIX));
         Files.deleteIfExists(Paths.get(localTempPath, zipFoldName + ZIP_SUFFIX));
-        Files.walk(zipFold).filter(path -> zipFold.compareTo(path) != 0).forEach(path -> {
+        Stream<Path> fileListStream = Files.walk(zipFold);
+        fileListStream.filter(path -> zipFold.compareTo(path) != 0).forEach(path -> {
             try {
                 Files.delete(path);
             } catch (IOException e) {
                 logger.error(ExceptionUtils.getStackTrace(e));
             }
         });
+        fileListStream.close();
         Files.deleteIfExists(zipFold);
     }
 
@@ -154,10 +158,7 @@ public class FileStoreJob {
         if (!ftpEnable && threadQueueNum.get() < 50){
             ftpEnable  = restart();
         }
-        if (!ftpEnable){
-            return false;
-        }
-        return true;
+        return ftpEnable;
     }
 
     public boolean pause(){

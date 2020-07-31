@@ -14,7 +14,7 @@ public class KafkaCacheDefaultHandler extends KafkaCacheHandler {
     @Override
     public void run() {
         byte[] data;
-        while (true) {
+        while (true && !Thread.currentThread().isInterrupted()) {
             try {
                 data = queue.take();
                 if (data.length > 0) {

@@ -24,18 +24,16 @@ public class KafkaCacheFileStoreHandler extends KafkaCacheHandler {
 
     @Override
     public void run() {
-        while (true) {
+        while (true && !Thread.currentThread().isInterrupted()) {
             try {
                 byte[] data = queue.take();
-                if (data == null || data.length < 0) continue;
-                logger.info("start - dispose queue data " + data);
+                if (data == null || data.length <= 0) continue;
+                logger.info("start - dispose queue data ");
                 //TODO: 解析信息 1. 大图改URL，2. 小图bindata没值的话 解析图片存到bindata里面
                 Files.write(Paths.get(localTempPath + UUID.randomUUID() + ".file.temp"), data);
                 Files.move(Paths.get(localTempPath + UUID.randomUUID() + ".file.temp"), Paths.get(localTempPath + UUID.randomUUID() + ".file"));
-                logger.info("end - dispose queue data " + data);
-            } catch (InterruptedException e) {
-                logger.error(ExceptionUtils.getStackTrace(e));
-            } catch (IOException e) {
+                logger.info("end - dispose queue data ");
+            } catch (IOException|InterruptedException e) {
                 logger.error(ExceptionUtils.getStackTrace(e));
             }
         }

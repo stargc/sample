@@ -1,6 +1,5 @@
 package com.ehualu.data.business.test;
 
-import dg.model.nano.Genericobj;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
