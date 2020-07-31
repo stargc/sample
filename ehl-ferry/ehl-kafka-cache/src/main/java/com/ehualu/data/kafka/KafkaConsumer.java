@@ -28,7 +28,10 @@ public class KafkaConsumer implements Runnable{
     private static final Logger logger = LoggerFactory.getLogger(KafkaConsumer.class);
 
 
-    @Qualifier("customExecutor")
+    @Value("${ehl.kafka.topic}")
+    private String topic;
+
+    @Qualifier("kafkaThreadExecutor")
     @Autowired
     private Executor executor;
     @Autowired
@@ -36,13 +39,11 @@ public class KafkaConsumer implements Runnable{
     @Autowired
     private KafkaCacheHandlerFactory handlerFactory;
 
-    @Value("${kafka.handler.thread-num}")
-    private int handlerNum;
-
     private KafkaCacheQueueAgent<byte[]> queue;
     private boolean pauseKey;
     private Queue<KafkaCacheHandler> handlerQueue;
 
+    //保证consumer init 之前先装载handler
     @Autowired
     private KafkaCacheDefaultHandler kafkaCacheDefaultHandler;
 
@@ -62,7 +63,7 @@ public class KafkaConsumer implements Runnable{
 
     @Override
     public void run() {
-        kafkaConsumer.subscribe(Arrays.asList("demo"));
+        kafkaConsumer.subscribe(Arrays.asList(topic));
         while (true && !Thread.currentThread().isInterrupted()) {
             while (pauseKey) {
                 ConsumerRecords<String, byte[]> records = kafkaConsumer.poll(Duration.ofMillis(200));
@@ -79,8 +80,12 @@ public class KafkaConsumer implements Runnable{
         }
     }
 
-    public boolean pauseKey(){
-        pauseKey = !pauseKey;
+    public boolean pause(){
+        pauseKey = false;
+        return pauseKey;
+    }
+    public boolean restart(){
+        pauseKey = true;
         return pauseKey;
     }
 }

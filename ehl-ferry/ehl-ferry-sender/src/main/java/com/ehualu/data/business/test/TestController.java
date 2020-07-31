@@ -1,6 +1,6 @@
 package com.ehualu.data.business.test;
 
-import com.ehualu.data.business.ftp.FileCheckJob;
+import com.ehualu.data.business.ftp.FileStoreJob;
 import com.ehualu.data.kafka.KafkaConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ public class TestController {
     @Autowired
     private KafkaConsumer consumer;
     @Autowired
-    private FileCheckJob fileCheckJob;
+    private FileStoreJob fileStoreJob;
 
     @GetMapping("send")
     public String send(String msg){
@@ -27,13 +27,25 @@ public class TestController {
 
     @GetMapping("receivePause")
     public boolean receivePause(){
-        return consumer.pauseKey();
+        return consumer.pause();
+    }
+    @GetMapping("receiveRestart")
+    public boolean receiveRestart(){
+        return consumer.restart();
+    }
+
+    @GetMapping("ftpPause")
+    public boolean ftpPause(){
+        return fileStoreJob.pause();
+    }
+    @GetMapping("ftpRestart")
+    public boolean ftpRestart(){
+        return fileStoreJob.restart();
     }
 
     @GetMapping("ftpTest")
     public String ftpTest(){
-        fileCheckJob.checkLocalFile();
-//         testServer.ftpTest();
+        fileStoreJob.checkLocalFile();
         return "SUCCESS";
     }
 }

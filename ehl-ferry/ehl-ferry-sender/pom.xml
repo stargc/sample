@@ -81,7 +81,7 @@
 
         <dependency>
             <groupId>com.ehualu.data</groupId>
-            <artifactId>ehl-kafka-cache</artifactId>
+            <artifactId>ehl-ferry-kafka-cache</artifactId>
             <version>0.1.0</version>
             <scope>compile</scope>
         </dependency>

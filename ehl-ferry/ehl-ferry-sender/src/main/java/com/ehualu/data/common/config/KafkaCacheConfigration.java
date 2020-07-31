@@ -17,7 +17,7 @@ public class KafkaCacheConfigration {
 
     @Value("${ftp.local.temp-path}")
     private String localTempPath;
-    @Value("${kafka.consumer.max-poll-records}")
+    @Value("${ehl.kafka.consumer.max-poll-records}")
     private int maxPollRecords;
 
     @Autowired

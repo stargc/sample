@@ -10,8 +10,8 @@
     </parent>
 
     <groupId>com.ehualu.data</groupId>
-    <artifactId>ehl-kafka-cache</artifactId>
-    <name>ehl-kafka-cache</name>
+    <artifactId>ehl-ferry-kafka-cache</artifactId>
+    <name>ehl-ferry-kafka-cache</name>
     <version>0.1.0</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

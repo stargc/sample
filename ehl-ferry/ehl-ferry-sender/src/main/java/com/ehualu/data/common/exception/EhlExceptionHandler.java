@@ -63,9 +63,9 @@ public class EhlExceptionHandler {
 		return message;
 	}
 
-	@ExceptionHandler(com.example.empty.infrastructure.exception.ValParmException.class)
+	@ExceptionHandler(ValParmException.class)
 	@ResponseBody
-	public Object handleValParmException(HttpServletRequest request, com.example.empty.infrastructure.exception.ValParmException e) {
+	public Object handleValParmException(HttpServletRequest request, ValParmException e) {
 		Message<String> message = new Message<>();
 		message.setStatus(Message.Code.ERROR);
 		message.setErrorCode(Message.Code.ERRORCODE);
@@ -73,9 +73,9 @@ public class EhlExceptionHandler {
 		return message;
 	}
 
-	@ExceptionHandler(com.example.empty.infrastructure.exception.ThirdPatryException.class)
+	@ExceptionHandler(ThirdPatryException.class)
 	@ResponseBody
-	public Object handleThirdPatryException(HttpServletRequest request, com.example.empty.infrastructure.exception.ThirdPatryException e) {
+	public Object handleThirdPatryException(HttpServletRequest request, ThirdPatryException e) {
 		Message<String> message = new Message<>();
 		message.setStatus(Message.Code.ERROR);
 		message.setErrorCode(Message.Code.ERRORCODE);

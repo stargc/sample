@@ -15,30 +15,27 @@ import java.util.Properties;
  */
 @Configuration
 public class KafkaConfigration {
-    @Value("${kafka.bootstrap-servers}")
+    @Value("${ehl.kafka.bootstrap-servers}")
     private String bootstrapServers;
-    @Value("${kafka.producer.acks:all}")
+    @Value("${ehl.kafka.producer.acks:all}")
     private String acks;
-    @Value("${kafka.producer.key-serializer}")
+    @Value("${ehl.kafka.producer.key-serializer}")
     private String keySerializer;
-    @Value("${kafka.producer.value-serializer}")
+    @Value("${ehl.kafka.producer.value-serializer}")
     private String valueerializer;
-    @Value("${kafka.consumer.group-id}")
+    @Value("${ehl.kafka.consumer.group-id}")
     private String groupId;
-    @Value("${kafka.consumer.enable-auto-commit:true}")
+    @Value("${ehl.kafka.consumer.enable-auto-commit:true}")
     private String enableAutoCommit;
-    @Value("${kafka.consumer.auto-commit-interval:1000}")
+    @Value("${ehl.kafka.consumer.auto-commit-interval:1000}")
     private String autoCommitIntervalMs;
-    @Value("${kafka.consumer.key-deserializer}")
+    @Value("${ehl.kafka.consumer.key-deserializer}")
     private String keyDeserializer;
-    @Value("${kafka.consumer.value-deserializer}")
+    @Value("${ehl.kafka.consumer.value-deserializer}")
     private String valueDeserializer;
-    @Value("${kafka.consumer.max-poll-records}")
+    @Value("${ehl.kafka.consumer.max-poll-records}")
     private int maxPollRecords;
 
-
-    @Value("${ftp.local.temp-path}")
-    private String localTempPath;
 
     @Autowired
     private KafkaCacheHandlerFactory handlerFactory;
