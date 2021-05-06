@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <context id="context" targetRuntime="MyBatis3">
+        <!--定义生成的java类的编码格式-->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 生成带分页接口的查询 -->
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+
+        </commentGenerator>
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/viid_dev?serverTimezone=Asia/Shanghai"
+                        userId="root"
+                        password="root">
+            <property name="nullCatalogMeansCurrent" value="true" />
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成模型的包名和位置-->
+        <javaModelGenerator targetPackage="com.gc.demo.infrastructure.persistence.po"
+                            targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="./src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.gc.demo.infrastructure.persistence.mapper" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
+        <table tableName="sys_user_info" domainObjectName="UserInfo"
+               enableSelectByPrimaryKey="false"
+               enableSelectByExample="true"
+               enableCountByExample="true"
+               enableDeleteByExample="true"
+               enableUpdateByExample="true">
+            <generatedKey column="**id" sqlStatement="MySql"/>
+        </table>
+
+        <!-- 针对视图生成 -->
+        <!--        <table tableName="v_ape_info" domainObjectName="ApeViewInfo"-->
+        <!--               enableSelectByPrimaryKey="false"-->
+        <!--               enableSelectByExample="true"-->
+        <!--               enableCountByExample="true"-->
+        <!--               enableDeleteByExample="false"-->
+        <!--               enableUpdateByExample="false"-->
+        <!--               enableInsert="false">-->
+        <!--            <generatedKey column="***ID" sqlStatement="JDBC"/>-->
+        <!--        </table>-->
+    </context>
+</generatorConfiguration>
