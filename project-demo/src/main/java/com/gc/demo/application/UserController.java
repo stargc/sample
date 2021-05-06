@@ -2,9 +2,11 @@ package com.gc.demo.application;
 
 import com.gc.demo.business.user.AvatarService;
 import com.gc.demo.business.user.BaseService;
+import com.gc.demo.business.user.ImageCodeService;
 import com.gc.demo.business.user.vo.LoginRequest;
 import com.gc.demo.business.user.vo.LogoutRequest;
 import com.gc.demo.business.user.vo.RegisterRequest;
+import com.gc.demo.business.user.vo.VeriftyCodeRequest;
 import com.gc.demo.infrastructure.model.BaseResponse;
 import com.gc.demo.infrastructure.model.BaseResponseBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,8 @@ public class UserController {
     private BaseService baseService;
     @Autowired
     private AvatarService avatarService;
+    @Autowired
+    private ImageCodeService imageCodeService;
 
     @PostMapping("/login")
     public BaseResponse login(@RequestBody @Valid LoginRequest request){
@@ -57,5 +61,17 @@ public class UserController {
     public void showAvatar(@PathVariable(value = "name") String name,HttpServletResponse response) throws IOException {
         response.setContentType("image/jpeg");
         avatarService.showAvatar(name,response);
+    }
+
+    @GetMapping("/getCodeImage")
+    public void getCodeImage(@RequestParam String userName,HttpServletResponse response) throws IOException {
+        response.setContentType("image/jpeg");
+        imageCodeService.getCodeImage(userName,response);
+    }
+
+    @PostMapping("/checkImageCode")
+    public BaseResponse checkImageCode(@RequestBody @Valid VeriftyCodeRequest request){
+        imageCodeService.checkImageCode(request);
+        return new BaseResponseBuilder.Builder<>(true).builder();
     }
 }
